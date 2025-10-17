@@ -8,46 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 224 71% 4%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 189 94% 43%;
-    --primary-foreground: 222 47% 11%;
-    --primary-glow: 189 94% 63%;
+    --primary: 225 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 225 100% 70%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 189 94% 43%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 189 94% 43%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 225 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Custom design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(189 94% 43%) 0%, hsl(217 91% 60%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(224 71% 4%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(224 71% 4% / 0.5) 0%, hsl(217 33% 17% / 0.3) 100%);
+    /* AIAS Brand Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(225 100% 50%) 0%, hsl(225 100% 70%) 100%);
+    --gradient-hero: radial-gradient(ellipse at top, hsl(225 100% 15%) 0%, hsl(0 0% 4%) 70%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 6%) 0%, hsl(225 30% 8%) 100%);
+    --gradient-accent: linear-gradient(90deg, hsl(225 100% 50%) 0%, hsl(45 100% 50%) 100%);
+    --gradient-mesh: radial-gradient(at 40% 20%, hsl(225 100% 25%) 0px, transparent 50%), 
+                     radial-gradient(at 80% 0%, hsl(45 100% 25%) 0px, transparent 50%), 
+                     radial-gradient(at 0% 50%, hsl(225 100% 15%) 0px, transparent 50%);
     
-    --shadow-glow: 0 0 40px hsl(189 94% 43% / 0.3);
-    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
+    /* Advanced Shadows */
+    --shadow-glow: 0 0 60px hsl(225 100% 50% / 0.4), 0 0 100px hsl(225 100% 50% / 0.2);
+    --shadow-card: 0 20px 60px -15px hsl(225 100% 50% / 0.3);
+    --shadow-accent: 0 0 40px hsl(45 100% 50% / 0.5);
+    --shadow-brutal: 8px 8px 0px hsl(225 100% 50%);
     
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
