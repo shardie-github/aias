@@ -7,10 +7,10 @@ export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Features', href: '#features', isRoute: false },
+    { name: 'Services', href: '/services', isRoute: true },
+    { name: 'Case Studies', href: '/case-studies', isRoute: true },
     { name: 'ROI Calculator', href: '/roi-calculator', isRoute: true },
-    { name: 'Pricing', href: '#pricing', isRoute: false },
-    { name: 'About', href: '#about', isRoute: false },
+    { name: 'Resources', href: '#resources', isRoute: false },
   ];
 
   return (

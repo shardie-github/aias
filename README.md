@@ -1,8 +1,11 @@
-# Welcome to your Lovable project
+# AIAS - AI Agent & Automation Consultancy Platform
 
-## Project info
+Enterprise-grade AI consultancy platform showcasing custom AI agents, workflow automation, and intelligent business solutions.
+
+## Project Info
 
 **URL**: https://lovable.dev/projects/c43398e6-9562-4364-a016-8bece2da7794
+**Status**: Production Ready (Frontend) | Backend Integration Pending (Momen)
 
 ## How can I edit this code?
 

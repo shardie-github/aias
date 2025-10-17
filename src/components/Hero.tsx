@@ -21,16 +21,16 @@ export const Hero = () => {
 
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-            Your AI Assistant for
+            AI Agent & Automation
             <span className="block mt-2 bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
-              Enterprise Excellence
+              Consultancy Experts
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Harness the power of advanced AI to automate workflows, enhance productivity, 
-            and transform your business operations.
+            Transform your business with custom AI agents and intelligent workflow automation. 
+            Out-of-the-box solutions or fully customized systems built for your unique needs.
           </p>
 
           {/* CTA Buttons */}
@@ -39,7 +39,7 @@ export const Hero = () => {
               size="lg" 
               className="bg-gradient-primary shadow-glow text-lg px-8 hover:shadow-xl transition-all"
             >
-              Start Free Trial
+              Schedule Consultation
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Link to="/roi-calculator">
