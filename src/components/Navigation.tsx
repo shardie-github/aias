@@ -52,12 +52,16 @@ export const Navigation = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
-            <Button size="sm" className="bg-gradient-primary shadow-glow">
-              Get Started
-            </Button>
+            <Link to="/auth">
+              <Button variant="ghost" size="sm">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/auth">
+              <Button size="sm" className="bg-gradient-primary shadow-glow">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -94,12 +98,16 @@ export const Navigation = () => {
               )
             ))}
             <div className="flex flex-col gap-2 pt-4">
-              <Button variant="ghost" size="sm">
-                Sign In
-              </Button>
-              <Button size="sm" className="bg-gradient-primary shadow-glow">
-                Get Started
-              </Button>
+              <Link to="/auth" onClick={() => setIsOpen(false)}>
+                <Button variant="ghost" size="sm" className="w-full">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth" onClick={() => setIsOpen(false)}>
+                <Button size="sm" className="bg-gradient-primary shadow-glow w-full">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
         )}
