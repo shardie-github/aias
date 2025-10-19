@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -102,19 +103,19 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
       };
     }, [api, onSelect]);
 
-    return (
-      <CarouselContext.Provider
-        value={{
-          carouselRef,
-          api: api,
-          opts,
-          orientation: orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
-          scrollPrev,
-          scrollNext,
-          canScrollPrev,
+    const contextValue = useMemo(() => ({
+      carouselRef,
+      api: api,
+      opts,
+      orientation: orientation || (opts?.axis === "y" ? "vertical" : "horizontal"),
+      scrollPrev,
+      scrollNext,
+      canScrollPrev,
           canScrollNext,
-        }}
-      >
+    }), [carouselRef, api, opts, orientation, scrollPrev, scrollNext, canScrollPrev, canScrollNext]);
+
+    return (
+      <CarouselContext.Provider value={contextValue}>
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}

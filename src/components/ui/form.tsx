@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from "react-hook-form";
@@ -23,8 +24,10 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
+  const contextValue = useMemo(() => ({ name: props.name }), [props.name]);
+
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={contextValue}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -63,8 +66,10 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
   ({ className, ...props }, ref) => {
     const id = React.useId();
 
+    const contextValue = useMemo(() => ({ id }), [id]);
+
     return (
-      <FormItemContext.Provider value={{ id }}>
+      <FormItemContext.Provider value={contextValue}>
         <div ref={ref} className={cn("space-y-2", className)} {...props} />
       </FormItemContext.Provider>
     );
