@@ -73,7 +73,7 @@ export const AnimatedBackground = () => {
       {/* Floating Particles */}
       {[...Array(20)].map((_, i) => (
         <motion.div
-          key={i}
+          key={`particle-${i}`}
           className="absolute w-2 h-2 bg-primary/30 rounded-full"
           animate={{
             x: [0, Math.random() * 200 - 100],

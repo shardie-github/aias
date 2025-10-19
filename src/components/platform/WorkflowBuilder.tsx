@@ -37,8 +37,8 @@ import { WorkflowNode, WorkflowTemplate } from '@/types/platform';
 
 interface WorkflowBuilderProps {
   workflowId?: string;
-  onSave?: (workflow: any) => void;
-  onExecute?: (workflow: any) => void;
+  onSave?: (workflow: WorkflowTemplate) => void;
+  onExecute?: (workflow: WorkflowTemplate) => void;
 }
 
 export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({ 
@@ -450,7 +450,7 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
 
                 return (
                   <line
-                    key={index}
+                    key={`connection-${index}`}
                     x1={fromX}
                     y1={fromY}
                     x2={toX}

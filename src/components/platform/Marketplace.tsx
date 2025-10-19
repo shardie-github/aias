@@ -475,7 +475,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({ onItemSelect, onPurcha
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
                                 <Star
-                                  key={i}
+                                  key={`rating-star-${i}`}
                                   className={`h-4 w-4 ${
                                     i < Math.floor(item.rating)
                                       ? 'text-yellow-400 fill-current'
@@ -573,7 +573,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({ onItemSelect, onPurcha
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
                                 <Star
-                                  key={i}
+                                  key={`rating-star-${i}`}
                                   className={`h-4 w-4 ${
                                     i < Math.floor(item.rating)
                                       ? 'text-yellow-400 fill-current'

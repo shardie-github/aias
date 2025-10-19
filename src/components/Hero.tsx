@@ -144,7 +144,7 @@ export const Hero = () => {
               { value: '99.9%', label: 'Uptime', subtext: 'Enterprise SLA', delay: 0.3, icon: '🛡️' },
             ].map((stat, index) => (
               <motion.div
-                key={index}
+                key={`stat-${index}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 1.2 + stat.delay }}

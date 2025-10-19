@@ -31,7 +31,7 @@ export const ChatbotWidget = () => {
                 </div>
                 <ul className="space-y-2">
                   {agentSkills.map((skill, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm">
+                    <li key={`skill-${index}`} className="flex items-start gap-2 text-sm">
                       <span className="text-primary">•</span>
                       <span>{skill}</span>
                     </li>

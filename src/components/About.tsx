@@ -109,7 +109,7 @@ export const About = () => {
                       <h4 className="font-semibold mb-3 text-center">Key Expertise</h4>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {founder.credentials.map((credential, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
+                          <Badge key={`${founder.name}-credential-${idx}`} variant="outline" className="text-xs">
                             {credential}
                           </Badge>
                         ))}

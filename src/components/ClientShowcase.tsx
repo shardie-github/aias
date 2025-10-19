@@ -80,7 +80,7 @@ export const ClientShowcase = () => {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            From Fortune 500 companies to growing startups, see who's transforming their operations with AIAS.
+            From Fortune 500 companies to growing startups, see who&apos;s transforming their operations with AIAS.
           </p>
         </motion.div>
 
@@ -175,7 +175,7 @@ export const ClientShowcase = () => {
                       <h5 className="font-semibold text-sm mb-3 text-muted-foreground">Results</h5>
                       <div className="space-y-2">
                         {study.results.map((result, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
+                          <div key={`${study.title}-result-${idx}`} className="flex items-center gap-2">
                             <CheckCircle className={`w-4 h-4 ${study.color} flex-shrink-0`} />
                             <span className="text-sm">{result}</span>
                           </div>

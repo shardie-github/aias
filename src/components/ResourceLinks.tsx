@@ -65,7 +65,7 @@ export const ResourceLinks = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {resources.map((resource, index) => (
             <a
-              key={index}
+              key={`resource-${index}`}
               href={resource.link}
               target="_blank"
               rel="noopener noreferrer"

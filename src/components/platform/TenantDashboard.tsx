@@ -242,7 +242,7 @@ export const TenantDashboard: React.FC<TenantDashboardProps> = ({ tenantId }) =>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">This Month's Executions</p>
+                <p className="text-sm font-medium text-gray-600">This Month&apos;s Executions</p>
                 <p className="text-3xl font-bold text-gray-900">{(usage?.executions || 0).toLocaleString()}</p>
                 <p className="text-sm text-gray-500">
                   of {tenant.limits.executions.toLocaleString()} limit
@@ -330,7 +330,7 @@ export const TenantDashboard: React.FC<TenantDashboardProps> = ({ tenantId }) =>
                       <CheckCircle className="h-4 w-4 text-green-600" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Workflow "Lead Qualification" completed successfully</p>
+                      <p className="text-sm font-medium">Workflow &ldquo;Lead Qualification&rdquo; completed successfully</p>
                       <p className="text-xs text-gray-500">2 minutes ago</p>
                     </div>
                   </div>
@@ -339,7 +339,7 @@ export const TenantDashboard: React.FC<TenantDashboardProps> = ({ tenantId }) =>
                       <Bot className="h-4 w-4 text-blue-600" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">New AI agent "Customer Support Bot" deployed</p>
+                      <p className="text-sm font-medium">New AI agent &ldquo;Customer Support Bot&rdquo; deployed</p>
                       <p className="text-xs text-gray-500">1 hour ago</p>
                     </div>
                   </div>
@@ -348,7 +348,7 @@ export const TenantDashboard: React.FC<TenantDashboardProps> = ({ tenantId }) =>
                       <Workflow className="h-4 w-4 text-purple-600" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">Workflow "Email Automation" triggered 15 times</p>
+                      <p className="text-sm font-medium">Workflow &ldquo;Email Automation&rdquo; triggered 15 times</p>
                       <p className="text-xs text-gray-500">3 hours ago</p>
                     </div>
                   </div>
@@ -381,7 +381,7 @@ export const TenantDashboard: React.FC<TenantDashboardProps> = ({ tenantId }) =>
                     <h4 className="font-medium text-sm">Plan Features:</h4>
                     <ul className="space-y-1">
                       {tenant.plan.features.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-2 text-sm">
+                        <li key={`feature-${index}`} className="flex items-center gap-2 text-sm">
                           <CheckCircle className="h-4 w-4 text-green-500" />
                           {feature}
                         </li>

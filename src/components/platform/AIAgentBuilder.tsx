@@ -17,7 +17,8 @@ import {
   Bot, 
   Settings, 
   Play, 
-  Save, 
+  Save,
+  Eye, 
   Download, 
   Upload,
   TestTube,
@@ -287,7 +288,7 @@ export const AIAgentBuilder: React.FC<AIAgentBuilderProps> = ({
 
                   <div>
                     <Label htmlFor="agent-model">AI Model</Label>
-                    <Select value={agent.model} onValueChange={(value) => updateAgent({ model: value as any })}>
+                    <Select value={agent.model} onValueChange={(value) => updateAgent({ model: value as 'gpt-4' | 'claude-3' | 'custom' | 'multi-model' })}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select AI model" />
                       </SelectTrigger>
@@ -335,7 +336,7 @@ export const AIAgentBuilder: React.FC<AIAgentBuilderProps> = ({
                               ? 'border-purple-500 bg-purple-50'
                               : 'border-gray-200 hover:border-gray-300'
                           }`}
-                          onClick={() => updatePersonality({ tone: option.id as any })}
+                          onClick={() => updatePersonality({ tone: option.id as 'professional' | 'casual' | 'friendly' | 'technical' | 'creative' })}
                         >
                           <div className="font-medium">{option.label}</div>
                           <div className="text-sm text-gray-500">{option.description}</div>
@@ -473,7 +474,7 @@ export const AIAgentBuilder: React.FC<AIAgentBuilderProps> = ({
                       rows={4}
                     />
                     <p className="text-sm text-gray-500 mt-1">
-                      Provide specific examples or data to improve the agent's performance
+                      Provide specific examples or data to improve the agent&apos;s performance
                     </p>
                   </div>
                 </CardContent>
@@ -497,7 +498,7 @@ export const AIAgentBuilder: React.FC<AIAgentBuilderProps> = ({
                               ? 'border-purple-500 bg-purple-50'
                               : 'border-gray-200 hover:border-gray-300'
                           }`}
-                          onClick={() => updatePricing({ type: option.id as any })}
+                          onClick={() => updatePricing({ type: option.id as 'per_use' | 'subscription' | 'one_time' | 'free' })}
                         >
                           <div className="font-medium">{option.label}</div>
                           <div className="text-sm text-gray-500">{option.description}</div>
