@@ -130,35 +130,38 @@ export const Hero = () => {
             </Link>
           </motion.div>
 
-          {/* Stats */}
+          {/* Enhanced Stats with Proof Points */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-12 sm:pt-16 md:pt-24 max-w-3xl mx-auto px-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 pt-12 sm:pt-16 md:pt-24 max-w-5xl mx-auto px-4"
           >
             {[
-              { value: '42+', label: 'Active Workflows', delay: 0 },
-              { value: '10k+', label: 'Hours Saved', delay: 0.1 },
-              { value: '24/7', label: 'AI Operations', delay: 0.2 },
+              { value: '42+', label: 'Active Workflows', subtext: 'Across 15+ Industries', delay: 0, icon: '⚡' },
+              { value: '10k+', label: 'Hours Saved', subtext: 'Monthly for Clients', delay: 0.1, icon: '⏱️' },
+              { value: '24/7', label: 'AI Operations', subtext: 'Zero Downtime', delay: 0.2, icon: '🤖' },
+              { value: '99.9%', label: 'Uptime', subtext: 'Enterprise SLA', delay: 0.3, icon: '🛡️' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 1.2 + stat.delay }}
-                whileHover={{ scale: 1.1, y: -5 }}
+                whileHover={{ scale: 1.05, y: -8 }}
                 className="relative group"
               >
-                <div className="p-4 sm:p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border group-hover:border-primary/50 transition-all">
+                <div className="p-4 sm:p-6 bg-card/60 backdrop-blur-sm rounded-2xl border border-border group-hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10">
                   <motion.div 
-                    className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity"
+                    className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300"
                   />
-                  <div className="relative">
+                  <div className="relative text-center">
+                    <div className="text-2xl mb-2">{stat.icon}</div>
                     <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-accent bg-clip-text text-transparent">
                       {stat.value}
                     </div>
-                    <div className="text-xs sm:text-sm text-muted-foreground mt-1 sm:mt-2">{stat.label}</div>
+                    <div className="text-sm font-semibold text-foreground mt-1">{stat.label}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{stat.subtext}</div>
                   </div>
                 </div>
               </motion.div>

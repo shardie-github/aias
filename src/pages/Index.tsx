@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { Features } from '@/components/Features';
+import { About } from '@/components/About';
+import { InfoCards } from '@/components/InfoCards';
+import { InteractiveProofPoints } from '@/components/InteractiveProofPoints';
+import { ClientShowcase } from '@/components/ClientShowcase';
 import { AutomationFlowcharts } from '@/components/AutomationFlowcharts';
 import { DynamicCaseExplorer } from '@/components/DynamicCaseExplorer';
 import { ThinkingPulse } from '@/components/ThinkingPulse';
@@ -81,6 +85,18 @@ const Index = () => {
       </section>
 
       <Features />
+      
+      {/* Interactive Proof Points */}
+      <InteractiveProofPoints />
+      
+      {/* Client Showcase */}
+      <ClientShowcase />
+      
+      {/* Info Cards with Proof Points */}
+      <InfoCards />
+      
+      {/* About Us Section */}
+      <About />
       
       {/* Solution Quiz */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
