@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -31,9 +31,9 @@ export default function Admin() {
 
   useEffect(() => {
     checkAdminAccess();
-  }, []);
+  }, [checkAdminAccess]);
 
-  const checkAdminAccess = async () => {
+  const checkAdminAccess = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
@@ -66,9 +66,9 @@ export default function Admin() {
       console.error("Error checking admin access:", error);
       navigate("/");
     }
-  };
+  }, [navigate, toast, loadUserRoles]);
 
-  const loadUserRoles = async () => {
+  const loadUserRoles = useCallback(async () => {
     try {
       const { data: rolesData, error } = await supabase
         .from("user_roles")
@@ -91,16 +91,16 @@ export default function Admin() {
       })) || [];
 
       setUserRoles(merged as UserRole[]);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error loading users",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   const updateUserRole = async (userId: string, newRole: "admin" | "moderator" | "user") => {
     try {
@@ -116,10 +116,10 @@ export default function Admin() {
         description: "User role has been successfully updated.",
       });
       loadUserRoles();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error updating role",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive",
       });
     }

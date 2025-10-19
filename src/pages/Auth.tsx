@@ -101,10 +101,10 @@ export default function Auth() {
       setEmail("");
       setPassword("");
       setPasswordStrength(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Sign up failed",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive",
       });
     } finally {
@@ -128,10 +128,10 @@ export default function Auth() {
         title: "Welcome back!",
         description: "Successfully signed in.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Sign in failed",
-        description: error.message,
+        description: error instanceof Error ? error.message : "Unknown error occurred",
         variant: "destructive",
       });
     } finally {

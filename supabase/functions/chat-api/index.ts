@@ -14,7 +14,7 @@ const chatRequestSchema = z.object({
 });
 
 // Distributed rate limit check using Supabase function
-async function checkRateLimit(supabaseAdmin: any, userId: string): Promise<boolean> {
+async function checkRateLimit(supabaseAdmin: unknown, userId: string): Promise<boolean> {
   const { data, error } = await supabaseAdmin.rpc('check_rate_limit', {
     p_identifier: userId,
     p_endpoint: 'chat-api',
@@ -31,7 +31,7 @@ async function checkRateLimit(supabaseAdmin: any, userId: string): Promise<boole
 }
 
 // Log audit event
-async function logAudit(supabaseAdmin: any, userId: string, action: string, resourceType: string, resourceId?: string, metadata?: any) {
+async function logAudit(supabaseAdmin: unknown, userId: string, action: string, resourceType: string, resourceId?: string, metadata?: Record<string, unknown>) {
   await supabaseAdmin.rpc('log_audit_event', {
     p_user_id: userId,
     p_action: action,

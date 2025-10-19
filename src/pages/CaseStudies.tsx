@@ -120,7 +120,7 @@ const CaseStudies = () => {
                 {/* Testimonial */}
                 <div className="p-8 rounded-xl bg-gradient-card backdrop-blur-sm border border-primary/20">
                   <blockquote className="text-lg italic mb-4">
-                    "{study.testimonial}"
+                    &ldquo;{study.testimonial}&rdquo;
                   </blockquote>
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">

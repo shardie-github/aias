@@ -96,7 +96,7 @@ export const LeadGenForm = () => {
                 <Download className="ml-2 w-5 h-5" />
               </Button>
               <p className="text-xs text-muted-foreground text-center">
-                By subscribing, you'll also receive our weekly AI automation insights newsletter. Unsubscribe anytime.
+                By subscribing, you&apos;ll also receive our weekly AI automation insights newsletter. Unsubscribe anytime.
               </p>
             </form>
           </div>
