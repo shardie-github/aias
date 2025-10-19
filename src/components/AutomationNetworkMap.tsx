@@ -19,7 +19,7 @@ const connections = [
 
 export const AutomationNetworkMap = () => {
   return (
-    <div className="relative w-full h-96 bg-gradient-card backdrop-blur-sm border border-border rounded-2xl p-8 overflow-hidden">
+    <div className="relative w-full h-80 sm:h-96 bg-gradient-card backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-8 overflow-hidden">
       {/* Animated background grid */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -106,8 +106,8 @@ export const AutomationNetworkMap = () => {
             />
             
             {/* Node */}
-            <div className={`relative w-16 h-16 bg-gradient-to-br ${node.color} rounded-full flex items-center justify-center shadow-glow`}>
-              <node.icon className="w-7 h-7 text-white" />
+            <div className={`relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${node.color} rounded-full flex items-center justify-center shadow-glow`}>
+              <node.icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
             </div>
 
             {/* Label */}

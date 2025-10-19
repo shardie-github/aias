@@ -114,7 +114,7 @@ export const SolutionQuiz = () => {
 
             {/* Question */}
             <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 px-2">
                 {questions[currentQuestion].question}
               </h3>
 
@@ -125,13 +125,13 @@ export const SolutionQuiz = () => {
                     whileHover={{ scale: 1.02, x: 4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(option.value)}
-                    className="p-4 text-left bg-card border border-border rounded-xl hover:border-primary/50 transition-colors group"
+                    className="p-3 sm:p-4 text-left bg-card border border-border rounded-xl hover:border-primary/50 transition-colors group min-h-[48px]"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-lg group-hover:text-primary transition-colors">
+                      <span className="text-base sm:text-lg group-hover:text-primary transition-colors">
                         {option.text}
                       </span>
-                      <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 opacity-0 group-hover:opacity-100 transition-opacity text-primary flex-shrink-0" />
                     </div>
                   </motion.button>
                 ))}
@@ -176,17 +176,17 @@ export const SolutionQuiz = () => {
                 <span className="text-sm font-semibold text-accent">Recommended Solution</span>
               </div>
 
-              <h3 className="text-3xl md:text-4xl font-bold">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold px-4">
                 {recommendation.title}
               </h3>
 
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 {recommendation.description}
               </p>
             </div>
 
             {/* Features */}
-            <div className="grid md:grid-cols-2 gap-4 pt-4">
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pt-4">
               {recommendation.features.map((feature, index) => (
                 <motion.div
                   key={index}

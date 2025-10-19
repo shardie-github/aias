@@ -39,32 +39,32 @@ export const LeadGenForm = () => {
                 <span className="text-lg font-semibold">Free Resource</span>
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 px-4">
                 Get Your Free
                 <span className="block mt-2 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
                   AI Agent System Prompts Guide
                 </span>
               </h2>
               
-              <p className="text-xl text-muted-foreground mb-8">
+              <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 px-4">
                 10-page master guide on crafting perfect system prompts and fine-tuning your AI agents for maximum performance
               </p>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="p-4 rounded-lg bg-card/50">
-                  <Download className="w-8 h-8 text-primary mx-auto mb-2" />
-                  <div className="font-semibold mb-1">10-Page PDF</div>
-                  <div className="text-sm text-muted-foreground">Comprehensive guide</div>
+              <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 px-4">
+                <div className="p-3 sm:p-4 rounded-lg bg-card/50">
+                  <Download className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-2" />
+                  <div className="text-sm sm:text-base font-semibold mb-1">10-Page PDF</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Comprehensive guide</div>
                 </div>
-                <div className="p-4 rounded-lg bg-card/50">
-                  <Mail className="w-8 h-8 text-primary mx-auto mb-2" />
-                  <div className="font-semibold mb-1">Instant Delivery</div>
-                  <div className="text-sm text-muted-foreground">Sent to your inbox</div>
+                <div className="p-3 sm:p-4 rounded-lg bg-card/50">
+                  <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-2" />
+                  <div className="text-sm sm:text-base font-semibold mb-1">Instant Delivery</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">Sent to your inbox</div>
                 </div>
-                <div className="p-4 rounded-lg bg-card/50">
-                  <Gift className="w-8 h-8 text-primary mx-auto mb-2" />
-                  <div className="font-semibold mb-1">Completely Free</div>
-                  <div className="text-sm text-muted-foreground">No credit card</div>
+                <div className="p-3 sm:p-4 rounded-lg bg-card/50">
+                  <Gift className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-2" />
+                  <div className="text-sm sm:text-base font-semibold mb-1">Completely Free</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">No credit card</div>
                 </div>
               </div>
             </div>

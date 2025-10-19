@@ -57,26 +57,26 @@ export const Pricing = () => {
     <section id="pricing" className="py-24 relative">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold px-4">
             Simple, Transparent
             <span className="block mt-2 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
               Pricing
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg sm:text-xl text-muted-foreground px-4">
             Choose the perfect plan for your business needs
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <div
               key={plan.name}
-              className={`relative p-8 rounded-xl border transition-all duration-300 ${
+              className={`relative p-6 sm:p-8 rounded-xl border transition-all duration-300 ${
                 plan.popular
-                  ? 'bg-gradient-card backdrop-blur-sm border-primary shadow-glow scale-105'
+                  ? 'bg-gradient-card backdrop-blur-sm border-primary shadow-glow sm:scale-105'
                   : 'bg-gradient-card backdrop-blur-sm border-border hover:border-primary/50'
               }`}
               style={{ animationDelay: `${index * 100}ms` }}

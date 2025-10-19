@@ -23,22 +23,22 @@ export const BookingInterface = () => {
     <section className="py-24 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold">
+          <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold px-4">
               Schedule Your
               <span className="block mt-2 bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
                 Free Consultation
               </span>
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-lg sm:text-xl text-muted-foreground px-4">
               Meet with an AI automation expert to discuss your business needs
             </p>
           </div>
 
-          <div className="p-8 rounded-xl bg-gradient-card backdrop-blur-sm border border-border">
-            <form className="space-y-6">
+          <div className="p-4 sm:p-6 md:p-8 rounded-xl bg-gradient-card backdrop-blur-sm border border-border">
+            <form className="space-y-4 sm:space-y-6">
               {/* Contact Info */}
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Full Name *</label>
                   <Input placeholder="John Doe" required />
@@ -49,7 +49,7 @@ export const BookingInterface = () => {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Company</label>
                   <Input placeholder="Your Company" />
@@ -63,27 +63,27 @@ export const BookingInterface = () => {
               {/* Meeting Type */}
               <div>
                 <label className="block text-sm font-medium mb-3">Preferred Meeting Type *</label>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {meetingTypes.map((type) => (
                     <button
                       key={type.value}
                       type="button"
                       onClick={() => setSelectedType(type.value)}
-                      className={`p-4 rounded-lg border transition-all ${
+                      className={`p-3 sm:p-4 rounded-lg border transition-all min-h-[80px] sm:min-h-[100px] ${
                         selectedType === type.value
                           ? 'border-primary bg-primary/10'
                           : 'border-border hover:border-primary/50'
                       }`}
                     >
-                      <type.icon className="w-6 h-6 mx-auto mb-2 text-primary" />
-                      <div className="text-sm font-medium">{type.label}</div>
+                      <type.icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-primary" />
+                      <div className="text-xs sm:text-sm font-medium">{type.label}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Date & Time Selection */}
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />

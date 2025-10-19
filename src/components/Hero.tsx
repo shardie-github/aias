@@ -78,8 +78,8 @@ export const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
-              <span className="block mb-4">AI Agent &</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight">
+              <span className="block mb-2 sm:mb-4">AI Agent &</span>
               <span className="block bg-gradient-accent bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]">
                 Automation Consultancy
               </span>
@@ -91,7 +91,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4"
           >
             Stop scaling chaos. Start scaling intelligence.
             <span className="block mt-2 text-foreground/90">
@@ -104,26 +104,26 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center pt-6 sm:pt-8 px-4"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
               <Button 
                 size="lg" 
-                className="bg-gradient-primary shadow-glow text-lg px-10 py-7 hover:shadow-accent transition-all group"
+                className="w-full sm:w-auto bg-gradient-primary shadow-glow text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 hover:shadow-accent transition-all group min-h-[48px]"
               >
                 Schedule Consultation
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
             
-            <Link to="/roi-calculator">
+            <Link to="/roi-calculator" className="w-full sm:w-auto">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="text-lg px-10 py-7 border-primary/30 hover:border-accent hover:text-accent bg-card/30 backdrop-blur-sm"
+                  className="w-full sm:w-auto text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 border-primary/30 hover:border-accent hover:text-accent bg-card/30 backdrop-blur-sm min-h-[48px]"
                 >
-                  <Calculator className="mr-2 w-5 h-5" />
+                  <Calculator className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
                   Calculate ROI
                 </Button>
               </motion.div>
@@ -135,7 +135,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="grid grid-cols-3 gap-8 pt-24 max-w-3xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-12 sm:pt-16 md:pt-24 max-w-3xl mx-auto px-4"
           >
             {[
               { value: '42+', label: 'Active Workflows', delay: 0 },
@@ -150,15 +150,15 @@ export const Hero = () => {
                 whileHover={{ scale: 1.1, y: -5 }}
                 className="relative group"
               >
-                <div className="p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border group-hover:border-primary/50 transition-all">
+                <div className="p-4 sm:p-6 bg-card/50 backdrop-blur-sm rounded-2xl border border-border group-hover:border-primary/50 transition-all">
                   <motion.div 
                     className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity"
                   />
                   <div className="relative">
-                    <div className="text-4xl md:text-5xl font-bold bg-gradient-accent bg-clip-text text-transparent">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-accent bg-clip-text text-transparent">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground mt-1 sm:mt-2">{stat.label}</div>
                   </div>
                 </div>
               </motion.div>
