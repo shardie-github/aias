@@ -121,7 +121,7 @@ export const SolutionQuiz = () => {
               <div className="grid gap-3">
                 {questions[currentQuestion].options.map((option, index) => (
                   <motion.button
-                    key={index}
+                    key={`option-${index}`}
                     whileHover={{ scale: 1.02, x: 4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(option.value)}
@@ -189,7 +189,7 @@ export const SolutionQuiz = () => {
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pt-4">
               {recommendation.features.map((feature, index) => (
                 <motion.div
-                  key={index}
+                  key={`feature-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.1 }}

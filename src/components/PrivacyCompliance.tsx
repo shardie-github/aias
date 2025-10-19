@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 import { 
   Shield, 
   Cookie, 
@@ -182,12 +183,21 @@ export const PrivacyCompliance: React.FC = () => {
     saveConsent();
   };
 
+  const { toast } = useToast();
+
   const handleDataSubjectRequest = async (requestType: 'access' | 'portability' | 'erasure') => {
     try {
       const result = await privacyManager.handleDataSubjectRequest('current_user', requestType);
-      alert(`Data subject request processed: ${JSON.stringify(result, null, 2)}`);
+      toast({
+        title: "Data Subject Request Processed",
+        description: `Your ${requestType} request has been processed successfully.`,
+      });
     } catch (error) {
-      alert(`Error processing request: ${error}`);
+      toast({
+        title: "Error Processing Request",
+        description: `Failed to process your ${requestType} request. Please try again.`,
+        variant: "destructive",
+      });
     }
   };
 

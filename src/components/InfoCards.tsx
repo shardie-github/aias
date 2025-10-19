@@ -153,7 +153,7 @@ export const InfoCards = () => {
               </span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Don't just take our word for it. Hear from the leaders who've transformed their businesses with AIAS.
+              Don&apos;t just take our word for it. Hear from the leaders who&apos;ve transformed their businesses with AIAS.
             </p>
           </div>
 
@@ -172,11 +172,11 @@ export const InfoCards = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        <Star key={`star-${i}`} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
                     <blockquote className="text-muted-foreground mb-6 italic">
-                      "{testimonial.quote}"
+                      &ldquo;{testimonial.quote}&rdquo;
                     </blockquote>
                     <div className="flex items-center gap-3">
                       <div className="text-2xl">{testimonial.avatar}</div>

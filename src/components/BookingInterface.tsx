@@ -40,29 +40,29 @@ export const BookingInterface = () => {
               {/* Contact Info */}
               <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Full Name *</label>
-                  <Input placeholder="John Doe" required />
+                  <label htmlFor="fullName" className="block text-sm font-medium mb-2">Full Name *</label>
+                  <Input id="fullName" placeholder="John Doe" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email *</label>
-                  <Input type="email" placeholder="john@company.com" required />
+                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
+                  <Input id="email" type="email" placeholder="john@company.com" required />
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Company</label>
-                  <Input placeholder="Your Company" />
+                  <label htmlFor="company" className="block text-sm font-medium mb-2">Company</label>
+                  <Input id="company" placeholder="Your Company" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Phone</label>
-                  <Input type="tel" placeholder="+1 (555) 000-0000" />
+                  <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone</label>
+                  <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
                 </div>
               </div>
 
               {/* Meeting Type */}
               <div>
-                <label className="block text-sm font-medium mb-3">Preferred Meeting Type *</label>
+                <label htmlFor="meetingType" className="block text-sm font-medium mb-3">Preferred Meeting Type *</label>
                 <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {meetingTypes.map((type) => (
                     <button
@@ -85,11 +85,12 @@ export const BookingInterface = () => {
               {/* Date & Time Selection */}
               <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2 flex items-center gap-2">
+                  <label htmlFor="date" className="block text-sm font-medium mb-2 flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
                     Select Date *
                   </label>
                   <Input
+                    id="date"
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
@@ -98,11 +99,12 @@ export const BookingInterface = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2 flex items-center gap-2">
+                  <label htmlFor="time" className="block text-sm font-medium mb-2 flex items-center gap-2">
                     <Clock className="w-4 h-4" />
                     Select Time *
                   </label>
                   <select
+                    id="time"
                     value={selectedTime}
                     onChange={(e) => setSelectedTime(e.target.value)}
                     className="w-full px-3 py-2 rounded-md bg-background border border-input"
@@ -118,10 +120,11 @@ export const BookingInterface = () => {
 
               {/* Additional Info */}
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label htmlFor="needs" className="block text-sm font-medium mb-2">
                   Tell us about your automation needs
                 </label>
                 <Textarea
+                  id="needs"
                   placeholder="What business processes would you like to automate? What challenges are you facing?"
                   rows={4}
                 />

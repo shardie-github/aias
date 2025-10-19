@@ -69,7 +69,7 @@ export const DynamicCaseExplorer = () => {
 
         return (
           <motion.div
-            key={index}
+            key={`case-${index}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -136,7 +136,7 @@ export const DynamicCaseExplorer = () => {
                 <div className="flex flex-wrap gap-2">
                   {caseStudy.tags.map((tag, tagIndex) => (
                     <span
-                      key={tagIndex}
+                      key={`${caseStudy.title}-tag-${tagIndex}`}
                       className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground"
                     >
                       {tag}

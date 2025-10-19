@@ -44,7 +44,7 @@ export const AutomationNetworkMap = () => {
           
           return (
             <motion.line
-              key={index}
+              key={`connection-${index}`}
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 0.3 }}
               transition={{ duration: 2, delay: index * 0.2 }}
@@ -71,7 +71,7 @@ export const AutomationNetworkMap = () => {
       {/* Nodes */}
       {nodes.map((node, index) => (
         <motion.div
-          key={index}
+          key={`node-${node.id || index}`}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{

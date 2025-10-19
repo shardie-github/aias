@@ -79,7 +79,7 @@ export const AutomationFlowcharts = () => {
               {/* Workflow Steps */}
               <div className="space-y-4">
                 {workflow.steps.map((step, stepIndex) => (
-                  <div key={stepIndex} className="relative">
+                  <div key={`${workflow.id}-step-${stepIndex}`} className="relative">
                     <div className="flex items-center gap-4">
                       <div className={`p-3 rounded-lg ${step.color} flex-shrink-0`}>
                         <step.icon className="w-5 h-5" />

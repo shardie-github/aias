@@ -88,7 +88,7 @@ export const InteractiveProofPoints = () => {
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
             Numbers That
             <span className="block mt-2 bg-gradient-accent bg-clip-text text-transparent">
-              Don't Lie
+              Don&apos;t Lie
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">

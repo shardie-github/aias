@@ -54,13 +54,13 @@ export const FloatingDock = ({ onChatOpen }: FloatingDockProps) => {
 
             if (item.href) {
               return (
-                <Link key={index} to={item.href}>
+                <Link key={`dock-item-${index}`} to={item.href}>
                   {content}
                 </Link>
               );
             }
 
-            return <div key={index}>{content}</div>;
+            return <div key={`dock-div-${index}`}>{content}</div>;
           })}
         </div>
       </div>

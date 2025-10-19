@@ -60,7 +60,7 @@ export const FAQSection = () => {
           <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, index) => (
               <AccordionItem
-                key={index}
+                key={`faq-${index}`}
                 value={`item-${index}`}
                 className="border border-border rounded-lg px-6 bg-gradient-card backdrop-blur-sm hover:border-primary/50 transition-all"
               >
