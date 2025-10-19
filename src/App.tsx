@@ -10,6 +10,7 @@ import CaseStudies from "./pages/CaseStudies";
 import ROICalculator from "./pages/ROICalculator";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Platform from "./pages/Platform";
 import NotFound from "./pages/NotFound";
 import PrivacyCompliance from "./components/PrivacyCompliance";
 import TrustBadges from "./components/TrustBadges";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/roi-calculator" element={<ROICalculator />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/platform/*" element={<Platform />} />
           <Route path="/privacy" element={<PrivacyCompliance />} />
           <Route path="/trust" element={<TrustBadges />} />
           <Route path="/automation" element={<AutomationDashboard />} />

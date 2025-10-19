@@ -8,6 +8,7 @@ export const Navigation = () => {
 
   const navLinks = [
     { name: 'Services', href: '/services', isRoute: true },
+    { name: 'Platform', href: '/platform', isRoute: true },
     { name: 'Case Studies', href: '/case-studies', isRoute: true },
     { name: 'ROI Calculator', href: '/roi-calculator', isRoute: true },
     { name: 'Automation', href: '/automation', isRoute: true },
