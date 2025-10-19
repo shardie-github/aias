@@ -44,7 +44,7 @@ export const AutomationNetworkMap = () => {
           
           return (
             <motion.line
-              key={`connection-${index}`}
+              key={`connection-${conn.from}-${conn.to}`}
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 0.3 }}
               transition={{ duration: 2, delay: index * 0.2 }}

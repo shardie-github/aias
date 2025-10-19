@@ -94,7 +94,7 @@ export interface WorkflowNode {
   id: string;
   type: 'trigger' | 'action' | 'condition' | 'ai_processing' | 'data_transform' | 'notification';
   position: { x: number; y: number };
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   connections: string[];
   metadata: {
     label: string;
@@ -130,8 +130,8 @@ export interface WorkflowExecution {
   workflowId: string;
   tenantId: string;
   status: 'running' | 'completed' | 'failed' | 'cancelled';
-  triggerData: Record<string, any>;
-  context: Record<string, any>;
+  triggerData: Record<string, unknown>;
+  context: Record<string, unknown>;
   startTime: Date;
   endTime?: Date;
   errorMessage?: string;
@@ -274,7 +274,7 @@ export interface RevenueStream {
   period: string;
   tenantId?: string;
   itemId?: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   createdAt: Date;
 }
 
@@ -352,12 +352,12 @@ export interface ParameterConfig {
   type: string;
   required: boolean;
   description: string;
-  example: any;
+  example: string | number | boolean | Record<string, unknown>;
 }
 
 export interface ResponseConfig {
-  schema: Record<string, any>;
-  examples: Record<string, any>[];
+  schema: Record<string, unknown>;
+  examples: Record<string, unknown>[];
 }
 
 export interface IntegrationPricing {
@@ -382,8 +382,8 @@ export interface DemoEnvironment {
   name: string;
   description: string;
   type: 'workflow' | 'agent' | 'integration' | 'app';
-  configuration: Record<string, any>;
-  data: Record<string, any>;
+  configuration: Record<string, unknown>;
+  data: Record<string, unknown>;
   permissions: string[];
   timeLimit: number; // in minutes
   maxUsers: number;
@@ -407,14 +407,14 @@ export interface TutorialStep {
   title: string;
   content: string;
   type: 'instruction' | 'interactive' | 'quiz' | 'demo';
-  configuration?: Record<string, any>;
+  configuration?: Record<string, unknown>;
   validation?: ValidationRule[];
   hints?: string[];
 }
 
 export interface ValidationRule {
   type: 'exact' | 'contains' | 'regex' | 'custom';
-  value: any;
+  value: string | number | boolean | Record<string, unknown>;
   message: string;
 }
 
@@ -488,7 +488,7 @@ export interface CommunicationChannel {
   id: string;
   name: string;
   type: 'email' | 'slack' | 'teams' | 'discord' | 'webhook';
-  configuration: Record<string, any>;
+  configuration: Record<string, unknown>;
   active: boolean;
   tenantId: string;
   createdAt: Date;
@@ -502,7 +502,7 @@ export interface AuditLog {
   action: string;
   resource: string;
   resourceId: string;
-  details: Record<string, any>;
+  details: Record<string, unknown>;
   ipAddress: string;
   userAgent: string;
   timestamp: Date;

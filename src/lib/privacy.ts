@@ -108,7 +108,7 @@ export class PrivacyManager {
   async handleDataSubjectRequest(
     userId: string,
     requestType: 'access' | 'rectification' | 'erasure' | 'portability' | 'restriction' | 'objection'
-  ): Promise<any> {
+  ): Promise<{ success: boolean; message: string; data?: Record<string, unknown> }> {
     const dataSubject = this.dataSubjects.get(userId);
     if (!dataSubject) {
       throw new Error('Data subject not found');
@@ -135,7 +135,7 @@ export class PrivacyManager {
   /**
    * Generate comprehensive data portability report
    */
-  private async generateDataPortabilityReport(userId: string): Promise<any> {
+  private async generateDataPortabilityReport(userId: string): Promise<{ report: Record<string, unknown>; format: string }> {
     const dataSubject = this.dataSubjects.get(userId);
     const consent = dataSubject ? this.consentData.get(dataSubject.consentId) : null;
 
@@ -161,7 +161,7 @@ export class PrivacyManager {
   /**
    * Process data erasure request (Right to be forgotten)
    */
-  private async processDataErasure(userId: string): Promise<any> {
+  private async processDataErasure(userId: string): Promise<{ success: boolean; erasedData: string[] }> {
     // Mark data for erasure
     const dataSubject = this.dataSubjects.get(userId);
     if (dataSubject) {
@@ -229,7 +229,7 @@ export class PrivacyManager {
   /**
    * Log audit events for compliance
    */
-  private async logAuditEvent(action: string, metadata: any): Promise<void> {
+  private async logAuditEvent(action: string, metadata: Record<string, unknown>): Promise<void> {
     // This would integrate with your audit logging system
     console.log(`[AUDIT] ${action}:`, metadata);
   }

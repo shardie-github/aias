@@ -17,22 +17,109 @@ export interface AutomationWorkflow {
   category: 'lead_generation' | 'appointment_booking' | 'conferencing' | 'note_taking' | 'sketching' | 'admin' | 'integration';
 }
 
+export interface WebhookConfig {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: Record<string, unknown>;
+}
+
+export interface ScheduleConfig {
+  cron: string;
+  timezone?: string;
+  enabled: boolean;
+}
+
+export interface EventConfig {
+  eventType: string;
+  source: string;
+  filters?: Record<string, unknown>;
+}
+
+export interface AIDetectionConfig {
+  model: string;
+  threshold: number;
+  prompt: string;
+  inputField: string;
+}
+
+export type TriggerConfig = WebhookConfig | ScheduleConfig | EventConfig | AIDetectionConfig;
+
 export interface WorkflowTrigger {
   type: 'webhook' | 'schedule' | 'event' | 'manual' | 'ai_detection';
-  config: any;
+  config: TriggerConfig;
   conditions?: TriggerCondition[];
 }
 
 export interface TriggerCondition {
   field: string;
   operator: 'equals' | 'contains' | 'greater_than' | 'less_than' | 'regex';
-  value: any;
+  value: string | number | boolean;
 }
+
+export interface AIAnalysisConfig {
+  model: string;
+  prompt: string;
+  inputFields: string[];
+  outputFormat: 'text' | 'json' | 'structured';
+}
+
+export interface DataExtractionConfig {
+  source: string;
+  fields: string[];
+  format: 'json' | 'csv' | 'xml';
+  validation?: Record<string, unknown>;
+}
+
+export interface NotificationConfig {
+  type: 'email' | 'sms' | 'push' | 'webhook';
+  recipients: string[];
+  template: string;
+  subject?: string;
+}
+
+export interface APICallConfig {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: Record<string, unknown>;
+  timeout?: number;
+}
+
+export interface DatabaseUpdateConfig {
+  table: string;
+  operation: 'insert' | 'update' | 'delete';
+  data: Record<string, unknown>;
+  where?: Record<string, unknown>;
+}
+
+export interface AIGenerationConfig {
+  model: string;
+  prompt: string;
+  maxTokens?: number;
+  temperature?: number;
+  outputFormat: 'text' | 'json' | 'structured';
+}
+
+export interface SchedulingConfig {
+  delay: number;
+  unit: 'seconds' | 'minutes' | 'hours' | 'days';
+  condition?: string;
+}
+
+export interface IntegrationConfig {
+  service: string;
+  action: string;
+  parameters: Record<string, unknown>;
+  credentials: Record<string, string>;
+}
+
+export type StepConfig = AIAnalysisConfig | DataExtractionConfig | NotificationConfig | APICallConfig | DatabaseUpdateConfig | AIGenerationConfig | SchedulingConfig | IntegrationConfig;
 
 export interface WorkflowStep {
   id: string;
   type: 'ai_analysis' | 'data_extraction' | 'notification' | 'api_call' | 'database_update' | 'ai_generation' | 'scheduling' | 'integration';
-  config: any;
+  config: StepConfig;
   dependencies: string[];
   timeout: number;
   retryPolicy: RetryPolicy;
@@ -69,7 +156,7 @@ export interface ScoringRule {
 
 export interface ScoringCondition {
   operator: string;
-  value: any;
+  value: string | number | boolean;
   score: number;
 }
 
@@ -162,7 +249,7 @@ export class AutomationManager {
   /**
    * Execute a workflow
    */
-  async executeWorkflow(workflowId: string, triggerData?: any): Promise<WorkflowExecution> {
+  async executeWorkflow(workflowId: string, triggerData?: Record<string, unknown>): Promise<WorkflowExecution> {
     const workflow = this.workflows.get(workflowId);
     if (!workflow) {
       throw new Error('Workflow not found');
@@ -591,7 +678,7 @@ export class AutomationManager {
   }
 
   // Private helper methods
-  private async executeAIAnalysis(config: any, context: any): Promise<any> {
+  private async executeAIAnalysis(config: AIAnalysisConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate AI analysis
     return {
       analysis: 'AI analysis completed',
@@ -601,7 +688,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeDataExtraction(config: any, context: any): Promise<any> {
+  private async executeDataExtraction(config: DataExtractionConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate data extraction
     return {
       extractedData: { field1: 'value1', field2: 'value2' },
@@ -610,7 +697,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeNotification(config: any, context: any): Promise<any> {
+  private async executeNotification(config: NotificationConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate notification sending
     return {
       sent: true,
@@ -620,7 +707,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeAPICall(config: any, context: any): Promise<any> {
+  private async executeAPICall(config: APICallConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate API call
     return {
       success: true,
@@ -630,7 +717,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeDatabaseUpdate(config: any, context: any): Promise<any> {
+  private async executeDatabaseUpdate(config: DatabaseUpdateConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate database update
     return {
       success: true,
@@ -639,7 +726,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeAIGeneration(config: any, context: any): Promise<any> {
+  private async executeAIGeneration(config: AIGenerationConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate AI generation
     return {
       generated: true,
@@ -649,7 +736,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeScheduling(config: any, context: any): Promise<any> {
+  private async executeScheduling(config: SchedulingConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate scheduling
     return {
       scheduled: true,
@@ -658,7 +745,7 @@ export class AutomationManager {
     };
   }
 
-  private async executeIntegration(config: any, context: any): Promise<any> {
+  private async executeIntegration(config: IntegrationConfig, context: Record<string, unknown>): Promise<Record<string, unknown>> {
     // Simulate integration
     return {
       integrated: true,
@@ -680,7 +767,7 @@ export class AutomationManager {
     return 'step_' + Date.now() + '_' + Math.random().toString(36).substring(2);
   }
 
-  private async logAutomationEvent(action: string, metadata: any): Promise<void> {
+  private async logAutomationEvent(action: string, metadata: Record<string, unknown>): Promise<void> {
     console.log(`[AUTOMATION] ${action}:`, metadata);
   }
 }
@@ -693,8 +780,8 @@ interface WorkflowExecution {
   startTime: string;
   endTime?: string;
   steps: StepExecution[];
-  triggerData?: any;
-  context: any;
+  triggerData?: Record<string, unknown>;
+  context: Record<string, unknown>;
   error?: string;
 }
 
@@ -704,8 +791,8 @@ interface StepExecution {
   status: 'running' | 'completed' | 'failed';
   startTime: string;
   endTime?: string;
-  input: any;
-  output: any;
+  input: Record<string, unknown>;
+  output: Record<string, unknown>;
   error?: string;
 }
 

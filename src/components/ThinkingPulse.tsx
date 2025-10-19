@@ -44,7 +44,7 @@ export const ThinkingPulse = () => {
 
         return (
           <motion.div
-            key={index}
+            key={`orbiting-node-${index}`}
             animate={{
               rotate: 360,
             }}

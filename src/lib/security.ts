@@ -38,7 +38,7 @@ export interface SecurityEvent {
   userId?: string;
   ipAddress: string;
   userAgent: string;
-  details: any;
+  details: Record<string, unknown>;
   resolved: boolean;
 }
 
@@ -55,7 +55,7 @@ export class SecurityManager {
   private static instance: SecurityManager;
   private securityEvents: Map<string, SecurityEvent> = new Map();
   private failedAttempts: Map<string, { count: number; lastAttempt: number }> = new Map();
-  private threatPatterns: Map<string, any> = new Map();
+  private threatPatterns: Map<string, Record<string, unknown>> = new Map();
   private config: SecurityConfig;
 
   constructor() {
@@ -158,7 +158,7 @@ export class SecurityManager {
   /**
    * Generate secure JWT token
    */
-  generateJWT(payload: any): string {
+  generateJWT(payload: Record<string, unknown>): string {
     const header = {
       alg: 'HS256',
       typ: 'JWT'
@@ -186,7 +186,7 @@ export class SecurityManager {
   /**
    * Verify JWT token
    */
-  verifyJWT(token: string): any {
+  verifyJWT(token: string): { valid: boolean; payload?: Record<string, unknown>; error?: string } {
     try {
       const [header, payload, signature] = token.split('.');
       
@@ -326,7 +326,7 @@ export class SecurityManager {
   /**
    * Generate security report for compliance
    */
-  generateSecurityReport(startDate: Date, endDate: Date): any {
+  generateSecurityReport(startDate: Date, endDate: Date): { report: Record<string, unknown>; summary: Record<string, unknown> } {
     const events = Array.from(this.securityEvents.values())
       .filter(event => {
         const eventDate = new Date(event.timestamp);
@@ -386,7 +386,10 @@ export class SecurityManager {
 
   private async sendSecurityAlert(event: SecurityEvent): Promise<void> {
     // In production, integrate with alerting system
-    console.log(`[SECURITY ALERT] ${event.severity.toUpperCase()}: ${event.type}`, event);
+    if (import.meta.env.DEV) {
+      console.warn(`[SECURITY ALERT] ${event.severity.toUpperCase()}: ${event.type}`, event);
+    }
+    // TODO: Integrate with actual alerting system (Slack, email, etc.)
   }
 
   private generateEventId(): string {
@@ -417,7 +420,7 @@ export class SecurityManager {
     }, {} as Record<string, number>);
   }
 
-  private getTopThreats(events: SecurityEvent[]): any[] {
+  private getTopThreats(events: SecurityEvent[]): Array<{ type: string; count: number; severity: string }> {
     const threatCounts = new Map<string, number>();
     
     events.forEach(event => {
@@ -433,7 +436,7 @@ export class SecurityManager {
       .map(([threat, count]) => ({ threat, count }));
   }
 
-  private calculateComplianceMetrics(events: SecurityEvent[]): any {
+  private calculateComplianceMetrics(events: SecurityEvent[]): { totalEvents: number; criticalEvents: number; resolutionRate: number; averageResolutionTime: number } {
     const totalEvents = events.length;
     const criticalEvents = events.filter(e => e.severity === 'critical').length;
     const resolvedEvents = events.filter(e => e.resolved).length;

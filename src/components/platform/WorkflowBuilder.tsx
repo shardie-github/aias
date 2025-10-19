@@ -405,11 +405,15 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
                   className={`absolute p-4 bg-white border-2 rounded-lg cursor-pointer shadow-sm hover:shadow-md transition-all ${
                     selectedNode === node.id ? 'border-blue-500' : 'border-gray-200'
                   }`}
-                  onClick={() => setSelectedNode(node.id)}
+                  onClick={() => {
+                    setSelectedNode(node.id);
+                    handleNodeClick(node.id);
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setSelectedNode(node.id);
+                      handleNodeClick(node.id);
                     }
                   }}
                   role="button"
@@ -419,7 +423,6 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
                     top: node.position.y,
                     transform: `scale(${zoom})`
                   }}
-                  onClick={() => handleNodeClick(node.id)}
                   draggable
                   onDrag={(e) => {
                     const rect = canvasRef.current?.getBoundingClientRect();
@@ -475,7 +478,7 @@ export const WorkflowBuilder: React.FC<WorkflowBuilderProps> = ({
 
                 return (
                   <line
-                    key={`connection-${index}`}
+                    key={`connection-${connection.from}-${connection.to}`}
                     x1={fromX}
                     y1={fromY}
                     x2={toX}

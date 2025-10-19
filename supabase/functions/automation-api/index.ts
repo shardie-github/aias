@@ -14,15 +14,15 @@ const corsHeaders = {
 interface WorkflowRequest {
   name: string;
   description: string;
-  trigger: any;
-  steps: any[];
+  trigger: Record<string, unknown>;
+  steps: Array<Record<string, unknown>>;
   category: string;
   tags: string[];
 }
 
 interface ExecutionRequest {
   workflowId: string;
-  triggerData?: any;
+  triggerData?: Record<string, unknown>;
 }
 
 interface LeadGenerationRequest {
@@ -32,7 +32,7 @@ interface LeadGenerationRequest {
   company?: string;
   phone?: string;
   source: string;
-  qualificationData?: any;
+  qualificationData?: Record<string, unknown>;
 }
 
 interface AppointmentRequest {
@@ -42,7 +42,7 @@ interface AppointmentRequest {
   endTime: string;
   meetingType?: string;
   location?: string;
-  participants?: any[];
+  participants?: Array<Record<string, unknown>>;
 }
 
 serve(async (req) => {

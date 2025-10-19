@@ -1,7 +1,7 @@
 // Monitoring service for application analytics and error tracking
 export interface MonitoringEvent {
   name: string;
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   timestamp?: number;
 }
 
@@ -24,7 +24,7 @@ class MonitoringService {
     this.isInitialized = true;
   }
 
-  trackEvent(name: string, properties?: Record<string, any>) {
+  trackEvent(name: string, properties?: Record<string, unknown>) {
     const event: MonitoringEvent = {
       name,
       properties,
@@ -54,7 +54,7 @@ class MonitoringService {
     });
   }
 
-  trackPerformance(metric: string, value: number, properties?: Record<string, any>) {
+  trackPerformance(metric: string, value: number, properties?: Record<string, unknown>) {
     this.trackEvent("performance", {
       metric,
       value,
