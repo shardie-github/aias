@@ -386,7 +386,10 @@ export class SecurityManager {
 
   private async sendSecurityAlert(event: SecurityEvent): Promise<void> {
     // In production, integrate with alerting system
-    console.log(`[SECURITY ALERT] ${event.severity.toUpperCase()}: ${event.type}`, event);
+    if (import.meta.env.DEV) {
+      console.warn(`[SECURITY ALERT] ${event.severity.toUpperCase()}: ${event.type}`, event);
+    }
+    // TODO: Integrate with actual alerting system (Slack, email, etc.)
   }
 
   private generateEventId(): string {

@@ -507,6 +507,14 @@ export const AIAgentBuilder: React.FC<AIAgentBuilderProps> = ({
                               : 'border-gray-200 hover:border-gray-300'
                           }`}
                           onClick={() => updatePricing({ type: option.id as 'per_use' | 'subscription' | 'one_time' | 'free' })}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              updatePricing({ type: option.id as 'per_use' | 'subscription' | 'one_time' | 'free' });
+                            }
+                          }}
+                          role="button"
+                          tabIndex={0}
                         >
                           <div className="font-medium">{option.label}</div>
                           <div className="text-sm text-gray-500">{option.description}</div>
