@@ -1,0 +1,338 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "wasm"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Supabase auth
+  supabaseId String? @unique
+
+  // Relations
+  memberships Membership[]
+  apiKeys     ApiKey[]
+  aiRuns      AiRun[]
+  reports     Report[]
+  projects    Project[]
+
+  @@map("users")
+}
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  logo        String?
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  memberships   Membership[]
+  subscriptions Subscription[]
+  projects      Project[]
+  sources       Source[]
+  webhookEvents WebhookEvent[]
+  featureFlags  FeatureFlag[]
+
+  @@map("organizations")
+}
+
+model Membership {
+  id     String @id @default(cuid())
+  role   Role   @default(VIEWER)
+  userId String
+  orgId  String
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+  @@map("memberships")
+}
+
+model Subscription {
+  id                String            @id @default(cuid())
+  status            SubscriptionStatus
+  plan              Plan
+  stripeCustomerId  String?           @unique
+  stripeSubscriptionId String?        @unique
+  stripePriceId     String?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd Boolean           @default(false)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  name      String
+  key       String   @unique
+  lastUsed  DateTime?
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(ACTIVE)
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  orgId  String
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@map("projects")
+}
+
+model Source {
+  id          String     @id @default(cuid())
+  name        String
+  type        SourceType
+  config      Json
+  lastRun     DateTime?
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  ingestEvents IngestEvent[]
+
+  @@map("sources")
+}
+
+model IngestEvent {
+  id        String        @id @default(cuid())
+  status    IngestStatus
+  stats     Json?
+  error     String?
+  startedAt DateTime      @default(now())
+  completedAt DateTime?
+
+  sourceId String
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@map("ingest_events")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal?
+  currency    String?
+  category    String?
+  tags        String[]
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Trend {
+  id          String   @id @default(cuid())
+  keyword     String
+  volume      Int?
+  category    String?
+  region      String?
+  period      String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("trends")
+}
+
+model Creative {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  type        String?
+  platform    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("creatives")
+}
+
+model Metric {
+  id        String   @id @default(cuid())
+  name      String
+  value     Decimal
+  unit      String?
+  category  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@map("metrics")
+}
+
+model AiRun {
+  id          String   @id @default(cuid())
+  kind        AiRunKind
+  provider    String
+  model       String
+  tokensIn    Int?
+  tokensOut   Int?
+  cost        Decimal?
+  durationMs  Int?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ai_runs")
+}
+
+model Report {
+  id          String     @id @default(cuid())
+  title       String
+  type        ReportType
+  content     Json
+  status      ReportStatus @default(PENDING)
+  fileUrl     String?
+  metadata    Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reports")
+}
+
+model WebhookEvent {
+  id        String   @id @default(cuid())
+  source    String
+  event     String
+  payload   Json
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@map("webhook_events")
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  description String?
+  enabled     Boolean  @default(false)
+  config      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@map("feature_flags")
+}
+
+// Enums
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  PAST_DUE
+  TRIALING
+  UNPAID
+}
+
+enum Plan {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  COMPLETED
+}
+
+enum SourceType {
+  SHOPIFY_JSON
+  GOOGLE_TRENDS_CSV
+  TIKTOK_BUSINESS_JSON
+  ALIEXPRESS_CSV
+  GENERIC_CSV
+  GENERIC_JSON
+}
+
+enum IngestStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum AiRunKind {
+  CHAT
+  AUDIT
+  ESTIMATE
+  CONTENT_GENERATION
+  WORKFLOW_GENERATION
+}
+
+enum ReportType {
+  AUDIT
+  ESTIMATE
+  CONTENT_PLAN
+  WORKFLOW
+}
+
+enum ReportStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+}
