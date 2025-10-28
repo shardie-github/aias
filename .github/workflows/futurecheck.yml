@@ -1,0 +1,58 @@
+name: Future Runtime Compatibility Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily at 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  futurecheck:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd apps/web && npm ci
+
+      - name: Run Future Runtime Check
+        run: |
+          npx tsx scripts/futurecheck.ts
+
+      - name: Generate Future Check Report
+        run: |
+          npx tsx scripts/futurecheck.ts --output=json > futurecheck-report.json
+
+      - name: Upload future check artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: futurecheck-report-${{ github.run_number }}
+          path: futurecheck-report.json
+
+      - name: Comment on PR with compatibility status
+        if: github.event_name == 'pull_request'
+        run: |
+          npx tsx scripts/post-futurecheck-comment.ts ${{ github.event.pull_request.number }}
+
+      - name: Create compatibility issue if needed
+        if: failure()
+        run: |
+          npx tsx scripts/create-compatibility-issue.ts
+
+      - name: Update compatibility badge
+        run: |
+          npx tsx scripts/update-compatibility-badge.ts

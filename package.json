@@ -84,7 +84,18 @@
     "slo:check": "tsx scripts/slo-checker.ts run",
     "chaos:run": "tsx scripts/chaos-mini.ts run",
     "secrets:rotate": "tsx scripts/rotate-secrets.ts rotate-all",
-    "secrets:rotate-single": "tsx scripts/rotate-secrets.ts rotate"
+    "secrets:rotate-single": "tsx scripts/rotate-secrets.ts rotate",
+    "ai:diagnose": "tsx ai/self_diagnose.ts",
+    "ai:insights": "node ai/insights_agent.mjs",
+    "ai:futurecheck": "tsx scripts/futurecheck.ts",
+    "ai:embeddings": "node scripts/generate-embeddings.mjs",
+    "ai:autoscale": "tsx ai/ai_autoscale.ts",
+    "ai:privacy": "tsx ai/privacy_guard.ts",
+    "ai:audit": "npm run ai:diagnose && npm run ai:insights && npm run ai:futurecheck && npm run ai:privacy",
+    "watchers:db": "tsx watchers/db_integrity.watcher.ts",
+    "watchers:api": "tsx watchers/api_contract.watcher.ts",
+    "watchers:ai": "tsx watchers/ai_performance.watcher.ts",
+    "watchers:all": "npm run watchers:db && npm run watchers:api && npm run watchers:ai"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",

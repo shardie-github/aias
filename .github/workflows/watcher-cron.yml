@@ -1,0 +1,91 @@
+name: Autonomous Regression Watchers
+
+on:
+  schedule:
+    # Run nightly at 3 AM UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      watcher_type:
+        description: 'Type of watcher to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - db_integrity
+          - api_contract
+          - ai_performance
+
+jobs:
+  watchers:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd apps/web && npm ci
+
+      - name: Setup environment variables
+        run: |
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> $GITHUB_ENV
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> $GITHUB_ENV
+          echo "SUPABASE_PROJECT_REF=${{ secrets.SUPABASE_PROJECT_REF }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "GITHUB_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
+          echo "GITHUB_REPO=${{ github.event.repository.name }}" >> $GITHUB_ENV
+
+      - name: Run Database Integrity Watcher
+        if: github.event.inputs.watcher_type == 'all' || github.event.inputs.watcher_type == 'db_integrity'
+        run: |
+          npx tsx watchers/db_integrity.watcher.ts
+
+      - name: Run API Contract Watcher
+        if: github.event.inputs.watcher_type == 'all' || github.event.inputs.watcher_type == 'api_contract'
+        run: |
+          npx tsx watchers/api_contract.watcher.ts
+
+      - name: Run AI Performance Watcher
+        if: github.event.inputs.watcher_type == 'all' || github.event.inputs.watcher_type == 'ai_performance'
+        run: |
+          npx tsx watchers/ai_performance.watcher.ts
+
+      - name: Run Cost Monitoring Watcher
+        run: |
+          npx tsx watchers/cost_monitoring.watcher.ts
+
+      - name: Run Security Watcher
+        run: |
+          npx tsx watchers/security.watcher.ts
+
+      - name: Generate Watcher Summary
+        run: |
+          npx tsx scripts/generate-watcher-summary.ts
+
+      - name: Upload watcher artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: watcher-reports-${{ github.run_number }}
+          path: |
+            watcher-reports/
+            watcher-summary.json
+
+      - name: Create GitHub Issues for Critical Findings
+        run: |
+          npx tsx scripts/create-watcher-issues.ts
+
+      - name: Send Slack Notification (if configured)
+        if: env.SLACK_WEBHOOK_URL
+        run: |
+          npx tsx scripts/send-slack-notification.ts

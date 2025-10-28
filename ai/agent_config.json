@@ -1,0 +1,99 @@
+{
+  "project_ref": "ghqyxhbyyirveptgwoqm",
+  "embeddings_table": "ai_embeddings",
+  "models": {
+    "gpt_4_turbo": "gpt-4-turbo-preview",
+    "gpt_3_5_turbo": "gpt-3.5-turbo",
+    "text_embedding_3_small": "text-embedding-3-small",
+    "text_embedding_3_large": "text-embedding-3-large"
+  },
+  "refresh_interval_days": 7,
+  "max_embeddings_per_namespace": 1000,
+  "chunk_size": 1000,
+  "chunk_overlap": 200,
+  "similarity_threshold": 0.5,
+  "max_search_results": 10,
+  "namespaces": {
+    "docs": {
+      "description": "Documentation and guides",
+      "directory": "./docs",
+      "extensions": [".md", ".mdx"],
+      "enabled": true
+    },
+    "code": {
+      "description": "Source code and components",
+      "directory": "./src",
+      "extensions": [".ts", ".tsx", ".js", ".jsx"],
+      "enabled": true
+    },
+    "api": {
+      "description": "API endpoints and routes",
+      "directory": "./src/pages/api",
+      "extensions": [".ts", ".js"],
+      "enabled": true
+    },
+    "supabase": {
+      "description": "Supabase functions and migrations",
+      "directory": "./supabase",
+      "extensions": [".ts", ".sql"],
+      "enabled": true
+    }
+  },
+  "ai_agents": {
+    "cursor": {
+      "enabled": true,
+      "context_window": 8000,
+      "temperature": 0.3,
+      "max_tokens": 2000
+    },
+    "openai_sdk": {
+      "enabled": true,
+      "context_window": 16000,
+      "temperature": 0.2,
+      "max_tokens": 4000
+    },
+    "vercel_ai_sdk": {
+      "enabled": true,
+      "context_window": 8000,
+      "temperature": 0.4,
+      "max_tokens": 2000
+    },
+    "supabase_edge": {
+      "enabled": true,
+      "context_window": 4000,
+      "temperature": 0.3,
+      "max_tokens": 1000
+    }
+  },
+  "monitoring": {
+    "health_check_interval_minutes": 15,
+    "error_threshold_percent": 5,
+    "latency_threshold_ms": 2000,
+    "memory_threshold_percent": 80,
+    "auto_scale_threshold": 70
+  },
+  "compliance": {
+    "privacy_by_design": true,
+    "data_retention_days": 90,
+    "pii_redaction": true,
+    "audit_logging": true,
+    "gdpr_compliant": true
+  },
+  "sustainability": {
+    "energy_efficient": true,
+    "carbon_footprint_tracking": true,
+    "green_hosting": true,
+    "resource_optimization": true
+  },
+  "features": {
+    "self_diagnosis": true,
+    "auto_scaling": true,
+    "cost_monitoring": true,
+    "performance_optimization": true,
+    "security_monitoring": true,
+    "compliance_checking": true,
+    "documentation_generation": true,
+    "release_notes_generation": true,
+    "onboarding_automation": true
+  }
+}
