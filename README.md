@@ -151,6 +151,31 @@ docker run -p 3000:3000 aias-platform
 - **Audit Logging** - Comprehensive activity tracking and compliance reporting
 - **Privacy Controls** - Complete data subject rights management
 
+## 🛠️ Operations Framework
+
+This repository includes a comprehensive self-operating production framework. See `/ops/README.md` for full documentation.
+
+### Quick Start
+
+```bash
+# Initialize framework
+npm run ops init
+
+# Run comprehensive health checks
+npm run ops doctor
+
+# Quick validation
+npm run ops check
+```
+
+### Ops Schedule
+
+**Daily:** `npm run ops doctor` → check reports → fix → release if green  
+**Weekly:** `npm run ops release` + growth report + rotate secrets  
+**Monthly:** DR rehearsal + deps update + red-team sweep
+
+See `/ops/SCHEDULE.md` for detailed schedule.
+
 ## 🛠️ Development
 
 ### Available Scripts

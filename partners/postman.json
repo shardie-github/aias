@@ -1,0 +1,40 @@
+{
+  "info": {
+    "name": "AIAS Platform Partner APIs",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "TikTok Business API",
+      "item": [
+        {
+          "name": "Create Campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{tiktok_api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaignName\": \"Test Campaign\",\n  \"budget\": 1000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/partners/tiktok/ads",
+              "host": ["{{base_url}}"],
+              "path": ["api", "partners", "tiktok", "ads"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.aias-platform.com"
+    }
+  ]
+}

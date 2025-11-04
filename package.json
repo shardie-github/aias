@@ -58,6 +58,7 @@
     "db:studio": "prisma studio",
     "queue:worker": "tsx src/workers/index.ts",
     "doctor": "tsx scripts/doctor.ts",
+    "ops": "tsx ops/cli.ts",
     "analyze": "npm run build:analyze",
     "a11y": "playwright test --grep @accessibility",
     "lighthouse": "lighthouse-ci autorun",
@@ -95,7 +96,8 @@
     "watchers:db": "tsx watchers/db_integrity.watcher.ts",
     "watchers:api": "tsx watchers/api_contract.watcher.ts",
     "watchers:ai": "tsx watchers/ai_performance.watcher.ts",
-    "watchers:all": "npm run watchers:db && npm run watchers:api && npm run watchers:ai"
+    "watchers:all": "npm run watchers:db && npm run watchers:api && npm run watchers:ai",
+    "ops": "tsx ops/cli.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",
@@ -129,7 +131,18 @@
     "typescript": "^5.3.0",
     "typescript-eslint": "^7.0.0",
     "vite-plugin-pwa": "^0.17.4",
-    "vitest": "^1.0.4"
+    "vitest": "^1.0.4",
+    "commander": "^11.1.0",
+    "@opentelemetry/sdk-node": "^0.47.0",
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.47.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.47.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.47.0",
+    "@opentelemetry/resources": "^1.21.0",
+    "@opentelemetry/semantic-conventions": "^1.21.0",
+    "@opentelemetry/sdk-metrics": "^1.21.0",
+    "zod": "^3.22.4",
+    "stripe": "^14.9.0"
   },
   "engines": {
     "node": ">=18.17.0",
