@@ -97,7 +97,11 @@
     "watchers:api": "tsx watchers/api_contract.watcher.ts",
     "watchers:ai": "tsx watchers/ai_performance.watcher.ts",
     "watchers:all": "npm run watchers:db && npm run watchers:api && npm run watchers:ai",
-    "ops": "tsx ops/cli.ts"
+    "ops": "tsx ops/cli.ts",
+    "guardian:verify": "tsx ops/cli.ts guardian verify",
+    "guardian:audit": "tsx ops/cli.ts guardian audit",
+    "guardian:report": "tsx ops/cli.ts guardian report",
+    "guardian:status": "tsx ops/cli.ts guardian status"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",

@@ -1,0 +1,62 @@
+name: default
+version: 1.0.0
+
+allowed_scopes:
+  - user
+  - app
+  - api
+
+data_classes:
+  - telemetry
+  - location
+  - audio
+  - biometrics
+  - content
+  - credentials
+  - other
+
+risk_weights:
+  impact:
+    low: 0.2
+    medium: 0.5
+    high: 0.8
+    critical: 1.0
+  
+  likelihood:
+    direct: 1.0
+    inferred: 0.6
+    aggregated: 0.3
+    anonymized: 0.1
+
+response_actions:
+  low:
+    - allow
+  
+  medium:
+    - allow
+    - mask
+  
+  high:
+    - mask
+    - redact
+    - alert
+  
+  critical:
+    - block
+    - alert
+
+thresholds:
+  low: 0.3
+  medium: 0.5
+  high: 0.7
+  critical: 0.9
+
+sensitive_contexts:
+  - camera_active
+  - microphone_active
+  - location_tracking
+  - biometric_auth
+
+auto_mute_triggers:
+  - camera_active
+  - microphone_active

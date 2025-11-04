@@ -7,6 +7,13 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { monitoringService, initializeErrorHandling } from "@/lib/monitoring";
 import { observabilityService } from "@/lib/observability";
 import { useEffect, Suspense, lazy } from "react";
+
+// Initialize Guardian middleware
+if (typeof window !== 'undefined') {
+  import('../guardian/middleware').then(({ initializeGuardianMiddleware }) => {
+    initializeGuardianMiddleware();
+  });
+}
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import CaseStudies from "./pages/CaseStudies";
@@ -31,6 +38,8 @@ const LazyBusinessDashboard = lazy(() => import("./components/BusinessDashboard"
 const LazyAutomationDashboard = lazy(() => import("./components/AutomationDashboard"));
 const LazyMarketplace = lazy(() => import("./components/platform/Marketplace"));
 const LazyPartnershipPortal = lazy(() => import("./components/PartnershipPortal"));
+const LazyTrustDashboard = lazy(() => import("./pages/TrustDashboard"));
+const LazyGuardianOnboarding = lazy(() => import("./pages/GuardianOnboarding"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -115,6 +124,16 @@ const App = () => {
               </Suspense>
             } />
             <Route path="/health" element={<Health />} />
+            <Route path="/dashboard/trust" element={
+              <Suspense fallback={<div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white text-xl">Loading...</div></div>}>
+                <LazyTrustDashboard />
+              </Suspense>
+            } />
+            <Route path="/guardian/onboarding" element={
+              <Suspense fallback={<div className="min-h-screen bg-gray-900 flex items-center justify-center"><div className="text-white text-xl">Loading...</div></div>}>
+                <LazyGuardianOnboarding />
+              </Suspense>
+            } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

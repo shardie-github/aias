@@ -27,6 +27,7 @@ import { benchmark } from './commands/benchmark.js';
 import { lintfix } from './commands/lintfix.js';
 import { docs } from './commands/docs.js';
 import { changelog } from './commands/changelog.js';
+import * as guardian from './commands/guardian.js';
 
 program
   .name('ops')
@@ -147,6 +148,67 @@ program
   .option('--version <version>', 'Version to generate changelog for')
   .action(async (options) => {
     await changelog(options);
+  });
+
+// Guardian commands
+const guardianCmd = program
+  .command('guardian')
+  .description('Guardian privacy system commands');
+
+guardianCmd
+  .command('verify')
+  .description('Verify ledger integrity')
+  .option('-v, --verbose', 'Verbose output')
+  .action(async (options) => {
+    const exitCode = await guardian.verify(options);
+    process.exit(exitCode);
+  });
+
+guardianCmd
+  .command('audit')
+  .description('Run Guardian audit')
+  .option('--fix', 'Auto-fix issues')
+  .option('--report', 'Generate audit report')
+  .option('-v, --verbose', 'Verbose output')
+  .action(async (options) => {
+    const exitCode = await guardian.audit(options);
+    process.exit(exitCode);
+  });
+
+guardianCmd
+  .command('report')
+  .description('Generate Guardian report')
+  .option('--weekly', 'Generate weekly report')
+  .option('--format <format>', 'Output format: json|markdown', 'json')
+  .action(async (options) => {
+    const exitCode = await guardian.report(options);
+    process.exit(exitCode);
+  });
+
+guardianCmd
+  .command('export-fabric')
+  .description('Export Trust Fabric model')
+  .option('--output <path>', 'Output file path')
+  .action(async (options) => {
+    const exitCode = await guardian.exportFabric(options);
+    process.exit(exitCode);
+  });
+
+guardianCmd
+  .command('import-fabric')
+  .description('Import Trust Fabric model')
+  .requiredOption('--file <path>', 'Input file path')
+  .action(async (options) => {
+    const exitCode = await guardian.importFabric(options);
+    process.exit(exitCode);
+  });
+
+guardianCmd
+  .command('status')
+  .description('Show Guardian status')
+  .action(async () => {
+    const exitCode = await guardian.status();
+    process.exit(exitCode);
   });
 
 program.parse(process.argv);
