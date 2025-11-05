@@ -1,0 +1,1 @@
+const fs=require('fs'); const edges=[['app','lib'],['app','components'],['app','supabase'],['components','lib']]; const m=['graph TD']; edges.forEach(([a,b])=>{if(fs.existsSync(a)&&fs.existsSync(b)) m.push(`${a}-->${b}`);}); fs.writeFileSync('docs/architecture/01_dependency_graph.mmd',m.join('\n'));
