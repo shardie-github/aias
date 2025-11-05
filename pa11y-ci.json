@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "timeout": 10000,
+    "wait": 2000,
+    "standard": "WCAG2AA",
+    "ignore": [
+      "notice",
+      "warning"
+    ]
+  },
+  "urls": [
+    "http://localhost:3000"
+  ]
+}

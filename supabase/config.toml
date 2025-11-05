@@ -1,4 +1,11 @@
-project_id = "gzadczzgyghnrshszyft"
+project_id = "${SUPABASE_PROJECT_REF}"
+
+[api]
+enabled = true
+
+[db]
+port = 6543
+shadow_port = 6544
 
 [functions.chat-api]
 verify_jwt = true
