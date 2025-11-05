@@ -29,7 +29,22 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-border text-center">
+        {/* [STAKE+TRUST:BEGIN:trust_links] */}
+        {/* Trust & Transparency links - visible when feature flags enabled */}
+        {/* TODO: Load flags from API or context to conditionally show */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
+            <a href="/trust" className="hover:underline">Trust Center</a>
+            <span>·</span>
+            <a href="/privacy" className="hover:underline">Privacy</a>
+            <span>·</span>
+            <a href="/status" className="hover:underline">Status</a>
+            <span>·</span>
+            <a href="/help" className="hover:underline">Help</a>
+          </div>
+        </div>
+        {/* [STAKE+TRUST:END:trust_links] */}
+        <div className="mt-4 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Hardonia. All rights reserved.
         </div>
       </div>

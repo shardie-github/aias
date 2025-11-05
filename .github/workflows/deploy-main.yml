@@ -45,6 +45,15 @@ jobs:
           test -f components/agent/SuggestionsDrawer.tsx
           echo "Agent files present ✓"
 
+      # [STAKE+TRUST:BEGIN:checks]
+      - name: Trust Smoke
+        run: |
+          test -f docs/trust/TRUST.md
+          test -f app/trust/page.tsx
+          test -f config/flags.trust.json
+          echo "Trust artifacts present ✓"
+      # [STAKE+TRUST:END:checks]
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
 

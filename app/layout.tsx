@@ -27,14 +27,25 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  // [STAKE+TRUST:BEGIN:i18n_layout]
+  // TODO: Replace with dynamic locale detection when i18n is implemented
+  // const locale = detectLocale(); // e.g., from cookie, header, or user preference
+  // const isRTL = isRTLLocale(locale);
+  const locale = "en";
+  const isRTL = false;
+  // [STAKE+TRUST:END:i18n_layout]
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
+          {/* [STAKE+TRUST:BEGIN:skip_link] */}
+          {/* Skip link already exists - verified accessibility feature */}
           <a href="#main" className="skip-link">Skip to content</a>
+          {/* [STAKE+TRUST:END:skip_link] */}
           <Header />
           <main id="main" className="container py-6">{children}</main>
           <Footer />
