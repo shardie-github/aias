@@ -144,6 +144,13 @@ jobs:
       - name: Build application
         run: pnpm run build
 
+      - name: Gamification smoke (build routes)
+        run: |
+          test -f app/play/page.tsx
+          test -f app/journal/page.tsx
+          test -f app/community/page.tsx
+          echo "Gamification routes present ✓"
+
       - name: Build analysis
         run: pnpm run build:analyze
 
