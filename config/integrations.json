@@ -1,0 +1,354 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Integration feature flags and scoring for Hardonia",
+  "scoringWeights": {
+    "UX_Impact": 5,
+    "Trust_FOMO": 4,
+    "Dev_Effort": -3,
+    "Cost_Efficiency": 4,
+    "Privacy_Fit": 4
+  },
+  "minPassScore": 18,
+  "integrations": {
+    "vercelAnalytics": {
+      "enabled": true,
+      "name": "Vercel Analytics",
+      "category": "analytics",
+      "consentKey": "analytics",
+      "score": 22,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 5
+      },
+      "cost": "free",
+      "privacy": "GDPR-friendly, no cookies, privacy-first",
+      "package": "@vercel/analytics"
+    },
+    "plausible": {
+      "enabled": true,
+      "name": "Plausible Analytics",
+      "category": "analytics",
+      "consentKey": "analytics",
+      "score": 21,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 5
+      },
+      "cost": "free-10k-events/month",
+      "privacy": "GDPR/PIPEDA compliant, no cookies",
+      "package": "plausible-tracker"
+    },
+    "posthog": {
+      "enabled": false,
+      "name": "PostHog",
+      "category": "analytics",
+      "consentKey": "analytics",
+      "score": 20,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-1M-events/month",
+      "privacy": "Self-hostable, GDPR-friendly",
+      "package": "posthog-js"
+    },
+    "clarity": {
+      "enabled": false,
+      "name": "Microsoft Clarity",
+      "category": "analytics",
+      "consentKey": "analytics",
+      "score": 19,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 2,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 3
+      },
+      "cost": "free",
+      "privacy": "GDPR-compliant, requires consent",
+      "package": null
+    },
+    "sentry": {
+      "enabled": true,
+      "name": "Sentry",
+      "category": "monitoring",
+      "consentKey": "functional",
+      "score": 21,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 2,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 5
+      },
+      "cost": "free-5k-events/month",
+      "privacy": "Error tracking only, GDPR-friendly",
+      "package": "@sentry/nextjs"
+    },
+    "cloudinary": {
+      "enabled": true,
+      "name": "Cloudinary",
+      "category": "media",
+      "consentKey": "functional",
+      "score": 22,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 5
+      },
+      "cost": "free-25GB-storage",
+      "privacy": "CDN/optimization, no tracking",
+      "package": "cloudinary"
+    },
+    "uploadcare": {
+      "enabled": false,
+      "name": "Uploadcare",
+      "category": "media",
+      "consentKey": "functional",
+      "score": 19,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 2,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-3GB-storage",
+      "privacy": "File handling, GDPR-compliant",
+      "package": "@uploadcare/react-widget"
+    },
+    "lottie": {
+      "enabled": true,
+      "name": "Lottie",
+      "category": "motion",
+      "consentKey": "functional",
+      "score": 21,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 4,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 5
+      },
+      "cost": "free",
+      "privacy": "Client-side animations, no tracking",
+      "package": "lottie-react"
+    },
+    "lenis": {
+      "enabled": true,
+      "name": "Lenis Smooth Scroll",
+      "category": "motion",
+      "consentKey": "functional",
+      "score": 20,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 5
+      },
+      "cost": "free",
+      "privacy": "Pure JS, no tracking",
+      "package": "@studio-freight/lenis"
+    },
+    "framerMotion": {
+      "enabled": true,
+      "name": "Framer Motion",
+      "category": "motion",
+      "consentKey": "functional",
+      "score": 22,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 4,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 5
+      },
+      "cost": "free",
+      "privacy": "Client-side animations, no tracking",
+      "package": "framer-motion"
+    },
+    "tidio": {
+      "enabled": true,
+      "name": "Tidio Chat",
+      "category": "chat",
+      "consentKey": "marketing",
+      "score": 20,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 5,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 3
+      },
+      "cost": "free-up-to-3-operators",
+      "privacy": "Requires consent for GDPR",
+      "package": null
+    },
+    "crisp": {
+      "enabled": false,
+      "name": "Crisp Chat",
+      "category": "chat",
+      "consentKey": "marketing",
+      "score": 19,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 5,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 3,
+        "Privacy_Fit": 3
+      },
+      "cost": "free-limited",
+      "privacy": "Requires consent for GDPR",
+      "package": "react-crisp-chat"
+    },
+    "hcaptcha": {
+      "enabled": false,
+      "name": "hCaptcha",
+      "category": "security",
+      "consentKey": "functional",
+      "score": 18,
+      "scores": {
+        "UX_Impact": 2,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 5,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-1M-requests/month",
+      "privacy": "Privacy-focused alternative to reCAPTCHA",
+      "package": "react-hcaptcha"
+    },
+    "recaptcha": {
+      "enabled": false,
+      "name": "reCAPTCHA v3",
+      "category": "security",
+      "consentKey": "functional",
+      "score": 17,
+      "scores": {
+        "UX_Impact": 2,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 3
+      },
+      "cost": "free",
+      "privacy": "Google service, requires consent",
+      "package": "react-google-recaptcha-v3"
+    },
+    "pusher": {
+      "enabled": true,
+      "name": "Pusher",
+      "category": "realtime",
+      "consentKey": "functional",
+      "score": 19,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 4,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 3,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-200k-messages/day",
+      "privacy": "GDPR-compliant, SOC 2",
+      "package": "pusher-js"
+    },
+    "ably": {
+      "enabled": false,
+      "name": "Ably",
+      "category": "realtime",
+      "consentKey": "functional",
+      "score": 18,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 4,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 3,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-6M-messages/month",
+      "privacy": "GDPR-compliant",
+      "package": "ably"
+    },
+    "algolia": {
+      "enabled": false,
+      "name": "Algolia",
+      "category": "search",
+      "consentKey": "functional",
+      "score": 19,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -2,
+        "Cost_Efficiency": 3,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-10k-searches/month",
+      "privacy": "GDPR-compliant",
+      "package": "algoliasearch"
+    },
+    "meili": {
+      "enabled": false,
+      "name": "Meilisearch",
+      "category": "search",
+      "consentKey": "functional",
+      "score": 18,
+      "scores": {
+        "UX_Impact": 5,
+        "Trust_FOMO": 2,
+        "Dev_Effort": -3,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 5
+      },
+      "cost": "self-hosted-free",
+      "privacy": "Self-hosted, full control",
+      "package": "meilisearch"
+    },
+    "trustpilot": {
+      "enabled": true,
+      "name": "Trustpilot",
+      "category": "social-proof",
+      "consentKey": "analytics",
+      "score": 21,
+      "scores": {
+        "UX_Impact": 3,
+        "Trust_FOMO": 5,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 4
+      },
+      "cost": "free-basic",
+      "privacy": "Requires consent for GDPR",
+      "package": null
+    },
+    "lemonSqueezy": {
+      "enabled": false,
+      "name": "Lemon Squeezy",
+      "category": "billing",
+      "consentKey": "functional",
+      "score": 18,
+      "scores": {
+        "UX_Impact": 4,
+        "Trust_FOMO": 3,
+        "Dev_Effort": -1,
+        "Cost_Efficiency": 4,
+        "Privacy_Fit": 4
+      },
+      "cost": "usage-based",
+      "privacy": "PCI-compliant, GDPR-friendly",
+      "package": "@lemonsqueezy/lemonsqueezy.js"
+    }
+  }
+}

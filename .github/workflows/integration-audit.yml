@@ -1,0 +1,56 @@
+name: Integration Audit
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (Next)
+        run: npm run build
+
+      - name: Start server
+        run: npm run start-ci &
+      
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000
+
+      - name: Lighthouse CI (mobile)
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: "./lighthouserc.json"
+          temporaryPublicStorage: true
+
+      - name: Pa11y (axe) — accessibility
+        run: npx pa11y-ci
+
+      - name: Upload LHCI artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: ".lighthouseci"
+
+      - name: Upload Pa11y results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pa11y-report
+          path: "pa11y-ci-results.json"
