@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { PWARegistration } from "@/components/pwa-registration";
 import { PerformanceHUD } from "@/components/dev/performance-hud";
+import AgentProvider from "@/components/agent/AgentProvider";
 
 export const metadata: Metadata = {
   title: "Hardonia",
@@ -40,6 +41,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Toaster />
           <PWARegistration />
           <PerformanceHUD />
+          {/* Agent Suggestions: show drawer site-wide when enabled */}
+          <AgentProvider />
         </ThemeProvider>
       </body>
     </html>

@@ -38,6 +38,13 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
+      - name: Agent Smoke Check
+        run: |
+          test -f lib/agent/feature-extract.ts
+          test -f lib/agent/recommender.ts
+          test -f components/agent/SuggestionsDrawer.tsx
+          echo "Agent files present ✓"
+
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
 
