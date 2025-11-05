@@ -8,6 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Trust & Transparency layer with stakeholder-focused artifacts
+- Trust center hub page (`/trust`) with links to privacy, security, and status pages
+- Privacy policy page (`/privacy`) with GDPR/PIPEDA-aligned content
+- Status page (`/status`) for incident communication and uptime visibility
+- Help center page (`/help`) for user support resources
+- Personal audit log viewer (`/account/audit-log`) for user activity tracking
+- Audit log database table with Row-Level Security (RLS) policies
+- Feedback API endpoint (`/api/feedback`) for user feedback collection
+- Trust layer feature flags (`config/flags.trust.json`) for gradual rollout
+- Comprehensive trust documentation (`docs/trust/`)
+  - TRUST.md - Product promises and data map
+  - PRIVACY_POLICY_DRAFT.md - Privacy policy (draft, requires legal review)
+  - SECURITY.md - Security posture and practices
+  - STATUS.md - Incident communication policy
+  - SLO_SLA.md - Service Level Objectives and Agreements
+  - A11Y_REPORT_TEMPLATE.md - WCAG 2.2 AA accessibility checklist
+  - I18N_READINESS.md - Internationalization strategy
+- Gap analysis reports (`docs/trust/00_inventory.md`, `01_gap_matrix.md`, `02_action_plan.md`)
+- Trust Smoke check in CI/CD pipeline
+- Accessibility improvements: i18n locale/direction support in layout
+- Footer trust links for discoverability
 - Comprehensive pre-launch hardening program
 - TypeScript strict mode configuration
 - Security headers middleware with CSP, HSTS, and more
