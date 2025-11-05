@@ -65,6 +65,7 @@
     "audit:deps": "npm audit --audit-level moderate",
     "audit:licenses": "license-checker --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC'",
     "audit:security": "npm audit --audit-level high",
+    "security:check": "tsx scripts/security-self-check.ts",
     "perf:budgets": "lighthouse-ci autorun",
     "perf:analyze": "npm run build:analyze && open dist/stats.html",
     "clean": "rm -rf node_modules dist .next",
