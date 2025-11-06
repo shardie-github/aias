@@ -11,9 +11,9 @@ import AgentProvider from "@/components/agent/AgentProvider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/structured-data";
 
 export const metadata: Metadata = {
-  title: "AIAS Platform — AI Automation for Canadian Businesses",
-  description: "Save 10+ hours/week with no-code AI agents. CAD $49/month. Canadian-first integrations (Shopify, Wave, Stripe). PIPEDA-compliant. Made in Canada.",
-  keywords: ["AI automation", "Canadian business automation", "no-code AI agents", "workflow automation Canada", "Shopify automation", "AI agents for SMB", "Canadian SaaS", "automation software Canada"],
+  title: "AIAS Platform — AI Automation for Global Businesses | Canadian-Built, World-Class",
+  description: "Save 10+ hours/week with no-code AI agents. Built in Canada, trusted globally. Multi-currency support, 100+ integrations, enterprise security. Starting at $49/month.",
+  keywords: ["AI automation", "global business automation", "no-code AI agents", "workflow automation", "Shopify automation", "AI agents for SMB", "international SaaS", "automation software", "Canadian SaaS", "worldwide business tools", "enterprise automation", "international integrations"],
   authors: [{ name: "AIAS Platform Team" }],
   creator: "AIAS Platform",
   publisher: "AIAS Platform",
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "AIAS Platform — AI Automation That Speaks Canadian Business",
-    description: "Save 10+ hours/week with no-code AI agents. CAD $49/month. 30-minute setup. Canadian integrations. Made in Canada.",
+    title: "AIAS Platform — AI Automation for Global Businesses | Canadian-Built",
+    description: "Save 10+ hours/week with no-code AI agents. Built in Canada, trusted by businesses worldwide. Multi-currency, 100+ integrations, enterprise security.",
     type: "website",
     url: "https://aias-platform.com",
     siteName: "AIAS Platform",
-    locale: "en_CA",
+    locale: "en_US",
     images: [
       {
         url: "/og-image.png",

@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pricing — AIAS Platform | CAD $49/month",
-  description: "Affordable AI automation for Canadian businesses. Free plan available. CAD $49/month Starter plan. Transparent GST/HST pricing. Cancel anytime.",
+  title: "Pricing — AIAS Platform | Starting at $49/month | Multi-Currency Support",
+  description: "Affordable AI automation for businesses worldwide. Free plan available. Starting at $49/month (CAD/USD/EUR). Multi-currency support. Cancel anytime.",
 };
 
 const plans = [
@@ -71,10 +71,10 @@ export default function PricingPage() {
           Simple, Transparent Pricing
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          All prices in CAD. GST/HST (13% Ontario) added at checkout. No hidden fees. Cancel anytime.
+          Multi-currency support: CAD, USD, EUR, GBP, and more. Prices shown in your local currency. Transparent pricing. Cancel anytime.
         </p>
         <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-          🇨🇦 Made in Canada • CAD Pricing
+          🇨🇦 Built in Canada • 🌍 Global Pricing • Multi-Currency Support
         </div>
       </div>
 
@@ -96,12 +96,13 @@ export default function PricingPage() {
               <div className="mt-4">
                 <span className="text-4xl font-bold">{plan.price}</span>
                 <span className="text-muted-foreground">/{plan.period}</span>
+                <p className="text-xs text-muted-foreground mt-1">Multi-currency available</p>
               </div>
               {plan.name === "Starter" && (
                 <div className="mt-2">
                   <span className="text-sm text-muted-foreground line-through">$490/year</span>
                   <span className="text-sm font-medium text-primary ml-2">
-                    $490/year (save $98)
+                    $490/year (save $98) • Save 20%
                   </span>
                 </div>
               )}
@@ -109,7 +110,7 @@ export default function PricingPage() {
                 <div className="mt-2">
                   <span className="text-sm text-muted-foreground line-through">$1,490/year</span>
                   <span className="text-sm font-medium text-primary ml-2">
-                    $1,490/year (save $298)
+                    $1,490/year (save $298) • Save 20%
                   </span>
                 </div>
               )}
@@ -144,12 +145,13 @@ export default function PricingPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>What payment methods do you accept?</CardTitle>
+            <CardTitle>What currencies and payment methods do you accept?</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
               We accept all major credit cards (Visa, Mastercard, American Express) and process payments through Stripe. 
-              All prices are in CAD. GST/HST (13% Ontario) is added at checkout.
+              Multi-currency support: CAD, USD, EUR, GBP, AUD, and more. Prices are displayed in your local currency. 
+              Taxes (GST/HST, VAT, etc.) are calculated automatically based on your location.
             </p>
           </CardContent>
         </Card>

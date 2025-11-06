@@ -5,8 +5,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="font-semibold mb-4">AIAS Platform</h3>
-            <p className="text-xs mb-2">AI automation that speaks Canadian business. Save 10+ hours/week with no-code AI agents.</p>
-            <p className="text-xs">🇨🇦 Made in Canada • PIPEDA Compliant</p>
+            <p className="text-xs mb-2">AI automation built in Canada, trusted globally. Save 10+ hours/week with no-code AI agents.</p>
+            <p className="text-xs">🇨🇦 Built in Canada • 🌍 Trusted Worldwide • PIPEDA & GDPR Compliant</p>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Product</h4>
@@ -49,7 +49,7 @@ export function Footer() {
             <a href="mailto:support@aias-platform.com" className="hover:underline">Support</a>
           </div>
           <div className="text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} AIAS Platform. All rights reserved. Made in Canada 🇨🇦
+            © {new Date().getFullYear()} AIAS Platform. All rights reserved. Built in Canada 🇨🇦 • Serving the World 🌍
           </div>
         </div>
       </div>

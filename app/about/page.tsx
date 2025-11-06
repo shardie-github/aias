@@ -22,37 +22,53 @@ export default function AboutPage() {
         <section>
           <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
           <p className="text-muted-foreground mb-4">
-            AIAS Platform was founded to make AI automation accessible to Canadian businesses. 
-            We believe that solo operators and small businesses shouldn't have to pay enterprise prices 
-            or learn complex coding to automate their workflows.
+            AIAS Platform was founded in Canada with a global vision. Built on years of experience supporting 
+            stakeholders across education, healthcare, technology, and business sectors worldwide, we understand 
+            the unique challenges of operating across different markets, cultures, and regulatory environments.
           </p>
           <p className="text-muted-foreground mb-4">
-            Our mission is to help Canadian businesses save 10+ hours per week with no-code AI agents, 
-            while keeping their data in Canada and complying with Canadian privacy laws.
+            Our mission is to make AI automation accessible to businesses everywhere—from solo entrepreneurs to 
+            global enterprises. We believe that automation shouldn't be limited by geography, currency, or technical 
+            expertise. That's why we've built a platform that works seamlessly across North America, Europe, 
+            Asia-Pacific, and beyond.
+          </p>
+          <p className="text-muted-foreground mb-4">
+            With deep roots in education and stakeholder management, we've seen first-hand how automation can 
+            transform workflows across industries. Whether you're managing educational programs, healthcare operations, 
+            or business processes, AIAS Platform adapts to your needs—no matter where you are in the world.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">Why Canadian-First?</h2>
+          <h2 className="text-2xl font-bold mb-4">Built in Canada, Designed for the World</h2>
           <p className="text-muted-foreground mb-4">
-            Most automation tools are built for US or EU markets. Canadian businesses need:
+            Our Canadian roots give us a unique perspective on global business needs. We understand the importance of 
+            strong privacy laws (PIPEDA), transparent pricing, and reliable service. But we also know that businesses 
+            operate across borders, currencies, and cultures.
+          </p>
+          <p className="text-muted-foreground mb-4">
+            That's why AIAS Platform combines:
           </p>
           <ul className="space-y-2 text-muted-foreground mb-4">
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Canadian integrations (Shopify, Wave, RBC, TD, Interac)</span>
+              <span><strong>Canadian Excellence:</strong> PIPEDA compliance, Canadian data residency options, transparent pricing</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>CAD pricing with transparent GST/HST</span>
+              <span><strong>Global Reach:</strong> Multi-currency support (CAD, USD, EUR, GBP, AUD, and more), 100+ international integrations</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>PIPEDA compliance and Canadian data residency</span>
+              <span><strong>Universal Compliance:</strong> GDPR, PIPEDA, SOC 2, and regional data residency options</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">✓</span>
-              <span>Canadian-friendly support hours and pricing</span>
+              <span><strong>Market Understanding:</strong> Built by someone with experience in education and stakeholder management across global markets</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">✓</span>
+              <span><strong>24/7 Global Support:</strong> Support teams across time zones to serve you wherever you are</span>
             </li>
           </ul>
         </section>
@@ -72,11 +88,11 @@ export default function AboutPage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Affordable Pricing</CardTitle>
+                <CardTitle>Multi-Currency Pricing</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  CAD $49/month — accessible to solo operators and small businesses.
+                  Starting at $49/month (CAD/USD/EUR) — accessible globally with transparent pricing in your local currency.
                 </p>
               </CardContent>
             </Card>
@@ -92,11 +108,11 @@ export default function AboutPage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Canadian Focus</CardTitle>
+                <CardTitle>Global Perspective</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Built for Canadian businesses, with Canadian integrations and support.
+                  Built in Canada with global perspective. Serving businesses across 40+ countries with multi-currency and international integrations.
                 </p>
               </CardContent>
             </Card>
@@ -123,7 +139,10 @@ export default function AboutPage() {
                 </a>
               </p>
               <p>
-                <strong>Support Hours:</strong> Monday-Friday, 9 AM - 5 PM EST
+                <strong>Support Hours:</strong> 24/7 global support (primary: Monday-Friday, 9 AM - 5 PM EST)
+              </p>
+              <p>
+                <strong>Global Reach:</strong> Serving clients across North America, Europe, Asia-Pacific, and beyond
               </p>
               <p>
                 <strong>Phone:</strong> 1-800-AIAS-HELP (toll-free Canada)

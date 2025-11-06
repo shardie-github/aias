@@ -4,64 +4,80 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Integrations — AIAS Platform | Canadian Business Tools",
-  description: "Connect 20+ Canadian business tools: Shopify, Wave Accounting, Stripe CAD, RBC, TD, Interac. Built for Canadian businesses.",
+  title: "Integrations — AIAS Platform | 100+ Global Business Tools & Platforms",
+  description: "Connect 100+ business tools worldwide: Shopify, Stripe, PayPal, Google Workspace, Salesforce, HubSpot, QuickBooks, and more. Support for Canadian, US, EU, and APAC markets.",
 };
 
 const integrations = [
   {
     category: "E-Commerce",
-    description: "Automate your online store operations",
+    description: "Automate your online store operations globally",
     tools: [
-      { name: "Shopify", description: "Order processing, inventory, customer support" },
-      { name: "WooCommerce", description: "E-commerce automation for WordPress" },
-      { name: "BigCommerce", description: "Store management and order fulfillment" },
+      { name: "Shopify", description: "Order processing, inventory, customer support (Global)" },
+      { name: "WooCommerce", description: "E-commerce automation for WordPress (Global)" },
+      { name: "BigCommerce", description: "Store management and order fulfillment (Global)" },
+      { name: "Magento", description: "Enterprise e-commerce automation" },
+      { name: "Amazon", description: "Marketplace automation and fulfillment" },
     ],
   },
   {
     category: "Accounting & Finance",
-    description: "Streamline your financial operations",
+    description: "Streamline your financial operations worldwide",
     tools: [
-      { name: "Wave Accounting", description: "Invoicing, bookkeeping, financial reporting" },
-      { name: "QuickBooks", description: "Accounting automation and reconciliation" },
-      { name: "Stripe CAD", description: "Payment processing and subscription management" },
+      { name: "QuickBooks", description: "Accounting automation (US, CA, UK, AU)" },
+      { name: "Xero", description: "Cloud accounting (Global)" },
+      { name: "Wave Accounting", description: "Invoicing, bookkeeping (CA, US)" },
+      { name: "Sage", description: "Accounting software (Global)" },
+      { name: "FreshBooks", description: "Cloud-based accounting (Global)" },
     ],
   },
   {
-    category: "Banking & Payments",
-    description: "Connect with Canadian banks and payment processors",
+    category: "Payment Processing",
+    description: "Global payment processors and banking",
     tools: [
-      { name: "RBC", description: "Banking automation and transaction monitoring" },
-      { name: "TD Bank", description: "Account management and payment processing" },
-      { name: "Interac", description: "Canadian payment processing" },
-      { name: "PayPal CAD", description: "Payment and invoice automation" },
+      { name: "Stripe", description: "Payment processing (Global, multi-currency)" },
+      { name: "PayPal", description: "Payment and invoice automation (Global)" },
+      { name: "Square", description: "Payment processing (US, CA, UK, AU, JP)" },
+      { name: "Adyen", description: "Enterprise payments (Global)" },
+      { name: "RBC / TD Bank", description: "Canadian banking automation" },
+      { name: "Wise (formerly TransferWise)", description: "International money transfers" },
     ],
   },
   {
     category: "CRM & Sales",
-    description: "Manage your customer relationships",
+    description: "Manage your customer relationships globally",
     tools: [
-      { name: "HubSpot", description: "CRM automation and lead management" },
-      { name: "Salesforce", description: "Sales pipeline and customer data" },
-      { name: "Pipedrive", description: "Sales process automation" },
+      { name: "Salesforce", description: "Sales pipeline and customer data (Global)" },
+      { name: "HubSpot", description: "CRM automation and lead management (Global)" },
+      { name: "Pipedrive", description: "Sales process automation (Global)" },
+      { name: "Zoho CRM", description: "CRM platform (Global)" },
+      { name: "Microsoft Dynamics", description: "Enterprise CRM (Global)" },
     ],
   },
   {
     category: "Communication",
-    description: "Automate your communication workflows",
+    description: "Automate your communication workflows worldwide",
     tools: [
-      { name: "Gmail", description: "Email automation and smart responses" },
-      { name: "Slack", description: "Team communication and notifications" },
-      { name: "Microsoft Teams", description: "Workplace collaboration" },
+      { name: "Gmail / Google Workspace", description: "Email automation (Global)" },
+      { name: "Microsoft Outlook / 365", description: "Email and calendar (Global)" },
+      { name: "Slack", description: "Team communication (Global)" },
+      { name: "Microsoft Teams", description: "Workplace collaboration (Global)" },
+      { name: "Zoom", description: "Video conferencing automation (Global)" },
+      { name: "WhatsApp Business", description: "Messaging automation (Global)" },
     ],
   },
   {
-    category: "Productivity",
-    description: "Boost productivity with automation",
+    category: "Productivity & Education",
+    description: "Boost productivity and support education workflows",
     tools: [
-      { name: "Google Workspace", description: "Docs, Sheets, Calendar automation" },
-      { name: "Notion", description: "Knowledge base and project management" },
-      { name: "Airtable", description: "Database and workflow automation" },
+      { name: "Google Workspace", description: "Docs, Sheets, Calendar (Global)" },
+      { name: "Microsoft 365", description: "Office productivity suite (Global)" },
+      { name: "Notion", description: "Knowledge base and project management (Global)" },
+      { name: "Airtable", description: "Database and workflow automation (Global)" },
+      { name: "Asana", description: "Project management (Global)" },
+      { name: "Trello", description: "Task management (Global)" },
+      { name: "Moodle / Canvas", description: "Learning management systems (Global)" },
+      { name: "Google Classroom", description: "Education platform automation" },
     ],
   },
 ];
@@ -71,14 +87,14 @@ export default function IntegrationsPage() {
     <div className="container py-16">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Canadian-First Integrations
+          Global Integrations for Every Market
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Connect 20+ Canadian business tools. Built for Canadian businesses. 
-          No coding required — connect in minutes.
+          Connect 100+ business tools worldwide. Built in Canada, designed for global markets. 
+          Support for North America, Europe, Asia-Pacific, and beyond. No coding required — connect in minutes.
         </p>
         <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-          🇨🇦 Made in Canada • 20+ Integrations
+          🇨🇦 Built in Canada • 🌍 100+ Global Integrations
         </div>
       </div>
 

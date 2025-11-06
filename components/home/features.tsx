@@ -43,7 +43,7 @@ export function Features() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose AIAS Platform</h2>
           <p className="text-muted-foreground text-lg">
-            Built for Canadian businesses who want AI automation without the complexity
+            Built in Canada with global perspective. Trusted by businesses worldwide across industries and markets
           </p>
         </div>
       </FadeIn>
