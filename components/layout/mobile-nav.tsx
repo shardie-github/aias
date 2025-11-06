@@ -17,12 +17,34 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="right" className="w-64">
         <nav className="flex flex-col gap-4 mt-8">
-          <Link href="/shop" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
-            Shop
+          <Link href="/features" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Features
+          </Link>
+          <Link href="/pricing" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Pricing
+          </Link>
+          <Link href="/integrations" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Integrations
+          </Link>
+          <Link href="/case-studies" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Case Studies
+          </Link>
+          <Link href="/blog" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Blog
           </Link>
           <Link href="/about" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
             About
           </Link>
+          <Link href="/demo" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Demo
+          </Link>
+          <div className="pt-4 border-t">
+            <Button className="w-full" asChild>
+              <Link href="/pricing" onClick={() => setOpen(false)}>
+                Start Free
+              </Link>
+            </Button>
+          </div>
         </nav>
       </SheetContent>
     </Sheet>

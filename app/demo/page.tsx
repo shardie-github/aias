@@ -85,7 +85,7 @@ export default function DemoPage() {
                   className="w-full px-4 py-2 border rounded-md"
                 />
               </div>
-              <Button className="w-full" size="lg">
+              <Button className="w-full" size="lg" asChild>
                 <a href="https://calendly.com/aias-platform" target="_blank" rel="noopener noreferrer">
                   Book Demo on Calendly
                 </a>
