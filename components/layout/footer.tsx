@@ -4,36 +4,40 @@ export function Footer() {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-semibold mb-4">Hardonia</h3>
-            <p className="text-xs">Modern, fast, and accessible commerce experience.</p>
+            <h3 className="font-semibold mb-4">AIAS Platform</h3>
+            <p className="text-xs mb-2">AI automation that speaks Canadian business. Save 10+ hours/week with no-code AI agents.</p>
+            <p className="text-xs">🇨🇦 Made in Canada • PIPEDA Compliant</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Shop</h4>
+            <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-2">
-              <li><a href="/shop" className="hover:underline">All Products</a></li>
-              <li><a href="/shop/new" className="hover:underline">New Arrivals</a></li>
+              <li><a href="/features" className="hover:underline">Features</a></li>
+              <li><a href="/pricing" className="hover:underline">Pricing</a></li>
+              <li><a href="/integrations" className="hover:underline">Integrations</a></li>
+              <li><a href="/case-studies" className="hover:underline">Case Studies</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Support</h4>
+            <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2">
+              <li><a href="/blog" className="hover:underline">Blog</a></li>
               <li><a href="/help" className="hover:underline">Help Center</a></li>
-              <li><a href="/contact" className="hover:underline">Contact</a></li>
+              <li><a href="/demo" className="hover:underline">Book Demo</a></li>
+              <li><a href="/status" className="hover:underline">Status</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
-              <li><a href="/privacy" className="hover:underline">Privacy</a></li>
-              <li><a href="/terms" className="hover:underline">Terms</a></li>
+              <li><a href="/about" className="hover:underline">About</a></li>
+              <li><a href="/privacy" className="hover:underline">Privacy Policy</a></li>
+              <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
+              <li><a href="/trust" className="hover:underline">Trust Center</a></li>
             </ul>
           </div>
         </div>
-        {/* [STAKE+TRUST:BEGIN:trust_links] */}
-        {/* Trust & Transparency links - visible when feature flags enabled */}
-        {/* TODO: Load flags from API or context to conditionally show */}
         <div className="mt-8 pt-8 border-t border-border">
-          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground mb-4">
             <a href="/trust" className="hover:underline">Trust Center</a>
             <span>·</span>
             <a href="/privacy" className="hover:underline">Privacy</a>
@@ -41,11 +45,12 @@ export function Footer() {
             <a href="/status" className="hover:underline">Status</a>
             <span>·</span>
             <a href="/help" className="hover:underline">Help</a>
+            <span>·</span>
+            <a href="mailto:support@aias-platform.com" className="hover:underline">Support</a>
           </div>
-        </div>
-        {/* [STAKE+TRUST:END:trust_links] */}
-        <div className="mt-4 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Hardonia. All rights reserved.
+          <div className="text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} AIAS Platform. All rights reserved. Made in Canada 🇨🇦
+          </div>
         </div>
       </div>
     </footer>

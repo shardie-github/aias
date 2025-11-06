@@ -8,21 +8,53 @@ import { Toaster } from "@/components/ui/toaster";
 import { PWARegistration } from "@/components/pwa-registration";
 import { PerformanceHUD } from "@/components/dev/performance-hud";
 import AgentProvider from "@/components/agent/AgentProvider";
+import { OrganizationSchema, WebSiteSchema } from "@/components/seo/structured-data";
 
 export const metadata: Metadata = {
-  title: "Hardonia",
-  description: "Modern, fast, and accessible commerce experience.",
+  title: "AIAS Platform — AI Automation for Canadian Businesses",
+  description: "Save 10+ hours/week with no-code AI agents. CAD $49/month. Canadian-first integrations (Shopify, Wave, Stripe). PIPEDA-compliant. Made in Canada.",
+  keywords: ["AI automation", "Canadian business automation", "no-code AI agents", "workflow automation Canada", "Shopify automation", "AI agents for SMB", "Canadian SaaS", "automation software Canada"],
+  authors: [{ name: "AIAS Platform Team" }],
+  creator: "AIAS Platform",
+  publisher: "AIAS Platform",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   manifest: "/manifest.webmanifest",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://aias-platform.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Hardonia",
-    description: "Modern, fast, and accessible commerce experience.",
+    title: "AIAS Platform — AI Automation That Speaks Canadian Business",
+    description: "Save 10+ hours/week with no-code AI agents. CAD $49/month. 30-minute setup. Canadian integrations. Made in Canada.",
     type: "website",
+    url: "https://aias-platform.com",
+    siteName: "AIAS Platform",
+    locale: "en_CA",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AIAS Platform — AI Automation for Canadian Businesses",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hardonia",
-    description: "Modern, fast, and accessible commerce experience.",
+    title: "AIAS Platform — AI Automation for Canadian Businesses",
+    description: "Save 10+ hours/week with no-code AI agents. CAD $49/month. Made in Canada.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -43,6 +75,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="manifest" href="/manifest.json" />
         <script dangerouslySetInnerHTML={{__html:`if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}`}} />
         {/* [META:END:pwa] */}
+        <OrganizationSchema />
+        <WebSiteSchema />
       </head>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>

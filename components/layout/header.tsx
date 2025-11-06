@@ -9,24 +9,27 @@ export function Header() {
     <header className="sticky top-0 z-50 backdrop-blur bg-bg/70 border-b border-border">
       <div className="container flex items-center justify-between h-14">
         <Link href="/" className="font-bold text-lg">
-          Hardonia
+          AIAS Platform
         </Link>
         <nav aria-label="Primary" className="hidden md:flex items-center gap-4">
-          <Link href="/play" className="px-3 py-2 hover:underline text-sm">
-            Play
+          <Link href="/features" className="px-3 py-2 hover:underline text-sm">
+            Features
           </Link>
-          <Link href="/community" className="px-3 py-2 hover:underline text-sm">
-            Community
+          <Link href="/pricing" className="px-3 py-2 hover:underline text-sm">
+            Pricing
           </Link>
-          <Link href="/challenges" className="px-3 py-2 hover:underline text-sm">
-            Challenges
+          <Link href="/integrations" className="px-3 py-2 hover:underline text-sm">
+            Integrations
           </Link>
-          <Link href="/leaderboard" className="px-3 py-2 hover:underline text-sm">
-            Leaderboard
+          <Link href="/case-studies" className="px-3 py-2 hover:underline text-sm">
+            Case Studies
           </Link>
-          <Link href="/journal" className="px-3 py-2 hover:underline text-sm">
-            Journal
+          <Link href="/blog" className="px-3 py-2 hover:underline text-sm">
+            Blog
           </Link>
+          <Button size="sm" asChild>
+            <Link href="/pricing">Start Free</Link>
+          </Button>
           <ThemeToggle />
         </nav>
         <div className="flex items-center gap-2 md:hidden">
