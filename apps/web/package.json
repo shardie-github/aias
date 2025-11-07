@@ -40,7 +40,7 @@
     "openai": "^4.20.1",
     "@anthropic-ai/sdk": "^0.9.1",
     "@google/generative-ai": "^0.2.1",
-    "ai": "^2.2.29",
+    "ai": "^5.0.52",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.2.0",
