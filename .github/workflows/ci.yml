@@ -141,6 +141,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Prisma Client
+        run: pnpm run db:generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PRISMA_CLIENT_ENGINE_TYPE: wasm
+
+      - name: Run database migrations
+        run: pnpm run db:migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PRISMA_CLIENT_ENGINE_TYPE: wasm
+
       - name: Build application
         run: pnpm run build
 
@@ -303,9 +315,14 @@ jobs:
           # Add your production deployment commands here
 
       - name: Run smoke tests
-        run: |
-          echo "Running smoke tests..."
-          # Add smoke test commands here
+        run: pnpm run smoke
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PRISMA_CLIENT_ENGINE_TYPE: wasm
+          HEALTH_URL: ${{ secrets.HEALTH_URL || 'http://localhost:3000/api/healthz' }}
 
       - name: Notify deployment
         uses: 8398a7/action-slack@v3
