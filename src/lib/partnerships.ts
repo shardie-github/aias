@@ -499,7 +499,22 @@ export const generateLeadMagnet = (type: 'ebook' | 'webinar' | 'template' | 'dem
 };
 
 export const createReferralLink = (partnerId: string, campaign?: string): string => {
-  const baseUrl = process.env.VITE_APP_URL || 'https://aias-consultancy.com';
+  // Get base URL from environment variables dynamically
+  let baseUrl: string;
+  if (typeof process !== 'undefined' && process.env) {
+    baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+              process.env.NEXT_PUBLIC_APP_URL || 
+              process.env.NEXTAUTH_URL || 
+              process.env.VITE_APP_URL || 
+              'https://aias-consultancy.com';
+  } else if (typeof import !== 'undefined' && import.meta && import.meta.env) {
+    baseUrl = import.meta.env.VITE_APP_URL || 
+              import.meta.env.NEXT_PUBLIC_SITE_URL || 
+              'https://aias-consultancy.com';
+  } else {
+    baseUrl = 'https://aias-consultancy.com';
+  }
+  
   const params = new URLSearchParams({
     ref: partnerId,
     ...(campaign && { campaign })

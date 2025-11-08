@@ -1,4 +1,22 @@
 // Comprehensive SEO optimization system
+// Get base URL from environment variables dynamically
+function getBaseUrl(): string {
+  if (typeof process !== 'undefined' && process.env) {
+    return process.env.NEXT_PUBLIC_SITE_URL || 
+           process.env.NEXT_PUBLIC_APP_URL || 
+           process.env.NEXTAUTH_URL || 
+           'https://aias-consultancy.com';
+  }
+  if (typeof import !== 'undefined' && import.meta && import.meta.env) {
+    return import.meta.env.VITE_APP_URL || 
+           import.meta.env.NEXT_PUBLIC_SITE_URL || 
+           'https://aias-consultancy.com';
+  }
+  return 'https://aias-consultancy.com';
+}
+
+const BASE_URL = getBaseUrl();
+
 export interface SEOConfig {
   title: string;
   description: string;
@@ -39,10 +57,10 @@ export const PAGE_SEO: PageSEO = {
       'AI consulting services',
       'enterprise AI'
     ],
-    canonical: 'https://aias-consultancy.com',
+    canonical: `${BASE_URL}`,
     ogTitle: 'AIAS - AI Agent Solutions | Enterprise AI Automation',
     ogDescription: 'Transform your business with custom AI agents and intelligent automation. Expert AI consultancy for enterprise digital transformation.',
-    ogImage: 'https://aias-consultancy.com/og-image.jpg',
+    ogImage: `${BASE_URL}/og-image.jpg`,
     ogType: 'website',
     twitterCard: 'summary_large_image',
     twitterSite: '@aias_consultancy',
@@ -50,8 +68,8 @@ export const PAGE_SEO: PageSEO = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'AIAS - AI Agent Solutions',
-      url: 'https://aias-consultancy.com',
-      logo: 'https://aias-consultancy.com/logo.png',
+      url: BASE_URL,
+      logo: `${BASE_URL}/logo.png`,
       description: 'Enterprise-grade AI consultancy platform showcasing custom AI agents, workflow automation, and intelligent business solutions.',
       address: {
         '@type': 'PostalAddress',
@@ -84,10 +102,10 @@ export const PAGE_SEO: PageSEO = {
       'AI project management',
       'AI technology consulting'
     ],
-    canonical: 'https://aias-consultancy.com/services',
+    canonical: `${BASE_URL}/services`,
     ogTitle: 'AI Consulting Services | Custom AI Solutions',
     ogDescription: 'Expert AI consulting services for custom AI solutions, workflow automation, and enterprise implementation.',
-    ogImage: 'https://aias-consultancy.com/services-og.jpg',
+    ogImage: `${BASE_URL}/services-og.jpg`,
     ogType: 'website',
     structuredData: {
       '@context': 'https://schema.org',
@@ -141,10 +159,10 @@ export const PAGE_SEO: PageSEO = {
       'AI project pricing',
       'AI solution pricing'
     ],
-    canonical: 'https://aias-consultancy.com/pricing',
+    canonical: `${BASE_URL}/pricing`,
     ogTitle: 'AI Consulting Pricing | Transparent AI Service Costs',
     ogDescription: 'Transparent pricing for AI consulting services. Flexible plans for AI automation and custom solutions.',
-    ogImage: 'https://aias-consultancy.com/pricing-og.jpg',
+    ogImage: `${BASE_URL}/pricing-og.jpg`,
     ogType: 'website'
   },
   caseStudies: {
@@ -159,10 +177,10 @@ export const PAGE_SEO: PageSEO = {
       'AI automation success',
       'AI consulting results'
     ],
-    canonical: 'https://aias-consultancy.com/case-studies',
+    canonical: `${BASE_URL}/case-studies`,
     ogTitle: 'AI Success Stories | Real-World AI Implementation',
     ogDescription: 'Real-world AI implementation success stories and case studies from our consulting projects.',
-    ogImage: 'https://aias-consultancy.com/case-studies-og.jpg',
+    ogImage: `${BASE_URL}/case-studies-og.jpg`,
     ogType: 'website'
   },
   platform: {
@@ -178,10 +196,10 @@ export const PAGE_SEO: PageSEO = {
       'AI tools',
       'AI software'
     ],
-    canonical: 'https://aias-consultancy.com/platform',
+    canonical: `${BASE_URL}/platform`,
     ogTitle: 'AI Automation Platform | Self-Service AI Workflow Builder',
     ogDescription: 'Build and deploy AI workflows with our self-service platform. No-code AI automation tools.',
-    ogImage: 'https://aias-consultancy.com/platform-og.jpg',
+    ogImage: `${BASE_URL}/platform-og.jpg`,
     ogType: 'website'
   }
 };
@@ -189,8 +207,8 @@ export const PAGE_SEO: PageSEO = {
 export class SEOService {
   private baseUrl: string;
 
-  constructor(baseUrl: string = 'https://aias-consultancy.com') {
-    this.baseUrl = baseUrl;
+  constructor(baseUrl?: string) {
+    this.baseUrl = baseUrl || getBaseUrl();
   }
 
   // Generate meta tags for a page

@@ -73,7 +73,7 @@ export async function sendStreakReminderEmail(userId: string, days: number) {
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/play" 
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/play" 
                style="display: inline-block; background: #ff6b35; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
               Continue Your Streak →
             </a>
@@ -128,7 +128,7 @@ export async function sendChallengeNotificationEmail(userId: string, challengeTi
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/challenges" 
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/challenges" 
                style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
               View Challenge →
             </a>
@@ -199,7 +199,7 @@ export async function sendMilestoneEmail(userId: string, milestoneType: string) 
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/play" 
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "http://localhost:3000"}/play" 
                style="display: inline-block; background: #f59e0b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
               View Your Progress →
             </a>

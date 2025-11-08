@@ -92,7 +92,13 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
     try {
-      const wsUrl = `${process.env.REACT_APP_WS_URL || 'ws://localhost:8080'}/notifications?userId=${userId}&tenantId=${tenantId || ''}`;
+      // Get WebSocket URL from environment variables dynamically
+      const wsBaseUrl = process.env.NEXT_PUBLIC_WS_URL || 
+                       process.env.REACT_APP_WS_URL || 
+                       (typeof window !== 'undefined' ? 
+                         (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host : 
+                         'ws://localhost:8080');
+      const wsUrl = `${wsBaseUrl}/notifications?userId=${userId}&tenantId=${tenantId || ''}`;
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {

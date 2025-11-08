@@ -19,11 +19,18 @@ const bookingRequestSchema = z.object({
   notes: z.string().max(2000, "Notes too long (max 2000 characters)").optional(),
 });
 
-// Initialize Supabase client
-const supabaseAdmin = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-);
+// Initialize Supabase client - Load from environment variables dynamically
+const supabaseUrl = Deno.env.get('SUPABASE_URL');
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  throw new Error(
+    'Missing required environment variables: SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY\n' +
+    'Please set these variables in Supabase Dashboard → Settings → API'
+  );
+}
+
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
 // Distributed rate limit check
 async function checkRateLimit(identifier: string): Promise<boolean> {

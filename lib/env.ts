@@ -80,10 +80,10 @@ function getEnvVar(key: string, required: boolean = true, defaultValue?: string)
  * All variables are loaded dynamically at runtime
  */
 export const env = {
-  // Supabase Configuration
+  // Supabase Configuration - Check multiple possible env var names
   supabase: {
-    url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL', true),
-    anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY', true),
+    url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL', false) || getEnvVar('SUPABASE_URL', true),
+    anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY', false) || getEnvVar('SUPABASE_ANON_KEY', true),
     serviceRoleKey: getEnvVar('SUPABASE_SERVICE_ROLE_KEY', true),
     jwtSecret: getEnvVar('SUPABASE_JWT_SECRET', false),
   },
@@ -97,6 +97,10 @@ export const env = {
   // Application Configuration
   app: {
     env: getEnvVar('NEXT_PUBLIC_APP_ENV', false, 'production'),
+    siteUrl: getEnvVar('NEXT_PUBLIC_SITE_URL', false) || 
+             getEnvVar('NEXT_PUBLIC_APP_URL', false) || 
+             getEnvVar('NEXTAUTH_URL', false) || 
+             '',
     nextAuthUrl: getEnvVar('NEXTAUTH_URL', false),
     nextAuthSecret: getEnvVar('NEXTAUTH_SECRET', false),
     logLevel: getEnvVar('LOG_LEVEL', false, 'info'),
@@ -154,11 +158,19 @@ export function validateEnv(): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
   
   try {
-    // Validate required Supabase vars
-    if (!env.supabase.url) errors.push('NEXT_PUBLIC_SUPABASE_URL is required');
-    if (!env.supabase.anonKey) errors.push('NEXT_PUBLIC_SUPABASE_ANON_KEY is required');
-    if (!env.supabase.serviceRoleKey) errors.push('SUPABASE_SERVICE_ROLE_KEY is required');
-    if (!env.database.url) errors.push('DATABASE_URL is required');
+    // Validate required Supabase vars (check multiple possible names)
+    if (!env.supabase.url) {
+      errors.push('NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL is required');
+    }
+    if (!env.supabase.anonKey) {
+      errors.push('NEXT_PUBLIC_SUPABASE_ANON_KEY or SUPABASE_ANON_KEY is required');
+    }
+    if (!env.supabase.serviceRoleKey) {
+      errors.push('SUPABASE_SERVICE_ROLE_KEY is required');
+    }
+    if (!env.database.url) {
+      errors.push('DATABASE_URL is required');
+    }
   } catch (error: any) {
     errors.push(error.message);
   }

@@ -325,9 +325,23 @@ export class QueueProcessors {
   }
 
   private static async uploadPdf(buffer: Buffer, reportId: string): Promise<string> {
-    // This would upload to Supabase storage
-    // For now, return a dummy URL
-    return `https://storage.supabase.co/reports/${reportId}.pdf`;
+    // Get Supabase URL from environment variables dynamically
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                       process.env.SUPABASE_URL || 
+                       '';
+    
+    if (!supabaseUrl) {
+      throw new Error('SUPABASE_URL environment variable is required for PDF upload');
+    }
+    
+    // Extract project ref from Supabase URL to construct storage URL
+    const projectRef = supabaseUrl.match(/https?:\/\/([^.]+)\.supabase\.co/)?.[1] || '';
+    
+    if (!projectRef) {
+      throw new Error('Invalid Supabase URL format');
+    }
+    
+    return `https://${projectRef}.supabase.co/storage/v1/object/public/reports/${reportId}.pdf`;
   }
 }
 
