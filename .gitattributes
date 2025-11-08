@@ -1,170 +1,53 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-# Source code
-*.{js,jsx,ts,tsx} text eol=lf
-*.{json,yaml,yml} text eol=lf
-*.{md,txt} text eol=lf
-*.{css,scss,sass} text eol=lf
-*.{html,htm} text eol=lf
-*.{xml,svg} text eol=lf
-
-# Configuration files
-*.{toml,ini,cfg,conf} text eol=lf
-*.{sh,bash} text eol=lf
-*.{sql} text eol=lf
-
-# Documentation
-*.md text eol=lf
-*.rst text eol=lf
-*.txt text eol=lf
-
-# Git files
-.gitignore text eol=lf
-.gitattributes text eol=lf
-.gitmodules text eol=lf
-
-# Docker files
-Dockerfile* text eol=lf
-*.dockerfile text eol=lf
-docker-compose*.yml text eol=lf
-
-# CI/CD files
-.github/** text eol=lf
-.gitlab-ci.yml text eol=lf
-.travis.yml text eol=lf
-.circleci/** text eol=lf
-
-# Package managers
-package.json text eol=lf
-package-lock.json text eol=lf
-yarn.lock text eol=lf
-pnpm-lock.yaml text eol=lf
-bun.lockb binary
-
-# TypeScript
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout
 *.ts text eol=lf
 *.tsx text eol=lf
-tsconfig*.json text eol=lf
-
-# Prisma
-*.prisma text eol=lf
-
-# Supabase
-supabase/** text eol=lf
-
-# Terraform
-*.tf text eol=lf
-*.tfvars text eol=lf
-
-# Kubernetes
-*.yaml text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
 *.yml text eol=lf
+*.yaml text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.sh text eol=lf
+*.sql text eol=lf
+*.txt text eol=lf
+*.toml text eol=lf
 
-# Binary files
-*.{png,jpg,jpeg,gif,ico,svg,webp} binary
-*.{woff,woff2,ttf,otf,eot} binary
-*.{pdf,zip,tar,gz,rar,7z} binary
-*.{exe,dll,so,dylib} binary
-*.{mp3,mp4,avi,mov,wav} binary
-
-# Large files (consider LFS)
-*.{psd,ai,sketch} binary
-*.{mov,mp4,avi,mkv} binary
-
-# Generated files
-*.min.js text eol=lf
-*.min.css text eol=lf
-dist/** text eol=lf
-build/** text eol=lf
-.next/** text eol=lf
-
-# Lock files
-package-lock.json text eol=lf
-yarn.lock text eol=lf
-pnpm-lock.yaml text eol=lf
-bun.lockb binary
-
-# Environment files
-.env* text eol=lf
-!.env.example
-
-# Logs
-*.log text eol=lf
-
-# Database
-*.db binary
-*.sqlite binary
-*.sqlite3 binary
-
-# Archives
-*.{zip,tar,gz,rar,7z} binary
-
-# Executables
+# Denote all files that are truly binary and should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.gz binary
+*.bz2 binary
+*.7z binary
 *.exe binary
 *.dll binary
 *.so binary
 *.dylib binary
 
-# Images
-*.{png,jpg,jpeg,gif,ico,svg,webp,avif} binary
+# Lockfiles should use LF
+package-lock.json text eol=lf
+pnpm-lock.yaml text eol=lf
+yarn.lock text eol=lf
+bun.lockb binary
 
-# Fonts
-*.{woff,woff2,ttf,otf,eot} binary
-
-# Media
-*.{mp3,mp4,avi,mov,wav,flac} binary
-
-# Documents
-*.{pdf,doc,docx,xls,xlsx,ppt,pptx} binary
-
-# IDE files
-.vscode/** text eol=lf
-.idea/** text eol=lf
-*.swp text eol=lf
-*.swo text eol=lf
-
-# OS files
-.DS_Store binary
-Thumbs.db binary
-desktop.ini binary
-
-# Temporary files
-*.tmp text eol=lf
-*.temp text eol=lf
-*~ text eol=lf
-
-# Backup files
-*.bak text eol=lf
-*.backup text eol=lf
-
-# Security files
-*.{pem,key,crt,p12,pfx} binary
-
-# Terraform state
-*.tfstate binary
-*.tfstate.* binary
-
-# Kubernetes secrets
-*.kubeconfig binary
-
-# Monitoring data
-prometheus_data/** binary
-grafana_data/** binary
-
-# Test results
-coverage/** text eol=lf
-test-results/** text eol=lf
-playwright-report/** text eol=lf
-
-# Bundle analysis
-stats.html text eol=lf
-bundle-analyzer-report.html text eol=lf
-
-# Performance results
-lighthouse-results/** text eol=lf
-lighthouse-ci-results/** text eol=lf
-
-# Security reports
-security-reports/** text eol=lf
-trivy-results.sarif text eol=lf
+# Git files
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitmodules text eol=lf

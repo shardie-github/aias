@@ -30,6 +30,36 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
 
+      - name: Verify .nvmrc matches NODE_VERSION
+        run: |
+          if [ -f .nvmrc ]; then
+            NVM_VERSION=$(cat .nvmrc | tr -d 'v')
+            NODE_MAJOR=$(echo "$NVM_VERSION" | cut -d. -f1)
+            if [ "$NODE_MAJOR" != "${{ env.NODE_VERSION }}" ]; then
+              echo "Error: .nvmrc version ($NVM_VERSION) doesn't match NODE_VERSION (${{ env.NODE_VERSION }})"
+              exit 1
+            fi
+            echo "✓ .nvmrc version ($NVM_VERSION) matches NODE_VERSION (${{ env.NODE_VERSION }})"
+          else
+            echo "Warning: .nvmrc file not found"
+          fi
+
+      - name: Verify .gitattributes exists
+        run: |
+          if [ ! -f .gitattributes ]; then
+            echo "Error: .gitattributes file is missing"
+            exit 1
+          fi
+          echo "✓ .gitattributes file exists"
+
+      - name: Verify sideEffects field in package.json
+        run: |
+          if ! grep -q '"sideEffects"' package.json; then
+            echo "Warning: sideEffects field not found in root package.json"
+          else
+            echo "✓ sideEffects field found in root package.json"
+          fi
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

@@ -195,6 +195,13 @@
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@8.15.0",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "app/globals.css",
+    "*.css"
+  ],
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/your-org"

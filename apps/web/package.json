@@ -2,6 +2,12 @@
   "name": "web",
   "version": "1.0.0",
   "private": true,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "*.css"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
