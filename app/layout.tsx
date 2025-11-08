@@ -9,6 +9,8 @@ import { PWARegistration } from "@/components/pwa-registration";
 import { PerformanceHUD } from "@/components/dev/performance-hud";
 import AgentProvider from "@/components/agent/AgentProvider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/structured-data";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Systems Thinking + AI: The Critical Skill for the AI Age | AIAS Platform",
@@ -110,6 +112,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <PerformanceHUD />
           {/* Agent Suggestions: show drawer site-wide when enabled */}
           <AgentProvider />
+          {/* Vercel Analytics and Speed Insights */}
+          <Analytics />
+          <SpeedInsights />
           {/* [META:BEGIN:mounts] */}
           {/* Example mounts — wire auth user ID + app meta in your layout or provider */}
           {/* <meta name="x-app-id" content={process.env.NEXT_PUBLIC_APP_ID || 'generic'} /> */}

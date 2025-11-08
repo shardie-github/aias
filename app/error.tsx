@@ -14,6 +14,21 @@ export default function Error({
   useEffect(() => {
     // Log error to monitoring service
     console.error("Application error:", error);
+    
+    // TODO: Send to error tracking service (e.g., Sentry, LogRocket)
+    // Example:
+    // if (typeof window !== 'undefined' && window.Sentry) {
+    //   window.Sentry.captureException(error);
+    // }
+    
+    // Track error in analytics (if available)
+    if (typeof window !== 'undefined' && (window as any).va?.track) {
+      (window as any).va.track('error', {
+        message: error.message,
+        digest: error.digest,
+        stack: error.stack?.substring(0, 500), // Limit stack trace size
+      });
+    }
   }, [error]);
 
   return (
