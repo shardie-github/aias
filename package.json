@@ -82,6 +82,9 @@
     "smoke": "tsx scripts/smoke.ts",
     "ops": "tsx ops/cli.ts",
     "analyze": "npm run build:analyze",
+    "analyze:unused": "npm run analyze:unused:deps && npm run analyze:unused:files",
+    "analyze:unused:deps": "depcheck --ignores='@types/*,eslint-*,prettier-*,@playwright/*,@axe-core/*,pa11y-ci,lighthouse-ci,@lhci/cli,rollup-plugin-visualizer,vite-plugin-pwa,@vitejs/*,vitest,@testing-library/*,jsdom,tsx,typescript-eslint,husky,lint-staged,wait-on,license-checker,commander,stripe,terser'",
+    "analyze:unused:files": "knip --reporter json > knip-report.json 2>&1 || true",
     "a11y": "pa11y-ci",
     "a11y:playwright": "playwright test --grep @accessibility",
     "lighthouse": "lighthouse-ci autorun",
@@ -188,7 +191,9 @@
     "typescript-eslint": "^7.0.0",
     "vite-plugin-pwa": "^0.17.4",
     "vitest": "^1.0.4",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "depcheck": "^1.4.7",
+    "knip": "^5.0.0"
   },
   "engines": {
     "node": ">=18.17.0",
