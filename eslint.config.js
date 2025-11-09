@@ -5,16 +5,20 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import importPlugin from "eslint-plugin-import";
+import unusedImports from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist"] },
+  { ignores: ["dist", ".next", "node_modules", "reports"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        project: "./tsconfig.json",
+      },
     },
     settings: {
       react: {
@@ -27,6 +31,7 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
       "jsx-a11y": jsxA11y,
       "import": importPlugin,
+      "unused-imports": unusedImports,
     },
     rules: {
       ...react.configs.recommended.rules,
@@ -121,15 +126,25 @@ export default tseslint.config(
       }],
       "import/no-duplicates": "error",
       "import/no-unresolved": "off", // TypeScript handles this
+      "import/no-extraneous-dependencies": ["error", {
+        "devDependencies": ["**/*.{test,spec}.{ts,tsx,js,jsx}", "**/tests/**", "**/scripts/**"]
+      }],
       
       // TypeScript specific
       "@typescript-eslint/no-unused-vars": ["warn", { 
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_" 
       }],
-      "@typescript-eslint/prefer-nullish-coalescing": "warn",
-      "@typescript-eslint/prefer-optional-chain": "warn",
-      "@typescript-eslint/no-unnecessary-condition": "warn",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": ["warn", {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }],
+      "@typescript-eslint/prefer-nullish-coalescing": "off", // Requires parserServices
+      "@typescript-eslint/prefer-optional-chain": "off", // Requires parserServices
+      "@typescript-eslint/no-unnecessary-condition": "off", // Requires parserServices
       "@typescript-eslint/no-floating-promises": "warn",
       "@typescript-eslint/await-thenable": "warn",
       "@typescript-eslint/no-misused-promises": "warn",

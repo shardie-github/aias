@@ -150,7 +150,12 @@
     "perf:optimize": "tsx scripts/auto-optimize.ts",
     "perf:alert": "tsx scripts/alert-regressions.ts",
     "perf:verify": "tsx scripts/verify-performance-setup.ts",
-    "perf:all": "npm run perf:collect && npm run perf:report && npm run perf:optimize && npm run perf:alert"
+    "perf:all": "npm run perf:collect && npm run perf:report && npm run perf:optimize && npm run perf:alert",
+    "prune:exports": "ts-prune > reports/ts-prune.txt || true",
+    "scan:usage": "knip --reporter json > reports/knip.json 2>&1 || true",
+    "audit:deps": "depcheck --json > reports/depcheck.json 2>&1 || true",
+    "lint:unused": "eslint . --report-unused-disable-directives --format json > reports/eslint-unused-disables.json 2>&1 || true",
+    "hygiene": "pnpm typecheck && pnpm lint && pnpm prune:exports && pnpm scan:usage && pnpm audit:deps"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",
