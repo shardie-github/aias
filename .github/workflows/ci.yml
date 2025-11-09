@@ -48,6 +48,18 @@ jobs:
       - name: License check
         run: pnpm run audit:licenses
 
+      - name: Code hygiene checks
+        run: pnpm run hygiene
+        continue-on-error: true
+
+      - name: Upload hygiene reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: code-hygiene-reports
+          path: reports/**
+          retention-days: 30
+
   # Unit Tests
   unit-tests:
     name: Unit Tests

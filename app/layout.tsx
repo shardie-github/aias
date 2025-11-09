@@ -10,6 +10,8 @@ import { PerformanceHUD } from "@/components/dev/performance-hud";
 import { PerformanceBeacon } from "@/components/performance-beacon";
 import AgentProvider from "@/components/agent/AgentProvider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/structured-data";
+import { EnhancedErrorBoundary } from "@/lib/error-handling/error-boundary-enhanced";
+import { TelemetryProvider } from "@/lib/monitoring/telemetry-provider";
 
 export const metadata: Metadata = {
   title: "Systems Thinking + AI: The Critical Skill for the AI Age | AIAS Platform",
@@ -80,27 +82,31 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <WebSiteSchema />
       </head>
       <body className="min-h-dvh antialiased">
-        <ThemeProvider>
-          {/* [STAKE+TRUST:BEGIN:skip_link] */}
-          {/* Skip link already exists - verified accessibility feature */}
-          <a href="#main" className="skip-link">Skip to content</a>
-          {/* [STAKE+TRUST:END:skip_link] */}
-          <Header />
-          <main id="main" className="container py-6">{children}</main>
-          <Footer />
-          <Toaster />
-          <PWARegistration />
-          <PerformanceHUD />
-          <PerformanceBeacon />
-          {/* Agent Suggestions: show drawer site-wide when enabled */}
-          <AgentProvider />
+        <EnhancedErrorBoundary>
+          <TelemetryProvider>
+            <ThemeProvider>
+              {/* [STAKE+TRUST:BEGIN:skip_link] */}
+              {/* Skip link already exists - verified accessibility feature */}
+              <a href="#main" className="skip-link">Skip to content</a>
+              {/* [STAKE+TRUST:END:skip_link] */}
+              <Header />
+              <main id="main" className="container py-6">{children}</main>
+              <Footer />
+              <Toaster />
+              <PWARegistration />
+              <PerformanceHUD />
+              <PerformanceBeacon />
+              {/* Agent Suggestions: show drawer site-wide when enabled */}
+              <AgentProvider />
           {/* [META:BEGIN:mounts] */}
           {/* Example mounts — wire auth user ID + app meta in your layout or provider */}
           {/* <meta name="x-app-id" content={process.env.NEXT_PUBLIC_APP_ID || 'generic'} /> */}
           {/* <ConsentPanel /> */}
           {/* <RecoDrawer userId="{AUTH_USER_ID}" /> */}
           {/* [META:END:mounts] */}
-        </ThemeProvider>
+            </ThemeProvider>
+          </TelemetryProvider>
+        </EnhancedErrorBoundary>
       </body>
     </html>
   );

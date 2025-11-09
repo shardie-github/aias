@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { telemetry } from "@/lib/monitoring/enhanced-telemetry";
 
 export default function Error({
   error,
@@ -12,7 +13,11 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log error to monitoring service
+    // Track error with telemetry
+    telemetry.trackError(error, {
+      digest: error.digest,
+      page: window.location.pathname,
+    });
     console.error("Application error:", error);
   }, [error]);
 

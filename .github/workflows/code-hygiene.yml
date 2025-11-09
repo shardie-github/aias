@@ -1,0 +1,120 @@
+name: Code Hygiene
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+  schedule:
+    # Run weekly on Monday at 2 AM UTC
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8.15.0'
+
+jobs:
+  hygiene:
+    name: Code Hygiene Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Type checking
+        run: pnpm run typecheck
+        continue-on-error: true
+
+      - name: Linting
+        run: pnpm run lint
+        continue-on-error: true
+
+      - name: Check unused exports (ts-prune)
+        run: pnpm run prune:exports
+        continue-on-error: true
+
+      - name: Scan for unused files and dependencies (knip)
+        run: pnpm run scan:usage
+        continue-on-error: true
+
+      - name: Audit dependencies (depcheck)
+        run: pnpm run audit:deps
+        continue-on-error: true
+
+      - name: Check unused ESLint disables
+        run: pnpm run lint:unused
+        continue-on-error: true
+
+      - name: Upload hygiene reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: code-hygiene-reports
+          path: reports/**
+          retention-days: 30
+
+      - name: Comment PR with summary
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            let comment = '## 🔍 Code Hygiene Report\n\n';
+            
+            // Read ts-prune report
+            try {
+              const tsPrunePath = path.join('reports', 'ts-prune.txt');
+              if (fs.existsSync(tsPrunePath)) {
+                const content = fs.readFileSync(tsPrunePath, 'utf8');
+                const unusedExports = content.split('\n').filter(line => 
+                  line.trim() && !line.includes('(used in module)')
+                ).length;
+                comment += `- **Unused exports**: ${unusedExports} found\n`;
+              }
+            } catch (e) {
+              comment += '- **ts-prune**: Report not available\n';
+            }
+            
+            // Read depcheck report
+            try {
+              const depcheckPath = path.join('reports', 'depcheck.json');
+              if (fs.existsSync(depcheckPath)) {
+                const depcheck = JSON.parse(fs.readFileSync(depcheckPath, 'utf8'));
+                const missingDeps = Object.keys(depcheck.missing || {}).length;
+                const unusedDeps = (depcheck.dependencies || []).length + (depcheck.devDependencies || []).length;
+                comment += `- **Missing dependencies**: ${missingDeps}\n`;
+                comment += `- **Unused dependencies**: ${unusedDeps}\n`;
+              }
+            } catch (e) {
+              comment += '- **depcheck**: Report not available\n';
+            }
+            
+            comment += '\n📊 Full reports available in workflow artifacts.\n';
+            comment += '📋 See [dead-code-plan.md](/reports/dead-code-plan.md) for detailed analysis.';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

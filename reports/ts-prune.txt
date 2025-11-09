@@ -1,0 +1,890 @@
+middleware.ts:267 - middleware
+middleware.ts:404 - config (used in module)
+next.config.ts:82 - default
+tailwind.config.ts:3 - default
+vite.config.ts:8 - default
+ai/ai_autoscale.ts:434 - AIAutoScale (used in module)
+ai/ai_autoscale.ts:434 - UsageMetrics (used in module)
+ai/ai_autoscale.ts:434 - CostPrediction (used in module)
+ai/ai_autoscale.ts:434 - ScalingRecommendation (used in module)
+ai/orchestrator.ts:360 - OrchestratorConfig (used in module)
+ai/orchestrator.ts:360 - OrchestratorReport (used in module)
+ai/privacy_guard.ts:470 - PIIPattern (used in module)
+ai/privacy_guard.ts:470 - RedactionResult (used in module)
+ai/privacy_guard.ts:470 - ComplianceReport (used in module)
+ai/self_diagnose.ts:464 - AISelfDiagnose (used in module)
+ai/self_diagnose.ts:464 - HealthMetrics (used in module)
+ai/unified_agent.ts:538 - UnifiedHardoniaAgent (used in module)
+app/error.tsx:7 - default
+app/layout.tsx:62 - default
+app/layout.tsx:14 - metadata
+app/loading.tsx:1 - default
+app/not-found.tsx:4 - default
+app/page.tsx:7 - default
+app/sitemap.ts:5 - default
+guardian/core.ts:11 - RiskLevel (used in module)
+guardian/core.ts:14 - ResponseAction (used in module)
+guardian/core.ts:43 - PolicyConfig (used in module)
+guardian/core.ts:59 - GuardianService (used in module)
+guardian/explainer.ts:9 - Explanation (used in module)
+guardian/explainer.ts:16 - GuardianGPT (used in module)
+guardian/explainer.ts:239 - guardianGPT
+guardian/inspector.ts:42 - GuardianInspector (used in module)
+guardian/recommendations.ts:10 - TrustFabricModel (used in module)
+guardian/recommendations.ts:31 - TrustFabricAI (used in module)
+hooks/use-toast.ts:71 - reducer (used in module)
+lib/env-validation.ts:14 - validateEnvOnStartup
+lib/env-validation.ts:52 - validateApiEnv
+ops/notify.ts:39 - sendAlert
+ops/notify.ts:117 - shouldAlert
+ops/notify.ts:124 - createReliabilityAlert
+ops/notify.ts:149 - createSecurityAlert
+ops/notify.ts:168 - createCostAlert
+ops/notify.ts:9 - AlertPayload (used in module)
+scripts/alert-regressions.ts:226 - detectRegressions (used in module)
+scripts/alert-regressions.ts:226 - createGitHubIssue (used in module)
+scripts/alert-regressions.ts:226 - sendWebhook (used in module)
+scripts/auto-optimize.ts:151 - analyzeAndOptimize (used in module)
+scripts/check-backup-evidence.ts:22 - checkBackupEvidence (used in module)
+scripts/check-backup-evidence.ts:110 - formatBackupEvidenceLine (used in module)
+scripts/collect-metrics.ts:278 - collectVercelMetrics (used in module)
+scripts/collect-metrics.ts:278 - collectSupabaseMetrics (used in module)
+scripts/collect-metrics.ts:278 - collectExpoMetrics (used in module)
+scripts/collect-metrics.ts:278 - collectCIMetrics (used in module)
+scripts/futurecheck.ts:547 - FutureCheck (used in module)
+scripts/futurecheck.ts:547 - CompatibilityReport (used in module)
+scripts/generate-vapid-keys.ts:38 - generateVAPIDKeys (used in module)
+scripts/publish-daily-article.ts:45 - publishDailyArticle (used in module)
+scripts/rss-feed-processor.ts:47 - processRSSFeeds (used in module)
+scripts/security-self-check.ts:416 - runSecurityCheck
+scripts/verify-performance-setup.ts:100 - checkFile (used in module)
+scripts/verify-performance-setup.ts:100 - checkEnvVar (used in module)
+src/App.tsx:146 - default
+watchers/ai_performance.watcher.ts:393 - AIPerformanceWatcher (used in module)
+watchers/ai_performance.watcher.ts:393 - PerformanceAnomaly (used in module)
+watchers/ai_performance.watcher.ts:393 - PerformanceReport (used in module)
+watchers/api_contract.watcher.ts:368 - APIContractWatcher (used in module)
+watchers/api_contract.watcher.ts:368 - ContractViolation (used in module)
+watchers/api_contract.watcher.ts:368 - ContractReport (used in module)
+watchers/db_integrity.watcher.ts:435 - DatabaseIntegrityWatcher (used in module)
+watchers/db_integrity.watcher.ts:435 - IntegrityCheck (used in module)
+watchers/db_integrity.watcher.ts:435 - IntegrityReport (used in module)
+app/about/page.tsx:9 - default
+app/about/page.tsx:4 - metadata
+app/affiliate-disclosure/page.tsx:9 - default
+app/affiliate-disclosure/page.tsx:4 - metadata
+app/billing/page.tsx:6 - default
+app/blog/page.tsx:13 - default
+app/blog/page.tsx:8 - metadata
+app/case-studies/page.tsx:71 - default
+app/case-studies/page.tsx:6 - metadata
+app/challenges/page.tsx:17 - default
+app/community/page.tsx:20 - default
+app/demo/page.tsx:11 - default
+app/demo/page.tsx:6 - metadata
+app/features/page.tsx:168 - default
+app/features/page.tsx:6 - metadata
+app/genai-content-engine/page.tsx:11 - default
+app/genai-content-engine/page.tsx:6 - metadata
+app/help/page.tsx:4 - default
+app/integrations/page.tsx:85 - default
+app/integrations/page.tsx:6 - metadata
+app/journal/page.tsx:7 - default
+app/leaderboard/page.tsx:5 - default
+app/offline/page.tsx:4 - default
+app/play/page.tsx:83 - default
+app/premium/page.tsx:12 - default
+app/premium/page.tsx:7 - metadata
+app/pricing/page.tsx:66 - default
+app/pricing/page.tsx:7 - metadata
+app/privacy/page.tsx:7 - default
+app/rss-news/page.tsx:58 - default
+app/rss-news/page.tsx:8 - metadata
+app/status/page.tsx:12 - default
+app/systems-thinking/page.tsx:11 - default
+app/systems-thinking/page.tsx:6 - metadata
+app/trust/page.tsx:7 - default
+components/a11y/aria-live.tsx:9 - AriaLive
+components/a11y/aria-live.tsx:22 - useAriaLive
+components/gamification/Badge.tsx:1 - default
+components/gamification/MilestoneCelebration.tsx:26 - default
+components/gamification/MilestoneCelebration.tsx:65 - MilestoneBadge
+components/gamification/PushNotificationButton.tsx:6 - requestPushPermission (used in module)
+components/gamification/PushNotificationButton.tsx:19 - subscribeToPush (used in module)
+components/monetization/premium-content-gate.tsx:14 - PremiumContentGate
+components/monetization/sponsored-badge.tsx:10 - SponsoredBadge
+components/privacy/ConsentPanel.tsx:2 - default
+components/reco/RecoDrawer.tsx:4 - default
+components/seo/structured-data.tsx:137 - BreadcrumbSchema
+components/ui/badge.tsx:22 - BadgeProps (used in module)
+components/ui/badge.tsx:30 - badgeVariants (used in module)
+components/ui/card.tsx:54 - CardFooter (used in module)
+components/ui/dialog.tsx:87 - DialogPortal (used in module)
+components/ui/dialog.tsx:88 - DialogOverlay (used in module)
+components/ui/dialog.tsx:89 - DialogClose (used in module)
+components/ui/dialog.tsx:93 - DialogFooter (used in module)
+components/ui/dialog.tsx:95 - DialogDescription (used in module)
+components/ui/input.tsx:4 - InputProps (used in module)
+components/ui/select.tsx:140 - SelectGroup (used in module)
+components/ui/select.tsx:144 - SelectLabel (used in module)
+components/ui/select.tsx:146 - SelectSeparator (used in module)
+components/ui/select.tsx:147 - SelectScrollUpButton (used in module)
+components/ui/select.tsx:148 - SelectScrollDownButton (used in module)
+components/ui/sheet.tsx:69 - SheetPortal (used in module)
+components/ui/sheet.tsx:69 - SheetClose (used in module)
+components/ui/toast.tsx:126 - ToastAction (used in module)
+lib/agent/events.ts:1 - track
+lib/api/route-handler.ts:39 - createRouteHandler (used in module)
+lib/api/route-handler.ts:12 - RouteHandlerOptions (used in module)
+lib/api/route-handler.ts:29 - RouteContext (used in module)
+lib/blog/articles.ts:206 - getSystemsThinkingArticles
+lib/blog/articles.ts:4 - BlogArticle (used in module)
+lib/blog/articles.ts:20 - articles (used in module)
+lib/blog/comments.ts:20 - ModerationResult (used in module)
+lib/blog/publishing-schedule.ts:40 - getScheduleForDateRange
+lib/blog/publishing-schedule.ts:4 - PublishingSchedule (used in module)
+lib/blog/rss-editorial.ts:6 - EditorialTake (used in module)
+lib/blog/rss-feed.ts:132 - generateSystemsThinkingCommentary
+lib/blog/rss-feed.ts:19 - RSSFeed (used in module)
+lib/gamification/challenge-templates.ts:93 - seedChallenges (used in module)
+lib/gamification/challenge-templates.ts:148 - seedBadges (used in module)
+lib/gamification/challenge-templates.ts:6 - CHALLENGE_TEMPLATES (used in module)
+lib/gamification/email.ts:13 - sendEmail (used in module)
+lib/gamification/email.ts:39 - sendStreakReminderEmail (used in module)
+lib/gamification/email.ts:97 - sendChallengeNotificationEmail
+lib/gamification/email.ts:152 - sendMilestoneEmail
+lib/gamification/email.ts:224 - checkAndSendStreakReminders
+lib/gamification/test-utils.ts:5 - testGamificationFeatures (used in module)
+lib/gamification/test-utils.ts:124 - testDatabaseSchema (used in module)
+lib/gamification/utils.ts:6 - checkAndAwardMilestone (used in module)
+lib/gamification/utils.ts:53 - updateStreak
+lib/gamification/utils.ts:84 - updateUserXP (used in module)
+lib/gamification/utils.ts:112 - processReferral
+lib/monetization/affiliate.ts:117 - generateAffiliateLink
+lib/monetization/affiliate.ts:154 - calculateAffiliateRevenue
+lib/monetization/affiliate.ts:4 - AffiliateLink (used in module)
+lib/monetization/affiliate.ts:17 - AffiliateStats
+lib/monetization/affiliate.ts:27 - affiliatePrograms (used in module)
+lib/monetization/feature-flags.ts:13 - shouldEnableFeature (used in module)
+lib/monetization/feature-flags.ts:41 - getEnabledFeatures
+lib/monetization/feature-flags.ts:50 - estimateRevenuePotential
+lib/monetization/feature-flags.ts:6 - MonetizationMetrics (used in module)
+lib/monitoring/security-monitor.ts:9 - SecurityEvent (used in module)
+lib/monitoring/security-monitor.ts:22 - SecurityMonitor (used in module)
+lib/offline/db.ts:1 - idb (used in module)
+lib/offline/sync.ts:3 - syncUp
+lib/offline/sync.ts:9 - syncDown
+lib/performance/cache.ts:236 - cached (used in module)
+lib/performance/cache.ts:10 - CacheOptions (used in module)
+lib/performance/cache.ts:16 - CacheService (used in module)
+lib/performance/query-optimizer.ts:10 - QueryOptions (used in module)
+lib/performance/query-optimizer.ts:19 - QueryOptimizer (used in module)
+lib/security/api-security.ts:32 - sanitizeInput (used in module)
+lib/security/api-security.ts:48 - sanitizeHTML
+lib/security/api-security.ts:109 - detectSQLInjection
+lib/security/api-security.ts:124 - detectXSS
+lib/security/api-security.ts:142 - validateRequestBody
+lib/security/api-security.ts:192 - generateRateLimitKey
+lib/security/api-security.ts:219 - validateAPIKey
+lib/security/api-security.ts:13 - validationSchemas
+lib/security/api-security.ts:207 - securityHeaders
+lib/security/tenant-isolation.ts:9 - TenantContext (used in module)
+lib/security/tenant-isolation.ts:16 - TenantLimits (used in module)
+lib/security/tenant-isolation.ts:25 - TenantIsolationService (used in module)
+lib/telemetry/track.ts:1 - track
+ops/ai/guardrails.ts:7 - AICallOptions (used in module)
+ops/ai/guardrails.ts:15 - AIGuardrail (used in module)
+ops/ai/guardrails.ts:76 - aiGuardrail
+ops/billing/stripe.ts:13 - isBillingEnabled (used in module)
+ops/billing/stripe.ts:17 - handleStripeWebhook
+ops/compliance/dsar.ts:15 - processDSAR
+ops/compliance/dsar.ts:65 - redactLog
+ops/compliance/dsar.ts:9 - DSARRequest (used in module)
+ops/cost/caps.ts:18 - CostCaps (used in module)
+ops/cost/caps.ts:72 - defaultCostCaps
+ops/features/flags.ts:16 - getFeatureFlag (used in module)
+ops/features/flags.ts:27 - getABVariant
+ops/features/flags.ts:32 - getPricing
+ops/features/flags.ts:58 - isOfferEnabled
+ops/features/flags.ts:9 - FeatureFlag
+ops/growth/engine.ts:19 - trackUTM
+ops/growth/engine.ts:26 - generateCohortReport (used in module)
+ops/growth/engine.ts:40 - generateGrowthReport
+ops/growth/engine.ts:9 - UTMData (used in module)
+ops/i18n/utils.ts:11 - I18n (used in module)
+ops/i18n/utils.ts:94 - i18n
+ops/incident/quiet-mode.ts:19 - setQuietMode
+ops/incident/quiet-mode.ts:23 - isQuietMode
+ops/incident/quiet-mode.ts:27 - shouldDegradeFeature
+ops/incident/quiet-mode.ts:34 - getBannerMessage
+ops/observability/index.ts:15 - initObservability
+ops/observability/index.ts:67 - observabilityMiddleware
+ops/observability/index.ts:48 - meter (used in module)
+ops/observability/index.ts:50 - requestCounter (used in module)
+ops/observability/index.ts:54 - requestDuration (used in module)
+ops/observability/index.ts:58 - errorCounter (used in module)
+ops/observability/index.ts:62 - costCounter
+ops/partners/contracts.ts:45 - validateContractPayload
+ops/partners/contracts.ts:5 - IntegrationContract (used in module)
+ops/partners/contracts.ts:12 - Endpoint (used in module)
+ops/partners/contracts.ts:18 - Webhook (used in module)
+ops/partners/contracts.ts:24 - partnerContracts
+ops/perf/budgets.ts:14 - validatePerformanceBudgets
+ops/perf/budgets.ts:5 - PERFORMANCE_BUDGETS (used in module)
+ops/store/manifests.ts:18 - generateAppStoreManifest
+ops/store/manifests.ts:36 - generateGooglePlayManifest
+ops/store/manifests.ts:53 - generatePrivacyLabels
+ops/store/manifests.ts:5 - AppStoreManifest (used in module)
+ops/utils/env.ts:5 - requireEnv
+ops/utils/env.ts:13 - requireEnvWithDefault
+ops/utils/env.ts:17 - validateEnv
+packages/config/index.ts:65 - env (used in module)
+packages/config/index.ts:107 - config (used in module)
+packages/config/index.ts:163 - Config
+packages/lib/index.ts:7 - prisma
+packages/lib/index.ts:12 - AuthUser
+packages/lib/index.ts:20 - AuthService
+packages/lib/index.ts:9 - CreateCheckoutSessionParams
+packages/lib/index.ts:18 - CreateBillingPortalSessionParams
+packages/lib/index.ts:23 - PaymentService
+packages/lib/index.ts:349 - startWorkers
+packages/lib/index.ts:11 - feedIngestQueue
+packages/lib/index.ts:12 - aiGenerateQueue
+packages/lib/index.ts:13 - reportPdfQueue
+packages/lib/index.ts:14 - billingSyncQueue
+packages/lib/index.ts:17 - FeedIngestJob
+packages/lib/index.ts:23 - AIGenerateJob
+packages/lib/index.ts:30 - ReportPdfJob
+packages/lib/index.ts:36 - BillingSyncJob
+packages/lib/index.ts:43 - QueueProcessors
+packages/lib/index.ts:5 - SourceConfigSchema
+packages/lib/index.ts:15 - SourceAdapter
+packages/lib/index.ts:22 - ShopifyAdapter
+packages/lib/index.ts:49 - GoogleTrendsAdapter
+packages/lib/index.ts:77 - TikTokBusinessAdapter
+packages/lib/index.ts:109 - AliExpressAdapter
+packages/lib/index.ts:136 - GenericCsvAdapter
+packages/lib/index.ts:161 - GenericJsonAdapter
+packages/lib/index.ts:186 - DataFeedService
+packages/lib/index.ts:8 - metrics
+packages/lib/index.ts:58 - logger
+packages/lib/index.ts:95 - ObservabilityService
+packages/lib/payments-paypal.ts:4 - PayPalConfig (used in module)
+packages/lib/payments-paypal.ts:11 - CreatePayPalOrderParams (used in module)
+packages/lib/payments-paypal.ts:21 - PayPalOrderResponse (used in module)
+packages/lib/payments-paypal.ts:31 - PayPalService (used in module)
+packages/lib/security-monitor.ts:4 - SecurityEvent (used in module)
+packages/lib/security-monitor.ts:21 - ThreatDetectionRule (used in module)
+packages/lib/security-monitor.ts:33 - SecurityAlert
+packages/lib/security-monitor.ts:48 - SecurityEventType (used in module)
+packages/lib/security-monitor.ts:64 - SecuritySeverity (used in module)
+packages/lib/security-monitor.ts:71 - SecurityAction (used in module)
+packages/lib/security-monitor.ts:81 - AlertStatus (used in module)
+packages/lib/security-monitor.ts:88 - SecurityMonitor (used in module)
+packages/lib/security-monitor.ts:543 - securityMonitor
+packages/lib/webhook-manager.ts:5 - WebhookConfig (used in module)
+packages/lib/webhook-manager.ts:14 - WebhookEvent (used in module)
+packages/lib/webhook-manager.ts:27 - WebhookManager (used in module)
+packages/lib/webhook-manager.ts:386 - webhookManager
+src/components/About.tsx:7 - About
+src/components/AnimatedBackground.tsx:4 - AnimatedBackground
+src/components/AutomationFlowcharts.tsx:48 - AutomationFlowcharts
+src/components/AutomationNetworkMap.tsx:20 - AutomationNetworkMap
+src/components/BookingInterface.tsx:17 - BookingInterface
+src/components/ChatbotWidget.tsx:15 - ChatbotWidget
+src/components/ChatShowcase.tsx:3 - ChatShowcase
+src/components/ClientShowcase.tsx:7 - ClientShowcase
+src/components/DynamicCaseExplorer.tsx:62 - DynamicCaseExplorer
+src/components/ErrorBoundary.tsx:26 - ErrorBoundary (used in module)
+src/components/ErrorBoundary.tsx:231 - withErrorBoundary
+src/components/ErrorBoundary.tsx:247 - useErrorHandler
+src/components/ErrorBoundary.tsx:276 - RouteErrorBoundary
+src/components/ErrorBoundary.tsx:301 - ApiErrorBoundary
+src/components/ErrorBoundary.tsx:327 - default
+src/components/FAQSection.tsx:43 - FAQSection
+src/components/Features.tsx:80 - Features
+src/components/FloatingDock.tsx:17 - FloatingDock
+src/components/Footer.tsx:3 - Footer
+src/components/Hero.tsx:7 - Hero
+src/components/InfoCards.tsx:6 - InfoCards
+src/components/InteractiveProofPoints.tsx:7 - InteractiveProofPoints
+src/components/LeadGenForm.tsx:7 - LeadGenForm
+src/components/LiveActivityFeed.tsx:13 - LiveActivityFeed
+src/components/Navigation.tsx:6 - Navigation
+src/components/PerformanceMonitor.tsx:182 - default
+src/components/Pricing.tsx:55 - Pricing
+src/components/PrivacyCompliance.tsx:38 - PrivacyCompliance (used in module)
+src/components/ResourceLinks.tsx:49 - ResourceLinks
+src/components/SecurityShowcase.tsx:72 - SecurityShowcase (used in module)
+src/components/SecurityShowcase.tsx:624 - default
+src/components/SolutionQuiz.tsx:63 - SolutionQuiz
+src/components/ThinkingPulse.tsx:4 - ThinkingPulse
+src/components/TrustBadges.tsx:34 - TrustBadges (used in module)
+src/hooks/use-mobile.tsx:5 - useIsMobile
+src/hooks/use-toast.ts:71 - reducer (used in module)
+src/hooks/use-toast.ts:186 - useToast (used in module)
+src/hooks/use-toast.ts:186 - toast (used in module)
+src/lib/analytics.ts:2 - BusinessMetrics (used in module)
+src/lib/analytics.ts:35 - EventData (used in module)
+src/lib/analytics.ts:45 - AnalyticsService
+src/lib/analytics.ts:355 - trackPageView
+src/lib/analytics.ts:365 - trackButtonClick
+src/lib/analytics.ts:375 - trackFormSubmit
+src/lib/analytics.ts:385 - trackPurchase
+src/lib/automation.ts:6 - AutomationWorkflow (used in module)
+src/lib/automation.ts:20 - WebhookConfig (used in module)
+src/lib/automation.ts:27 - ScheduleConfig (used in module)
+src/lib/automation.ts:33 - EventConfig (used in module)
+src/lib/automation.ts:39 - AIDetectionConfig (used in module)
+src/lib/automation.ts:46 - TriggerConfig (used in module)
+src/lib/automation.ts:48 - WorkflowTrigger (used in module)
+src/lib/automation.ts:54 - TriggerCondition (used in module)
+src/lib/automation.ts:60 - AIAnalysisConfig (used in module)
+src/lib/automation.ts:67 - DataExtractionConfig (used in module)
+src/lib/automation.ts:74 - NotificationConfig (used in module)
+src/lib/automation.ts:81 - APICallConfig (used in module)
+src/lib/automation.ts:89 - DatabaseUpdateConfig (used in module)
+src/lib/automation.ts:96 - AIGenerationConfig (used in module)
+src/lib/automation.ts:104 - SchedulingConfig (used in module)
+src/lib/automation.ts:110 - IntegrationConfig (used in module)
+src/lib/automation.ts:117 - StepConfig (used in module)
+src/lib/automation.ts:119 - WorkflowStep (used in module)
+src/lib/automation.ts:128 - RetryPolicy (used in module)
+src/lib/automation.ts:134 - LeadGenerationConfig (used in module)
+src/lib/automation.ts:143 - QualificationCriteria (used in module)
+src/lib/automation.ts:151 - ScoringRule (used in module)
+src/lib/automation.ts:157 - ScoringCondition (used in module)
+src/lib/automation.ts:163 - FollowUpStep (used in module)
+src/lib/automation.ts:170 - AppointmentBookingConfig (used in module)
+src/lib/automation.ts:180 - ReminderStep (used in module)
+src/lib/automation.ts:187 - ConferencingConfig
+src/lib/automation.ts:198 - NoteTakingConfig (used in module)
+src/lib/automation.ts:209 - SketchingConfig (used in module)
+src/lib/automation.ts:219 - AutomationManager (used in module)
+src/lib/automation.ts:808 - automationManager
+src/lib/billing.ts:2 - SubscriptionPlan (used in module)
+src/lib/billing.ts:27 - UsageMetrics (used in module)
+src/lib/billing.ts:35 - BillingInfo
+src/lib/billing.ts:49 - SUBSCRIPTION_PLANS
+src/lib/billing.ts:144 - ONE_TIME_APPS
+src/lib/billing.ts:192 - API_SERVICES
+src/lib/billing.ts:221 - BillingService
+src/lib/billing.ts:360 - calculateSavings
+src/lib/billing.ts:365 - formatPrice
+src/lib/flags.ts:41 - isFlagEnabled (used in module)
+src/lib/flags.ts:63 - getFlag
+src/lib/flags.ts:71 - getAllFlags
+src/lib/flags.ts:89 - isCanaryEnabled
+src/lib/flags.ts:103 - getFlagMetadata
+src/lib/flags.ts:9 - FeatureFlag (used in module)
+src/lib/flags.ts:16 - FlagsConfig (used in module)
+src/lib/i18n.ts:628 - default
+src/lib/i18n.ts:631 - useTranslation (used in module)
+src/lib/i18n.ts:636 - changeLanguage (used in module)
+src/lib/i18n.ts:640 - getCurrentLanguage
+src/lib/i18n.ts:644 - getAvailableLanguages
+src/lib/i18n.ts:649 - useT
+src/lib/monitoring.ts:76 - initializeErrorHandling
+src/lib/monitoring.ts:2 - MonitoringEvent (used in module)
+src/lib/monitoring.ts:8 - ErrorInfo (used in module)
+src/lib/observability.ts:6 - MetricData (used in module)
+src/lib/observability.ts:13 - LogEntry (used in module)
+src/lib/observability.ts:23 - PerformanceMetric (used in module)
+src/lib/observability.ts:30 - HealthCheck (used in module)
+src/lib/observability.ts:38 - ObservabilityService (used in module)
+src/lib/observability.ts:346 - observabilityService (used in module)
+src/lib/observability.ts:349 - log (used in module)
+src/lib/observability.ts:353 - recordMetric (used in module)
+src/lib/observability.ts:357 - recordPerformanceMetric (used in module)
+src/lib/observability.ts:361 - updateHealthCheck (used in module)
+src/lib/partnerships.ts:2 - PartnershipTier (used in module)
+src/lib/partnerships.ts:22 - Lead (used in module)
+src/lib/partnerships.ts:40 - Referral (used in module)
+src/lib/partnerships.ts:50 - Partner (used in module)
+src/lib/partnerships.ts:76 - PARTNERSHIP_TIERS
+src/lib/partnerships.ts:173 - PartnershipService
+src/lib/partnerships.ts:474 - generateLeadMagnet
+src/lib/partnerships.ts:501 - createReferralLink
+src/lib/privacy.ts:6 - PrivacySettings (used in module)
+src/lib/privacy.ts:16 - ConsentData (used in module)
+src/lib/privacy.ts:28 - DataSubject (used in module)
+src/lib/privacy.ts:38 - PrivacyManager (used in module)
+src/lib/privacy.ts:267 - privacyManager
+src/lib/rate-limiter.ts:6 - RateLimitConfig (used in module)
+src/lib/rate-limiter.ts:17 - RateLimitInfo (used in module)
+src/lib/rate-limiter.ts:24 - RateLimiter (used in module)
+src/lib/rate-limiter.ts:229 - rateLimiters
+src/lib/rate-limiter.ts:274 - createRateLimiter
+src/lib/rate-limiter.ts:279 - rateLimit (used in module)
+src/lib/security-headers.ts:6 - SecurityHeadersConfig (used in module)
+src/lib/security-headers.ts:16 - SecurityHeaders (used in module)
+src/lib/security-headers.ts:191 - securityHeaders (used in module)
+src/lib/security-headers.ts:194 - applySecurityHeaders
+src/lib/security-headers.ts:201 - generateNonce (used in module)
+src/lib/security.ts:8 - SecurityConfig (used in module)
+src/lib/security.ts:33 - SecurityEvent (used in module)
+src/lib/security.ts:45 - ThreatDetection (used in module)
+src/lib/security.ts:54 - SecurityManager (used in module)
+src/lib/security.ts:490 - securityManager
+src/lib/seo.ts:20 - SEOConfig (used in module)
+src/lib/seo.ts:40 - PageSEO (used in module)
+src/lib/seo.ts:44 - PAGE_SEO
+src/lib/seo.ts:207 - SEOService
+src/lib/seo.ts:369 - generatePageTitle
+src/lib/seo.ts:386 - generateMetaDescription
+src/lib/seo.ts:402 - generateKeywords
+src/lib/utils.ts:4 - cn
+src/lib/validation.ts:25 - userSchemas
+src/lib/validation.ts:56 - organizationSchemas
+src/lib/validation.ts:80 - projectSchemas
+src/lib/validation.ts:96 - apiKeySchemas
+src/lib/validation.ts:109 - subscriptionSchemas
+src/lib/validation.ts:122 - dataSourceSchemas
+src/lib/validation.ts:138 - aiRunSchemas
+src/lib/validation.ts:150 - reportSchemas
+src/lib/validation.ts:166 - webhookSchemas
+src/lib/validation.ts:183 - featureFlagSchemas
+src/lib/validation.ts:201 - querySchemas (used in module)
+src/lib/validation.ts:221 - fileSchemas
+src/lib/validation.ts:236 - sanitizers
+src/lib/validation.ts:276 - formatValidationError (used in module)
+src/lib/validation.ts:288 - validateInput (used in module)
+src/lib/validation.ts:304 - createValidationMiddleware
+src/types/platform.ts:6 - Tenant
+src/types/platform.ts:19 - SubscriptionPlan (used in module)
+src/types/platform.ts:31 - TenantLimits (used in module)
+src/types/platform.ts:42 - BillingInfo (used in module)
+src/types/platform.ts:51 - TenantSettings (used in module)
+src/types/platform.ts:60 - NotificationSettings (used in module)
+src/types/platform.ts:68 - SecuritySettings (used in module)
+src/types/platform.ts:76 - IntegrationSettings (used in module)
+src/types/platform.ts:82 - ApiKey (used in module)
+src/types/platform.ts:93 - WorkflowNode (used in module)
+src/types/platform.ts:107 - WorkflowTemplate
+src/types/platform.ts:128 - WorkflowExecution
+src/types/platform.ts:141 - ExecutionMetrics (used in module)
+src/types/platform.ts:151 - AIAgent
+src/types/platform.ts:167 - AgentPersonality (used in module)
+src/types/platform.ts:175 - AgentPricing (used in module)
+src/types/platform.ts:185 - AgentMetrics (used in module)
+src/types/platform.ts:194 - MarketplaceItem
+src/types/platform.ts:220 - APIService
+src/types/platform.ts:235 - APIPricing (used in module)
+src/types/platform.ts:248 - RateLimit (used in module)
+src/types/platform.ts:254 - AuthMethod (used in module)
+src/types/platform.ts:260 - APIExample (used in module)
+src/types/platform.ts:267 - RevenueStream
+src/types/platform.ts:281 - UsageMetrics
+src/types/platform.ts:294 - PlatformAnalytics
+src/types/platform.ts:307 - Integration
+src/types/platform.ts:321 - IntegrationConfig (used in module)
+src/types/platform.ts:329 - WebhookConfig (used in module)
+src/types/platform.ts:336 - RetryPolicy (used in module)
+src/types/platform.ts:342 - EndpointConfig (used in module)
+src/types/platform.ts:350 - ParameterConfig (used in module)
+src/types/platform.ts:358 - ResponseConfig (used in module)
+src/types/platform.ts:363 - IntegrationPricing (used in module)
+src/types/platform.ts:371 - SupportInfo (used in module)
+src/types/platform.ts:380 - DemoEnvironment
+src/types/platform.ts:393 - InteractiveTutorial
+src/types/platform.ts:405 - TutorialStep (used in module)
+src/types/platform.ts:415 - ValidationRule (used in module)
+src/types/platform.ts:421 - TutorialResource (used in module)
+src/types/platform.ts:429 - CommunityPost
+src/types/platform.ts:449 - ExpertProfile
+src/types/platform.ts:468 - Notification
+src/types/platform.ts:487 - CommunicationChannel
+src/types/platform.ts:498 - AuditLog
+src/types/platform.ts:512 - ComplianceReport
+src/types/platform.ts:524 - ComplianceIssue (used in module)
+app/account/audit-log/page.tsx:14 - default
+app/admin/compliance/page.tsx:19 - default
+app/admin/metrics/page.tsx:37 - default
+app/admin/reliability/page.tsx:46 - default
+app/api/example-secure/route.ts:27 - GET
+app/api/example-secure/route.ts:98 - POST
+app/api/feedback/route.ts:7 - POST
+app/api/feedback/route.ts:5 - runtime
+app/api/health/route.ts:3 - default
+app/api/health/route.ts:1 - config
+app/api/healthz/route.ts:13 - GET
+app/api/healthz/route.ts:11 - dynamic
+app/api/ingest/route.ts:11 - POST
+app/api/ingest/route.ts:4 - runtime
+app/api/metrics/route.ts:14 - GET
+app/api/metrics/route.ts:5 - runtime
+app/api/metrics/route.ts:6 - dynamic
+app/api/metrics/route.ts:7 - revalidate
+app/api/telemetry/route.ts:12 - POST
+app/api/telemetry/route.ts:5 - runtime
+app/billing/success/page.tsx:8 - default
+app/blog/[slug]/page.tsx:15 - generateMetadata
+app/blog/[slug]/page.tsx:31 - generateStaticParams
+app/blog/[slug]/page.tsx:38 - default
+app/rss-news/[id]/page.tsx:35 - generateMetadata
+app/rss-news/[id]/page.tsx:50 - default
+packages/lib/ai/index.ts:414 - createAIProvider
+packages/lib/ai/index.ts:429 - createFallbackAIProvider
+packages/lib/ai/index.ts:3 - ChatMessageSchema
+packages/lib/ai/index.ts:8 - ChatRequestSchema
+packages/lib/ai/index.ts:16 - AuditRequestSchema
+packages/lib/ai/index.ts:26 - EstimateRequestSchema
+packages/lib/ai/index.ts:43 - ContentGenerationRequestSchema
+packages/lib/ai/index.ts:52 - WorkflowGenerationRequestSchema
+packages/lib/ai/index.ts:61 - ChatMessage
+packages/lib/ai/index.ts:62 - ChatRequest
+packages/lib/ai/index.ts:63 - AuditRequest
+packages/lib/ai/index.ts:64 - EstimateRequest
+packages/lib/ai/index.ts:65 - ContentGenerationRequest
+packages/lib/ai/index.ts:66 - WorkflowGenerationRequest
+packages/lib/ai/index.ts:68 - AIProvider
+packages/lib/ai/index.ts:78 - AIResponse
+packages/lib/ai/index.ts:5 - AIClient
+packages/lib/ai/index.ts:106 - aiClient
+packages/lib/ai/index.ts:5 - AuditSummarySchema
+packages/lib/ai/index.ts:19 - ProjectEstimateSchema
+packages/lib/ai/index.ts:43 - ContentPlanSchema
+packages/lib/ai/index.ts:60 - WorkflowBlueprintSchema
+packages/lib/ai/index.ts:88 - AIGenerators
+packages/lib/connectors/crm-connector.ts:3 - CRMContact (used in module)
+packages/lib/connectors/crm-connector.ts:17 - CRMOpportunity (used in module)
+packages/lib/connectors/crm-connector.ts:31 - CRMConfig (used in module)
+packages/lib/connectors/crm-connector.ts:37 - CRMConnector (used in module)
+packages/lib/connectors/crm-connector.ts:60 - HubSpotConnector (used in module)
+packages/lib/connectors/crm-connector.ts:376 - SalesforceConnector (used in module)
+packages/lib/connectors/crm-connector.ts:622 - CRMConnectorFactory
+src/components/audit/AuditLoggingDashboard.tsx:31 - AuditLog (used in module)
+src/components/audit/AuditLoggingDashboard.tsx:53 - AuditFilter (used in module)
+src/components/audit/AuditLoggingDashboard.tsx:191 - AuditLoggingDashboard
+src/components/billing/SubscriptionEnforcement.tsx:25 - SubscriptionPlan (used in module)
+src/components/billing/SubscriptionEnforcement.tsx:47 - UsageMetrics (used in module)
+src/components/billing/SubscriptionEnforcement.tsx:56 - FeatureGate (used in module)
+src/components/billing/SubscriptionEnforcement.tsx:149 - SubscriptionEnforcement
+src/components/billing/UsageBasedBilling.tsx:25 - BillingMetric (used in module)
+src/components/billing/UsageBasedBilling.tsx:37 - BillingPeriod (used in module)
+src/components/billing/UsageBasedBilling.tsx:48 - BillingProjection (used in module)
+src/components/billing/UsageBasedBilling.tsx:147 - UsageBasedBilling
+src/components/compliance/GDPRComplianceUI.tsx:29 - ConsentSettings (used in module)
+src/components/compliance/GDPRComplianceUI.tsx:39 - DataSubject (used in module)
+src/components/compliance/GDPRComplianceUI.tsx:51 - DataSubjectRequest (used in module)
+src/components/compliance/GDPRComplianceUI.tsx:62 - ComplianceReport (used in module)
+src/components/compliance/GDPRComplianceUI.tsx:143 - GDPRComplianceUI
+src/components/marketplace/MarketplaceCommission.tsx:25 - MarketplaceItem (used in module)
+src/components/marketplace/MarketplaceCommission.tsx:42 - CommissionTier (used in module)
+src/components/marketplace/MarketplaceCommission.tsx:52 - Payout (used in module)
+src/components/marketplace/MarketplaceCommission.tsx:213 - MarketplaceCommission
+src/components/platform/AIAgentBuilder.tsx:49 - AIAgentBuilder (used in module)
+src/components/platform/AIAgentBuilder.tsx:800 - default
+src/components/platform/AnalyticsDashboard.tsx:106 - AnalyticsDashboard (used in module)
+src/components/platform/AnalyticsDashboard.tsx:736 - default
+src/components/platform/BillingDashboard.tsx:792 - default
+src/components/platform/CommunityFeatures.tsx:112 - CommunityFeatures (used in module)
+src/components/platform/CommunityFeatures.tsx:879 - default
+src/components/platform/NotificationCenter.tsx:61 - NotificationCenter (used in module)
+src/components/platform/NotificationCenter.tsx:755 - default
+src/components/platform/TenantDashboard.tsx:36 - TenantDashboard (used in module)
+src/components/platform/TenantDashboard.tsx:513 - default
+src/components/platform/TenantOnboarding.tsx:228 - TenantOnboarding (used in module)
+src/components/platform/TenantOnboarding.tsx:1064 - default
+src/components/platform/WorkflowBuilder.tsx:44 - WorkflowBuilder (used in module)
+src/components/platform/WorkflowBuilder.tsx:624 - default
+src/components/security/RealTimeSecurityDashboard.tsx:25 - SecurityEvent (used in module)
+src/components/security/RealTimeSecurityDashboard.tsx:39 - ThreatMetrics (used in module)
+src/components/security/RealTimeSecurityDashboard.tsx:49 - SecurityAlert (used in module)
+src/components/security/RealTimeSecurityDashboard.tsx:133 - RealTimeSecurityDashboard
+src/components/security/ThreatDetectionSystem.tsx:32 - ThreatPattern (used in module)
+src/components/security/ThreatDetectionSystem.tsx:46 - ThreatEvent (used in module)
+src/components/security/ThreatDetectionSystem.tsx:62 - AIAnalysis (used in module)
+src/components/security/ThreatDetectionSystem.tsx:191 - ThreatDetectionSystem
+src/components/tutorials/DemoEnvironment.tsx:8 - DemoScenario (used in module)
+src/components/tutorials/DemoEnvironment.tsx:20 - DemoStep (used in module)
+src/components/tutorials/DemoEnvironment.tsx:346 - DemoEnvironment
+src/components/tutorials/InteractiveTutorial.tsx:8 - TutorialStep (used in module)
+src/components/tutorials/TutorialLibrary.tsx:194 - TutorialLibrary
+src/components/ui/accordion.tsx:52 - Accordion (used in module)
+src/components/ui/accordion.tsx:52 - AccordionItem (used in module)
+src/components/ui/accordion.tsx:52 - AccordionTrigger (used in module)
+src/components/ui/accordion.tsx:52 - AccordionContent (used in module)
+src/components/ui/alert-dialog.tsx:93 - AlertDialog (used in module)
+src/components/ui/alert-dialog.tsx:94 - AlertDialogPortal (used in module)
+src/components/ui/alert-dialog.tsx:95 - AlertDialogOverlay (used in module)
+src/components/ui/alert-dialog.tsx:96 - AlertDialogTrigger (used in module)
+src/components/ui/alert-dialog.tsx:97 - AlertDialogContent (used in module)
+src/components/ui/alert-dialog.tsx:98 - AlertDialogHeader (used in module)
+src/components/ui/alert-dialog.tsx:99 - AlertDialogFooter (used in module)
+src/components/ui/alert-dialog.tsx:100 - AlertDialogTitle (used in module)
+src/components/ui/alert-dialog.tsx:101 - AlertDialogDescription (used in module)
+src/components/ui/alert-dialog.tsx:102 - AlertDialogAction (used in module)
+src/components/ui/alert-dialog.tsx:103 - AlertDialogCancel (used in module)
+src/components/ui/alert.tsx:43 - Alert (used in module)
+src/components/ui/alert.tsx:43 - AlertTitle (used in module)
+src/components/ui/alert.tsx:43 - AlertDescription (used in module)
+src/components/ui/aspect-ratio.tsx:5 - AspectRatio (used in module)
+src/components/ui/avatar.tsx:38 - Avatar (used in module)
+src/components/ui/avatar.tsx:38 - AvatarImage (used in module)
+src/components/ui/avatar.tsx:38 - AvatarFallback (used in module)
+src/components/ui/badge.tsx:7 - BadgeProps (used in module)
+src/components/ui/badge.tsx:13 - Badge (used in module)
+src/components/ui/breadcrumb.tsx:83 - Breadcrumb (used in module)
+src/components/ui/breadcrumb.tsx:84 - BreadcrumbList (used in module)
+src/components/ui/breadcrumb.tsx:85 - BreadcrumbItem (used in module)
+src/components/ui/breadcrumb.tsx:86 - BreadcrumbLink (used in module)
+src/components/ui/breadcrumb.tsx:87 - BreadcrumbPage (used in module)
+src/components/ui/breadcrumb.tsx:88 - BreadcrumbSeparator (used in module)
+src/components/ui/breadcrumb.tsx:89 - BreadcrumbEllipsis (used in module)
+src/components/ui/button.tsx:8 - ButtonProps (used in module)
+src/components/ui/button.tsx:22 - Button (used in module)
+src/components/ui/calendar.tsx:8 - CalendarProps (used in module)
+src/components/ui/calendar.tsx:54 - Calendar (used in module)
+src/components/ui/card.tsx:43 - Card (used in module)
+src/components/ui/card.tsx:43 - CardHeader (used in module)
+src/components/ui/card.tsx:43 - CardFooter (used in module)
+src/components/ui/card.tsx:43 - CardTitle (used in module)
+src/components/ui/card.tsx:43 - CardDescription (used in module)
+src/components/ui/card.tsx:43 - CardContent (used in module)
+src/components/ui/carousel.tsx:225 - CarouselApi (used in module)
+src/components/ui/carousel.tsx:225 - Carousel (used in module)
+src/components/ui/carousel.tsx:225 - CarouselContent (used in module)
+src/components/ui/carousel.tsx:225 - CarouselItem (used in module)
+src/components/ui/carousel.tsx:225 - CarouselPrevious (used in module)
+src/components/ui/carousel.tsx:225 - CarouselNext (used in module)
+src/components/ui/chart.tsx:10 - ChartConfig (used in module)
+src/components/ui/chart.tsx:306 - ChartContainer (used in module)
+src/components/ui/chart.tsx:306 - ChartTooltip (used in module)
+src/components/ui/chart.tsx:306 - ChartTooltipContent (used in module)
+src/components/ui/chart.tsx:306 - ChartLegend (used in module)
+src/components/ui/chart.tsx:306 - ChartLegendContent (used in module)
+src/components/ui/chart.tsx:306 - ChartStyle (used in module)
+src/components/ui/checkbox.tsx:26 - Checkbox (used in module)
+src/components/ui/collapsible.tsx:9 - Collapsible (used in module)
+src/components/ui/collapsible.tsx:9 - CollapsibleTrigger (used in module)
+src/components/ui/collapsible.tsx:9 - CollapsibleContent (used in module)
+src/components/ui/command.tsx:123 - Command (used in module)
+src/components/ui/command.tsx:124 - CommandDialog (used in module)
+src/components/ui/command.tsx:125 - CommandInput (used in module)
+src/components/ui/command.tsx:126 - CommandList (used in module)
+src/components/ui/command.tsx:127 - CommandEmpty (used in module)
+src/components/ui/command.tsx:128 - CommandGroup (used in module)
+src/components/ui/command.tsx:129 - CommandItem (used in module)
+src/components/ui/command.tsx:130 - CommandShortcut (used in module)
+src/components/ui/command.tsx:131 - CommandSeparator (used in module)
+src/components/ui/context-menu.tsx:163 - ContextMenu (used in module)
+src/components/ui/context-menu.tsx:164 - ContextMenuTrigger (used in module)
+src/components/ui/context-menu.tsx:165 - ContextMenuContent (used in module)
+src/components/ui/context-menu.tsx:166 - ContextMenuItem (used in module)
+src/components/ui/context-menu.tsx:167 - ContextMenuCheckboxItem (used in module)
+src/components/ui/context-menu.tsx:168 - ContextMenuRadioItem (used in module)
+src/components/ui/context-menu.tsx:169 - ContextMenuLabel (used in module)
+src/components/ui/context-menu.tsx:170 - ContextMenuSeparator (used in module)
+src/components/ui/context-menu.tsx:171 - ContextMenuShortcut (used in module)
+src/components/ui/context-menu.tsx:172 - ContextMenuGroup (used in module)
+src/components/ui/context-menu.tsx:173 - ContextMenuPortal (used in module)
+src/components/ui/context-menu.tsx:174 - ContextMenuSub (used in module)
+src/components/ui/context-menu.tsx:175 - ContextMenuSubContent (used in module)
+src/components/ui/context-menu.tsx:176 - ContextMenuSubTrigger (used in module)
+src/components/ui/context-menu.tsx:177 - ContextMenuRadioGroup (used in module)
+src/components/ui/dialog.tsx:85 - Dialog (used in module)
+src/components/ui/dialog.tsx:86 - DialogPortal (used in module)
+src/components/ui/dialog.tsx:87 - DialogOverlay (used in module)
+src/components/ui/dialog.tsx:88 - DialogClose (used in module)
+src/components/ui/dialog.tsx:89 - DialogTrigger (used in module)
+src/components/ui/dialog.tsx:90 - DialogContent (used in module)
+src/components/ui/dialog.tsx:91 - DialogHeader (used in module)
+src/components/ui/dialog.tsx:92 - DialogFooter (used in module)
+src/components/ui/dialog.tsx:93 - DialogTitle (used in module)
+src/components/ui/dialog.tsx:94 - DialogDescription (used in module)
+src/components/ui/drawer.tsx:77 - Drawer (used in module)
+src/components/ui/drawer.tsx:78 - DrawerPortal (used in module)
+src/components/ui/drawer.tsx:79 - DrawerOverlay (used in module)
+src/components/ui/drawer.tsx:80 - DrawerTrigger (used in module)
+src/components/ui/drawer.tsx:81 - DrawerClose (used in module)
+src/components/ui/drawer.tsx:82 - DrawerContent (used in module)
+src/components/ui/drawer.tsx:83 - DrawerHeader (used in module)
+src/components/ui/drawer.tsx:84 - DrawerFooter (used in module)
+src/components/ui/drawer.tsx:85 - DrawerTitle (used in module)
+src/components/ui/drawer.tsx:86 - DrawerDescription (used in module)
+src/components/ui/dropdown-menu.tsx:164 - DropdownMenu (used in module)
+src/components/ui/dropdown-menu.tsx:165 - DropdownMenuTrigger (used in module)
+src/components/ui/dropdown-menu.tsx:166 - DropdownMenuContent (used in module)
+src/components/ui/dropdown-menu.tsx:167 - DropdownMenuItem (used in module)
+src/components/ui/dropdown-menu.tsx:168 - DropdownMenuCheckboxItem (used in module)
+src/components/ui/dropdown-menu.tsx:169 - DropdownMenuRadioItem (used in module)
+src/components/ui/dropdown-menu.tsx:170 - DropdownMenuLabel (used in module)
+src/components/ui/dropdown-menu.tsx:171 - DropdownMenuSeparator (used in module)
+src/components/ui/dropdown-menu.tsx:172 - DropdownMenuShortcut (used in module)
+src/components/ui/dropdown-menu.tsx:173 - DropdownMenuGroup (used in module)
+src/components/ui/dropdown-menu.tsx:174 - DropdownMenuPortal (used in module)
+src/components/ui/dropdown-menu.tsx:175 - DropdownMenuSub (used in module)
+src/components/ui/dropdown-menu.tsx:176 - DropdownMenuSubContent (used in module)
+src/components/ui/dropdown-menu.tsx:177 - DropdownMenuSubTrigger (used in module)
+src/components/ui/dropdown-menu.tsx:178 - DropdownMenuRadioGroup (used in module)
+src/components/ui/form.tsx:134 - useFormField (used in module)
+src/components/ui/form.tsx:134 - Form (used in module)
+src/components/ui/form.tsx:134 - FormItem (used in module)
+src/components/ui/form.tsx:134 - FormLabel (used in module)
+src/components/ui/form.tsx:134 - FormControl (used in module)
+src/components/ui/form.tsx:134 - FormDescription (used in module)
+src/components/ui/form.tsx:134 - FormMessage (used in module)
+src/components/ui/form.tsx:134 - FormField (used in module)
+src/components/ui/hover-card.tsx:27 - HoverCard (used in module)
+src/components/ui/hover-card.tsx:27 - HoverCardTrigger (used in module)
+src/components/ui/hover-card.tsx:27 - HoverCardContent (used in module)
+src/components/ui/input-otp.tsx:61 - InputOTP (used in module)
+src/components/ui/input-otp.tsx:61 - InputOTPGroup (used in module)
+src/components/ui/input-otp.tsx:61 - InputOTPSlot (used in module)
+src/components/ui/input-otp.tsx:61 - InputOTPSeparator (used in module)
+src/components/ui/input.tsx:22 - Input (used in module)
+src/components/ui/label.tsx:17 - Label (used in module)
+src/components/ui/menubar.tsx:191 - Menubar (used in module)
+src/components/ui/menubar.tsx:192 - MenubarMenu (used in module)
+src/components/ui/menubar.tsx:193 - MenubarTrigger (used in module)
+src/components/ui/menubar.tsx:194 - MenubarContent (used in module)
+src/components/ui/menubar.tsx:195 - MenubarItem (used in module)
+src/components/ui/menubar.tsx:196 - MenubarSeparator (used in module)
+src/components/ui/menubar.tsx:197 - MenubarLabel (used in module)
+src/components/ui/menubar.tsx:198 - MenubarCheckboxItem (used in module)
+src/components/ui/menubar.tsx:199 - MenubarRadioGroup (used in module)
+src/components/ui/menubar.tsx:200 - MenubarRadioItem (used in module)
+src/components/ui/menubar.tsx:201 - MenubarPortal (used in module)
+src/components/ui/menubar.tsx:202 - MenubarSubContent (used in module)
+src/components/ui/menubar.tsx:203 - MenubarSubTrigger (used in module)
+src/components/ui/menubar.tsx:204 - MenubarGroup (used in module)
+src/components/ui/menubar.tsx:205 - MenubarSub (used in module)
+src/components/ui/menubar.tsx:206 - MenubarShortcut (used in module)
+src/components/ui/navigation-menu.tsx:108 - NavigationMenu (used in module)
+src/components/ui/navigation-menu.tsx:109 - NavigationMenuList (used in module)
+src/components/ui/navigation-menu.tsx:110 - NavigationMenuItem (used in module)
+src/components/ui/navigation-menu.tsx:111 - NavigationMenuContent (used in module)
+src/components/ui/navigation-menu.tsx:112 - NavigationMenuTrigger (used in module)
+src/components/ui/navigation-menu.tsx:113 - NavigationMenuLink (used in module)
+src/components/ui/navigation-menu.tsx:114 - NavigationMenuIndicator (used in module)
+src/components/ui/navigation-menu.tsx:115 - NavigationMenuViewport (used in module)
+src/components/ui/pagination.tsx:74 - Pagination (used in module)
+src/components/ui/pagination.tsx:75 - PaginationContent (used in module)
+src/components/ui/pagination.tsx:76 - PaginationEllipsis (used in module)
+src/components/ui/pagination.tsx:77 - PaginationItem (used in module)
+src/components/ui/pagination.tsx:78 - PaginationLink (used in module)
+src/components/ui/pagination.tsx:79 - PaginationNext (used in module)
+src/components/ui/pagination.tsx:80 - PaginationPrevious (used in module)
+src/components/ui/popover.tsx:29 - Popover (used in module)
+src/components/ui/popover.tsx:29 - PopoverTrigger (used in module)
+src/components/ui/popover.tsx:29 - PopoverContent (used in module)
+src/components/ui/progress.tsx:23 - Progress (used in module)
+src/components/ui/radio-group.tsx:36 - RadioGroup (used in module)
+src/components/ui/radio-group.tsx:36 - RadioGroupItem (used in module)
+src/components/ui/resizable.tsx:37 - ResizablePanelGroup (used in module)
+src/components/ui/resizable.tsx:37 - ResizablePanel (used in module)
+src/components/ui/resizable.tsx:37 - ResizableHandle (used in module)
+src/components/ui/scroll-area.tsx:38 - ScrollArea (used in module)
+src/components/ui/scroll-area.tsx:38 - ScrollBar (used in module)
+src/components/ui/select.tsx:133 - Select (used in module)
+src/components/ui/select.tsx:134 - SelectGroup (used in module)
+src/components/ui/select.tsx:135 - SelectValue (used in module)
+src/components/ui/select.tsx:136 - SelectTrigger (used in module)
+src/components/ui/select.tsx:137 - SelectContent (used in module)
+src/components/ui/select.tsx:138 - SelectLabel (used in module)
+src/components/ui/select.tsx:139 - SelectItem (used in module)
+src/components/ui/select.tsx:140 - SelectSeparator (used in module)
+src/components/ui/select.tsx:141 - SelectScrollUpButton (used in module)
+src/components/ui/select.tsx:142 - SelectScrollDownButton (used in module)
+src/components/ui/separator.tsx:20 - Separator (used in module)
+src/components/ui/sheet.tsx:97 - Sheet (used in module)
+src/components/ui/sheet.tsx:98 - SheetClose (used in module)
+src/components/ui/sheet.tsx:99 - SheetContent (used in module)
+src/components/ui/sheet.tsx:100 - SheetDescription (used in module)
+src/components/ui/sheet.tsx:101 - SheetFooter (used in module)
+src/components/ui/sheet.tsx:102 - SheetHeader (used in module)
+src/components/ui/sheet.tsx:103 - SheetOverlay (used in module)
+src/components/ui/sheet.tsx:104 - SheetPortal (used in module)
+src/components/ui/sheet.tsx:105 - SheetTitle (used in module)
+src/components/ui/sheet.tsx:106 - SheetTrigger (used in module)
+src/components/ui/sidebar.tsx:613 - Sidebar (used in module)
+src/components/ui/sidebar.tsx:614 - SidebarContent (used in module)
+src/components/ui/sidebar.tsx:615 - SidebarFooter (used in module)
+src/components/ui/sidebar.tsx:616 - SidebarGroup (used in module)
+src/components/ui/sidebar.tsx:617 - SidebarGroupAction (used in module)
+src/components/ui/sidebar.tsx:618 - SidebarGroupContent (used in module)
+src/components/ui/sidebar.tsx:619 - SidebarGroupLabel (used in module)
+src/components/ui/sidebar.tsx:620 - SidebarHeader (used in module)
+src/components/ui/sidebar.tsx:621 - SidebarInput (used in module)
+src/components/ui/sidebar.tsx:622 - SidebarInset (used in module)
+src/components/ui/sidebar.tsx:623 - SidebarMenu (used in module)
+src/components/ui/sidebar.tsx:624 - SidebarMenuAction (used in module)
+src/components/ui/sidebar.tsx:625 - SidebarMenuBadge (used in module)
+src/components/ui/sidebar.tsx:626 - SidebarMenuButton (used in module)
+src/components/ui/sidebar.tsx:627 - SidebarMenuItem (used in module)
+src/components/ui/sidebar.tsx:628 - SidebarMenuSkeleton (used in module)
+src/components/ui/sidebar.tsx:629 - SidebarMenuSub (used in module)
+src/components/ui/sidebar.tsx:630 - SidebarMenuSubButton (used in module)
+src/components/ui/sidebar.tsx:631 - SidebarMenuSubItem (used in module)
+src/components/ui/sidebar.tsx:632 - SidebarProvider (used in module)
+src/components/ui/sidebar.tsx:633 - SidebarRail (used in module)
+src/components/ui/sidebar.tsx:634 - SidebarSeparator (used in module)
+src/components/ui/sidebar.tsx:635 - SidebarTrigger (used in module)
+src/components/ui/sidebar.tsx:636 - useSidebar (used in module)
+src/components/ui/skeleton.tsx:7 - Skeleton (used in module)
+src/components/ui/slider.tsx:23 - Slider (used in module)
+src/components/ui/switch.tsx:27 - Switch (used in module)
+src/components/ui/table.tsx:72 - Table (used in module)
+src/components/ui/table.tsx:72 - TableHeader (used in module)
+src/components/ui/table.tsx:72 - TableBody (used in module)
+src/components/ui/table.tsx:72 - TableFooter (used in module)
+src/components/ui/table.tsx:72 - TableHead (used in module)
+src/components/ui/table.tsx:72 - TableRow (used in module)
+src/components/ui/table.tsx:72 - TableCell (used in module)
+src/components/ui/table.tsx:72 - TableCaption (used in module)
+src/components/ui/tabs.tsx:53 - Tabs (used in module)
+src/components/ui/tabs.tsx:53 - TabsList (used in module)
+src/components/ui/tabs.tsx:53 - TabsTrigger (used in module)
+src/components/ui/tabs.tsx:53 - TabsContent (used in module)
+src/components/ui/textarea.tsx:5 - TextareaProps (used in module)
+src/components/ui/textarea.tsx:21 - Textarea (used in module)
+src/components/ui/toast.tsx:102 - ToastProps (used in module)
+src/components/ui/toast.tsx:103 - ToastActionElement (used in module)
+src/components/ui/toast.tsx:104 - ToastProvider (used in module)
+src/components/ui/toast.tsx:105 - ToastViewport (used in module)
+src/components/ui/toast.tsx:106 - Toast (used in module)
+src/components/ui/toast.tsx:107 - ToastTitle (used in module)
+src/components/ui/toast.tsx:108 - ToastDescription (used in module)
+src/components/ui/toast.tsx:109 - ToastClose (used in module)
+src/components/ui/toast.tsx:110 - ToastAction (used in module)
+src/components/ui/toaster.tsx:4 - Toaster
+src/components/ui/toggle-group.tsx:50 - ToggleGroup (used in module)
+src/components/ui/toggle-group.tsx:50 - ToggleGroupItem (used in module)
+src/components/ui/toggle.tsx:17 - Toggle (used in module)
+src/components/ui/tooltip.tsx:28 - Tooltip (used in module)
+src/components/ui/tooltip.tsx:28 - TooltipTrigger (used in module)
+src/components/ui/tooltip.tsx:28 - TooltipContent (used in module)
+src/components/ui/tooltip.tsx:28 - TooltipProvider (used in module)
+src/components/ui/use-toast.ts:3 - useToast (used in module)
+src/components/ui/use-toast.ts:3 - toast (used in module)
+src/components/white-label/WhiteLabelConfig.tsx:30 - WhiteLabelConfig (used in module)
+src/integrations/supabase/client.ts:49 - supabase
+src/integrations/supabase/types.ts:1 - Json (used in module)
+src/integrations/supabase/types.ts:305 - Tables (used in module)
+src/integrations/supabase/types.ts:334 - TablesInsert
+src/integrations/supabase/types.ts:359 - TablesUpdate
+src/integrations/supabase/types.ts:384 - Enums (used in module)
+src/integrations/supabase/types.ts:401 - CompositeTypes (used in module)
+src/integrations/supabase/types.ts:418 - Constants
+app/api/admin/compliance/route.ts:8 - GET
+app/api/admin/compliance/route.ts:6 - config
+app/api/admin/reliability/route.ts:8 - GET
+app/api/admin/reliability/route.ts:6 - config
+app/api/agent/suggest/route.ts:7 - POST
+app/api/agent/suggest/route.ts:5 - runtime
+app/api/audit/me/route.ts:7 - GET
+app/api/audit/me/route.ts:5 - runtime
+app/api/blog/comments/route.ts:5 - GET
+app/api/blog/comments/route.ts:33 - POST
+app/api/blog/rss/route.ts:7 - GET
+app/api/blog/rss/route.ts:46 - POST
+app/api/blog/rss-comments/route.ts:5 - GET
+app/api/blog/rss-comments/route.ts:33 - POST
+app/api/stripe/create-checkout/route.ts:17 - default
+app/api/stripe/create-checkout/route.ts:51 - handleStripeWebhook
+app/api/stripe/webhook/route.ts:22 - POST
+app/api/stripe/webhook/route.ts:51 - PUT
+app/api/telemetry/ingest/route.ts:11 - POST
+app/api/telemetry/ingest/route.ts:4 - runtime
+app/api/monetization/affiliate/click/route.ts:4 - POST

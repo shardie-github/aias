@@ -1,0 +1,22 @@
+(node:3438) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspace/eslint.config.js?mtime=1762635203264 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspace/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Oops! Something went wrong! :(
+
+ESLint: 8.57.1
+
+Error: Error while loading rule '@typescript-eslint/prefer-nullish-coalescing': You have used a rule which requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.
+Parser: typescript-eslint/parser
+Occurred while linting /workspace/middleware.ts
+    at throwError (/workspace/node_modules/.pnpm/@typescript-eslint+utils@7.18.0_eslint@8.57.1_typescript@5.9.3/node_modules/@typescript-eslint/utils/dist/eslint-utils/getParserServices.js:38:11)
+    at getParserServices (/workspace/node_modules/.pnpm/@typescript-eslint+utils@7.18.0_eslint@8.57.1_typescript@5.9.3/node_modules/@typescript-eslint/utils/dist/eslint-utils/getParserServices.js:27:9)
+    at create (/workspace/node_modules/.pnpm/@typescript-eslint+eslint-plugin@7.18.0_@typescript-eslint+parser@7.18.0_eslint@8.57.1_typescript@5.9.3/node_modules/@typescript-eslint/eslint-plugin/dist/rules/prefer-nullish-coalescing.js:99:61)
+    at Object.create (/workspace/node_modules/.pnpm/@typescript-eslint+utils@7.18.0_eslint@8.57.1_typescript@5.9.3/node_modules/@typescript-eslint/utils/dist/eslint-utils/RuleCreator.js:37:20)
+    at createRuleListeners (/workspace/node_modules/.pnpm/eslint@8.57.1/node_modules/eslint/lib/linter/linter.js:895:21)
+    at /workspace/node_modules/.pnpm/eslint@8.57.1/node_modules/eslint/lib/linter/linter.js:1066:110
+    at Array.forEach (<anonymous>)
+    at runRules (/workspace/node_modules/.pnpm/eslint@8.57.1/node_modules/eslint/lib/linter/linter.js:1003:34)
+    at Linter._verifyWithFlatConfigArrayAndWithoutProcessors (/workspace/node_modules/.pnpm/eslint@8.57.1/node_modules/eslint/lib/linter/linter.js:1730:31)
+    at Linter._verifyWithFlatConfigArray (/workspace/node_modules/.pnpm/eslint@8.57.1/node_modules/eslint/lib/linter/linter.js:1861:21)

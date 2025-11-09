@@ -18,7 +18,66 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "@radix-ui/react-dialog", "@radix-ui/react-select"],
+    optimizePackageImports: [
+      "lucide-react",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-select",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "framer-motion",
+    ],
+  },
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? {
+      exclude: ["error", "warn"],
+    } : false,
+  },
+  // Bundle optimization
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Optimize client bundle
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: "all",
+          cacheGroups: {
+            default: false,
+            vendors: false,
+            framework: {
+              name: "framework",
+              chunks: "all",
+              test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+              priority: 40,
+              enforce: true,
+            },
+            lib: {
+              test: /[\\/]node_modules[\\/]/,
+              name(module: any) {
+                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)?.[1];
+                return `lib-${packageName?.replace("@", "")}`;
+              },
+              priority: 30,
+              minChunks: 1,
+              reuseExistingChunk: true,
+            },
+            commons: {
+              name: "commons",
+              minChunks: 2,
+              priority: 20,
+            },
+            shared: {
+              name: "shared",
+              minChunks: 2,
+              priority: 10,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      };
+    }
+    return config;
   },
   // Vercel optimizations
   swcMinify: true,
