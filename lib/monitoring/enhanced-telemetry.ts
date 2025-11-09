@@ -29,18 +29,30 @@ export interface UserEngagement {
   conversionFunnel?: string[];
 }
 
-export class EnhancedTelemetry {
+class EnhancedTelemetry {
   private events: TelemetryEvent[] = [];
   private performanceMetrics: PerformanceMetric[] = [];
   private engagement: Map<string, UserEngagement> = new Map();
 
-  /**
-   * Track user event
-   */
+  constructor() {
+    // Initialize session ID
+    if (typeof window !== 'undefined' && !sessionStorage.getItem('sessionId')) {
+      sessionStorage.setItem('sessionId', `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
+    }
+  }
+
+  private getSessionId(): string {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('sessionId') || 'anonymous';
+    }
+    return 'server';
+  }
+
   track(event: Omit<TelemetryEvent, 'timestamp'>): void {
     const fullEvent: TelemetryEvent = {
       ...event,
       timestamp: Date.now(),
+      sessionId: event.sessionId || this.getSessionId(),
     };
 
     this.events.push(fullEvent);
@@ -48,61 +60,35 @@ export class EnhancedTelemetry {
     this.sendToBackend(fullEvent);
   }
 
-  /**
-   * Track performance metric
-   */
   trackPerformance(metric: PerformanceMetric): void {
     this.performanceMetrics.push(metric);
-    this.sendToBackend({ name: 'performance', category: 'performance', properties: metric, timestamp: Date.now() });
+    this.sendToBackend({ name: 'performance', category: 'performance', properties: metric, timestamp: Date.now(), sessionId: this.getSessionId() });
   }
 
-  /**
-   * Track page view
-   */
   trackPageView(path: string, properties?: Record<string, any>): void {
     this.track({
       name: 'page_view',
       category: 'user',
-      properties: {
-        path,
-        ...properties,
-      },
+      properties: { path, ...properties },
     });
   }
 
-  /**
-   * Track user interaction
-   */
   trackInteraction(element: string, action: string, properties?: Record<string, any>): void {
     this.track({
       name: 'interaction',
       category: 'user',
-      properties: {
-        element,
-        action,
-        ...properties,
-      },
+      properties: { element, action, ...properties },
     });
   }
 
-  /**
-   * Track conversion event
-   */
   trackConversion(funnel: string, step: string, properties?: Record<string, any>): void {
     this.track({
       name: 'conversion',
       category: 'business',
-      properties: {
-        funnel,
-        step,
-        ...properties,
-      },
+      properties: { funnel, step, ...properties },
     });
   }
 
-  /**
-   * Track error
-   */
   trackError(error: Error, context?: Record<string, any>): void {
     this.track({
       name: 'error',
@@ -115,31 +101,18 @@ export class EnhancedTelemetry {
     });
   }
 
-  /**
-   * Track security event
-   */
   trackSecurityEvent(event: string, severity: 'low' | 'medium' | 'high' | 'critical', details?: Record<string, any>): void {
     this.track({
       name: 'security_event',
       category: 'security',
-      properties: {
-        event,
-        severity,
-        ...details,
-      },
+      properties: { event, severity, ...details },
     });
   }
 
-  /**
-   * Get user engagement metrics
-   */
   getEngagement(sessionId: string): UserEngagement | undefined {
     return this.engagement.get(sessionId);
   }
 
-  /**
-   * Get all performance metrics
-   */
   getPerformanceMetrics(): PerformanceMetric[] {
     return [...this.performanceMetrics];
   }
@@ -183,27 +156,30 @@ export class EnhancedTelemetry {
   }
 
   private async sendToBackend(event: TelemetryEvent): Promise<void> {
-    // Send to backend API
     try {
       await fetch('/api/telemetry/ingest', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(event),
       });
     } catch (error) {
-      console.error('Failed to send telemetry:', error);
+      // Silent fail for telemetry
     }
   }
 }
 
-// Singleton instance
-export const telemetry = new EnhancedTelemetry();
+export const telemetry = typeof window !== 'undefined' ? new EnhancedTelemetry() : {
+  track: () => {},
+  trackPerformance: () => {},
+  trackPageView: () => {},
+  trackInteraction: () => {},
+  trackConversion: () => {},
+  trackError: () => {},
+  trackSecurityEvent: () => {},
+  getEngagement: () => undefined,
+  getPerformanceMetrics: () => [],
+} as EnhancedTelemetry;
 
-/**
- * React hook for telemetry
- */
 export function useTelemetry() {
   return {
     track: telemetry.track.bind(telemetry),
@@ -212,5 +188,7 @@ export function useTelemetry() {
     trackConversion: telemetry.trackConversion.bind(telemetry),
     trackError: telemetry.trackError.bind(telemetry),
     trackPerformance: telemetry.trackPerformance.bind(telemetry),
+    getEngagement: telemetry.getEngagement.bind(telemetry),
+    getPerformanceMetrics: telemetry.getPerformanceMetrics.bind(telemetry),
   };
 }

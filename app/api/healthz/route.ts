@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "@/lib/env";
+import { logger } from "@/lib/logging/structured-logger";
+import { telemetry } from "@/lib/monitoring/enhanced-telemetry";
 
 // Load environment variables dynamically
 const supabaseUrl = env.supabase.url;
@@ -140,6 +142,21 @@ export async function GET() {
   }
 
   checks.total_latency_ms = Date.now() - startTime;
+
+  // Track health check performance
+  telemetry.trackPerformance({
+    name: "health_check",
+    value: checks.total_latency_ms,
+    unit: "ms",
+    tags: { status: checks.ok ? "healthy" : "unhealthy" },
+  });
+
+  // Log health check
+  if (checks.ok) {
+    logger.info("Health check passed", { latency: checks.total_latency_ms });
+  } else {
+    logger.warn("Health check failed", { checks });
+  }
 
   return NextResponse.json(checks, {
     status: checks.ok ? 200 : 503,
