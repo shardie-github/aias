@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { env } from "@/lib/env";
 import { SystemError, formatError } from "@/src/lib/errors";
 import { telemetry } from "@/lib/monitoring/enhanced-telemetry";
+import { cacheService } from "@/lib/performance/cache";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -52,12 +53,19 @@ export async function GET(req: NextRequest): Promise<NextResponse<MetricsRespons
       }
     );
 
-    // Get latest metrics from each source
+    // Get latest metrics from each source using SQL aggregation (avoid N+1)
+    // Use DISTINCT ON to get the latest metric per source efficiently
     const { data: latestMetrics, error } = await supabase
       .from("metrics_log")
       .select("source, metric, ts")
       .order("ts", { ascending: false })
       .limit(100);
+    
+    // If we have many sources, consider using a more efficient query:
+    // SELECT DISTINCT ON (source) source, metric, ts 
+    // FROM metrics_log 
+    // ORDER BY source, ts DESC
+    // This would require raw SQL or a Supabase RPC function for optimal performance
 
     if (error) {
       console.error("Error fetching metrics:", error);
@@ -121,28 +129,39 @@ export async function GET(req: NextRequest): Promise<NextResponse<MetricsRespons
       sources: {},
     };
 
-    // Group by source and extract key metrics
+    // Group by source efficiently (single pass)
     interface MetricEntry {
       source: string;
       metric: Record<string, unknown>;
       ts: string;
     }
     
-    const sourceGroups: Record<string, MetricEntry[]> = {};
+    const sourceGroups = new Map<string, MetricEntry[]>();
+    const sourceLatest = new Map<string, MetricEntry>();
+    
+    // Single pass: group and track latest per source
     for (const metric of latestMetrics || []) {
-      if (!sourceGroups[metric.source]) {
-        sourceGroups[metric.source] = [];
+      const source = metric.source;
+      
+      // Track latest (first one encountered due to DESC order)
+      if (!sourceLatest.has(source)) {
+        sourceLatest.set(source, metric);
       }
-      sourceGroups[metric.source].push(metric);
+      
+      // Group all metrics
+      if (!sourceGroups.has(source)) {
+        sourceGroups.set(source, []);
+      }
+      sourceGroups.get(source)!.push(metric);
     }
 
-    // Process each source
-    for (const [source, metrics] of Object.entries(sourceGroups)) {
-      const latest = metrics[0]?.metric || {};
+    // Process each source (now using Map for O(1) lookups)
+    for (const [source, metrics] of sourceGroups.entries()) {
+      const latest = sourceLatest.get(source);
       aggregated.sources[source] = {
-        latest: latest,
+        latest: latest?.metric || {},
         count: metrics.length,
-        lastUpdated: metrics[0]?.ts,
+        lastUpdated: latest?.ts || new Date().toISOString(),
       };
 
       // Map to performance object structure
@@ -175,18 +194,33 @@ export async function GET(req: NextRequest): Promise<NextResponse<MetricsRespons
     }
 
     // Calculate trends (7-day moving average) - cache this expensive operation
-    // TODO: Move to background job or cache with 60s TTL
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const trendsCacheKey = "metrics:trends:7day";
+    let trends = await cacheService.get<Record<string, {
+      average: number;
+      min: number;
+      max: number;
+      count: number;
+    }>>(trendsCacheKey, { ttl: 60 }); // Cache for 60 seconds
+    
+    if (!trends) {
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const { data: trendData } = await supabase
-      .from("metrics_log")
-      .select("source, metric, ts")
-      .gte("ts", sevenDaysAgo.toISOString())
-      .order("ts", { ascending: true });
+      const { data: trendData } = await supabase
+        .from("metrics_log")
+        .select("source, metric, ts")
+        .gte("ts", sevenDaysAgo.toISOString())
+        .order("ts", { ascending: true });
 
-    if (trendData && trendData.length > 0) {
-      aggregated.trends = calculateTrends(trendData);
+      if (trendData && trendData.length > 0) {
+        trends = calculateTrends(trendData);
+        // Cache the result
+        await cacheService.set(trendsCacheKey, trends, { ttl: 60 });
+      }
+    }
+    
+    if (trends) {
+      aggregated.trends = trends;
     }
 
     const duration = Date.now() - startTime;

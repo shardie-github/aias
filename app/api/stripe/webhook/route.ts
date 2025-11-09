@@ -5,6 +5,7 @@ import { env } from "@/lib/env";
 import { SystemError, ValidationError, formatError } from "@/src/lib/errors";
 import { recordError } from "@/lib/utils/error-detection";
 import { retry } from "@/lib/utils/retry";
+import { z } from "zod";
 
 // Load environment variables dynamically - no hardcoded values
 const stripe = new Stripe(env.stripe.secretKey!, {
@@ -138,8 +139,33 @@ export async function PUT(req: NextRequest): Promise<NextResponse<WebhookRespons
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
-        const userId = session.metadata?.userId;
-        const tier = session.metadata?.tier;
+        
+        // Validate metadata with Zod schema
+        const metadataSchema = z.object({
+          userId: z.string().uuid("User ID must be a valid UUID"),
+          tier: z.enum(["starter", "pro", "enterprise"], {
+            errorMap: () => ({ message: "Tier must be one of: starter, pro, enterprise" }),
+          }),
+        });
+        
+        const metadataValidation = metadataSchema.safeParse(session.metadata);
+        if (!metadataValidation.success) {
+          const error = new ValidationError(
+            "Invalid session metadata",
+            metadataValidation.error.errors.map((e) => ({
+              path: e.path,
+              message: e.message,
+            }))
+          );
+          recordError(error, { endpoint: '/api/stripe/webhook', action: 'checkout_session_validation' });
+          const formatted = formatError(error);
+          return NextResponse.json(
+            { error: formatted.message, details: formatted.details },
+            { status: formatted.statusCode }
+          );
+        }
+        
+        const { userId, tier } = metadataValidation.data;
 
         if (userId && tier) {
           const expiresAt = new Date();

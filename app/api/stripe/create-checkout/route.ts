@@ -41,66 +41,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     return res.status(200).json({ sessionId: session.id });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Checkout error";
     console.error("Checkout error:", error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: errorMessage });
   }
 }
 
-// Webhook handler for subscription events
-export async function handleStripeWebhook(req: NextApiRequest, res: NextApiResponse) {
-  const sig = req.headers["stripe-signature"]!;
-  const webhookSecret = env.stripe.webhookSecret!;
-
-  let event: Stripe.Event;
-
-  try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
-
-  try {
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
-        const userId = session.metadata?.userId;
-        const tier = session.metadata?.tier;
-
-        if (userId && tier) {
-          const expiresAt = new Date();
-          expiresAt.setMonth(expiresAt.getMonth() + 1); // 1 month subscription
-
-          await supabase.from("subscription_tiers").upsert({
-            user_id: userId,
-            tier,
-            xp_multiplier: XP_MULTIPLIERS[tier] || 1.0,
-            expires_at: expiresAt.toISOString(),
-          });
-
-          // Update user's XP multiplier in localStorage cache
-          await supabase.from("profiles").update({
-            // Profile updates if needed
-          }).eq("id", userId);
-        }
-        break;
-      }
-
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
-        // Handle subscription updates/cancellations
-        break;
-      }
-
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
-    }
-
-    return res.status(200).json({ received: true });
-  } catch (error: any) {
-    console.error("Webhook handler error:", error);
-    return res.status(500).json({ error: error.message });
-  }
-}
+// Note: Webhook handler is in app/api/stripe/webhook/route.ts
+// This file only handles checkout session creation
