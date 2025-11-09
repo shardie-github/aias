@@ -18,23 +18,20 @@ export function Header() {
           <Link href="/pricing" className="px-3 py-2 hover:underline text-sm">
             Pricing
           </Link>
-          <Link href="/systems-thinking" className="px-3 py-2 hover:underline text-sm font-medium">
-            Systems Thinking
-          </Link>
-          <Link href="/genai-content-engine" className="px-3 py-2 hover:underline text-sm">
-            GenAI Content Engine
-          </Link>
           <Link href="/integrations" className="px-3 py-2 hover:underline text-sm">
             Integrations
           </Link>
           <Link href="/case-studies" className="px-3 py-2 hover:underline text-sm">
             Case Studies
           </Link>
+          <Link href="/why-canadian" className="px-3 py-2 hover:underline text-sm">
+            🇨🇦 Why Canadian
+          </Link>
           <Link href="/blog" className="px-3 py-2 hover:underline text-sm">
             Blog
           </Link>
           <Button size="sm" asChild>
-            <Link href="/pricing">Start Free</Link>
+            <Link href="/signup">Start Free Trial</Link>
           </Button>
           <ThemeToggle />
         </nav>

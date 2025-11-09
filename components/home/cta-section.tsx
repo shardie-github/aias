@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import FadeIn from "@/components/motion/fade-in";
+import { Check } from "lucide-react";
 
 export function CTASection() {
   return (
@@ -11,50 +12,60 @@ export function CTASection() {
         <div className="container max-w-4xl mx-auto">
           <Card className="border-primary/20 shadow-lg">
             <CardHeader className="text-center">
-              <div className="text-5xl mb-4">🧠</div>
+              <div className="text-5xl mb-4">🚀</div>
               <CardTitle className="text-3xl md:text-4xl mb-4">
-                Systems Thinking: The Critical Skill for the AI Age
+                Start Saving 10+ Hours/Week Today
               </CardTitle>
               <CardDescription className="text-lg">
-                Systems thinking is THE skill needed more than ever in the AI age. It's what makes you stand out in the job market, 
-                succeed in business, and achieve optimal outcomes.
+                Join 2,000+ businesses worldwide automating with AIAS Platform. 
+                No credit card required. 14-day free trial. Cancel anytime.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-primary mb-1">Job Market</div>
-                  <p className="text-sm text-muted-foreground">Stand out with systems thinking</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold mb-1">30-Minute Setup</div>
+                    <p className="text-sm text-muted-foreground">Get started in minutes, not days</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-primary mb-1">Business</div>
-                  <p className="text-sm text-muted-foreground">Drive success with systems thinking</p>
+                <div className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold mb-1">100+ Integrations</div>
+                    <p className="text-sm text-muted-foreground">Connect your existing tools</p>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-primary mb-1">AI Age</div>
-                  <p className="text-sm text-muted-foreground">The critical skill for today</p>
+                <div className="flex items-start gap-2">
+                  <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold mb-1">PIPEDA Compliant</div>
+                    <p className="text-sm text-muted-foreground">Enterprise security & privacy</p>
+                  </div>
                 </div>
               </div>
               
               <div className="bg-muted/50 p-4 rounded-lg">
                 <p className="text-sm text-muted-foreground mb-2">
-                  <strong className="text-foreground">The Reality:</strong> AI can automate tasks, but AI cannot replicate systems thinking.
+                  <strong className="text-foreground">CAD $49/month</strong> — Transparent pricing, no hidden fees. 
+                  Save 10+ hours/week, reduce errors by 90%, focus on high-value work.
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Systems thinking is uniquely human, irreplaceable, and the key to sustainable success in the AI age.
+                  🇨🇦 Built in Canada • 🌍 Trusted Worldwide • 🔒 Enterprise Security
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
-                  <Link href="/genai-content-engine">Try GenAI Content Engine</Link>
+                <Button size="lg" className="text-base" asChild>
+                  <Link href="/signup">Start Free Trial</Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/systems-thinking">Learn About Systems Thinking</Link>
+                <Button size="lg" variant="outline" className="text-base" asChild>
+                  <Link href="/demo">Book Demo</Link>
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground mt-4">
-                See systems thinking + GenAI in action: Automated website creation from your blog posts and articles.
+              <p className="text-sm text-muted-foreground mt-4 text-center">
+                No credit card required • 14-day free trial • Cancel anytime
               </p>
             </CardContent>
           </Card>

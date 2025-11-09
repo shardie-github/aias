@@ -36,6 +36,7 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li><a href="/about" className="hover:underline">About</a></li>
+              <li><a href="/why-canadian" className="hover:underline">Why Canadian</a></li>
               <li><a href="/privacy" className="hover:underline">Privacy Policy</a></li>
               <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
               <li><a href="/trust" className="hover:underline">Trust Center</a></li>
@@ -53,6 +54,20 @@ export function Footer() {
             <a href="/help" className="hover:underline">Help</a>
             <span>·</span>
             <a href="mailto:support@aias-platform.com" className="hover:underline">Support</a>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4 mb-4">
+            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-muted text-xs">
+              <span>🔒</span> PIPEDA Compliant
+            </div>
+            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-muted text-xs">
+              <span>🛡️</span> SOC 2 (In Progress)
+            </div>
+            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-muted text-xs">
+              <span>🇨🇦</span> Canadian Data Residency
+            </div>
+            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-muted text-xs">
+              <span>✅</span> 99.9% Uptime SLA
+            </div>
           </div>
           <div className="text-center text-xs text-muted-foreground">
             © {new Date().getFullYear()} AIAS Platform. All rights reserved. Built in Canada 🇨🇦 • Serving the World 🌍

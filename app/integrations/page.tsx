@@ -96,6 +96,21 @@ export default function IntegrationsPage() {
         <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
           🇨🇦 Built in Canada • 🌍 100+ Global Integrations
         </div>
+        <div className="mt-6 p-6 bg-primary/5 rounded-lg max-w-3xl mx-auto">
+          <h2 className="text-xl font-bold mb-2">🇨🇦 Canadian Integrations — Our Specialty</h2>
+          <p className="text-muted-foreground mb-4">
+            We specialize in Canadian business tools: Shopify, Wave Accounting, Stripe CAD, RBC, TD, Interac, and more. 
+            Built for Canadian businesses with Canadian data residency options.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">Shopify</span>
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">Wave Accounting</span>
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">Stripe CAD</span>
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">RBC</span>
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">TD Bank</span>
+            <span className="px-3 py-1 bg-background rounded-full text-sm font-medium">Interac</span>
+          </div>
+        </div>
       </div>
 
       {integrations.map((category) => (
