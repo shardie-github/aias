@@ -2,8 +2,8 @@ name: Unified Hardonia Agent
 
 on:
   schedule:
-    # Run every 12 hours
-    - cron: "0 */12 * * *"
+    # Run every 12 hours at :05 (matches schedule_cron_light from ops.config.json)
+    - cron: "5 */12 * * *"
   workflow_dispatch:
     inputs:
       mode:

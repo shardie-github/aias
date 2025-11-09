@@ -22,10 +22,23 @@ export async function POST(req: NextRequest) {
       inp,
       fcp,
       fid,
+      tti, // Time to Interactive (Expo/mobile)
       ts,
       userAgent,
       connection,
+      platform, // 'web' | 'ios' | 'android'
     } = body;
+
+    // Check if Expo telemetry is enabled
+    const expoTelemetryEnabled = process.env.EXPO_PUBLIC_TELEMETRY === "true";
+    
+    // Only accept TTI from Expo if telemetry is enabled
+    if (platform && platform !== "web" && !expoTelemetryEnabled) {
+      return NextResponse.json(
+        { success: false, error: "Expo telemetry not enabled" },
+        { status: 403 }
+      );
+    }
 
     // Anonymize IP (don't store full IP)
     const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
@@ -40,7 +53,9 @@ export async function POST(req: NextRequest) {
       inp: inp || null,
       fcp: fcp || null,
       fid: fid || null,
+      tti: tti || null, // Time to Interactive (Expo/mobile)
       timestamp: ts || Date.now(),
+      platform: platform || "web",
       // Anonymized metadata
       userAgent: userAgent ? userAgent.substring(0, 100) : null,
       connection: connection || null,
@@ -59,8 +74,11 @@ export async function POST(req: NextRequest) {
       }
     );
 
+    // Determine source based on platform
+    const source = platform && platform !== "web" ? "expo" : "telemetry";
+    
     const { error } = await supabase.from("metrics_log").insert({
-      source: "telemetry",
+      source,
       metric,
     });
 

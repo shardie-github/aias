@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "flags": {
+    "canary_example": {
+      "enabled": false,
+      "env": "staging",
+      "description": "Example canary flag for testing",
+      "created": "2024-01-01T00:00:00Z"
+    }
+  },
+  "environments": {
+    "development": {
+      "default": true
+    },
+    "staging": {
+      "default": false
+    },
+    "production": {
+      "default": false
+    }
+  }
+}

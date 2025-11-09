@@ -185,6 +185,45 @@ async function validateTenantAccess(
 }
 
 /**
+ * Check admin access (Basic Auth or Vercel Access Control)
+ * For Vercel deployments, use Vercel Access Controls
+ * For other deployments, use Basic Auth via ADMIN_BASIC_AUTH secret
+ */
+function checkAdminAccess(request: NextRequest): boolean {
+  // Check for Vercel deployment (use Vercel Access Controls)
+  if (process.env.VERCEL) {
+    // Vercel Access Controls are handled at platform level
+    // Return true - access control is managed by Vercel
+    return true;
+  }
+  
+  // For non-Vercel deployments, use Basic Auth
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return false;
+  }
+  
+  // Get expected credentials from secret (name only, never echo value)
+  const adminAuthSecret = process.env.ADMIN_BASIC_AUTH;
+  if (!adminAuthSecret) {
+    // No secret configured - deny access
+    return false;
+  }
+  
+  // Decode and verify Basic Auth
+  try {
+    const encoded = authHeader.substring(6);
+    const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
+    const [username, password] = decoded.split(':');
+    
+    // Compare with secret (format: "username:password")
+    return decoded === adminAuthSecret;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Get user ID from request (JWT or session)
  */
 async function getUserId(request: NextRequest): Promise<string | null> {
@@ -243,6 +282,21 @@ export async function middleware(request: NextRequest) {
   // Health check endpoint - minimal processing
   if (pathname === '/api/healthz') {
     return NextResponse.next();
+  }
+  
+  // Admin dashboard protection
+  if (pathname.startsWith('/admin/')) {
+    const hasAdminAccess = checkAdminAccess(request);
+    
+    if (!hasAdminAccess) {
+      // Return 401 Unauthorized with WWW-Authenticate header for Basic Auth
+      return new NextResponse('Unauthorized', {
+        status: 401,
+        headers: {
+          'WWW-Authenticate': 'Basic realm="Admin Dashboard"',
+        },
+      });
+    }
   }
   
   // Get client identifier
