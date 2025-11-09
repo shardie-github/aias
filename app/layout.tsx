@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { PWARegistration } from "@/components/pwa-registration";
 import { PerformanceHUD } from "@/components/dev/performance-hud";
+import { PerformanceBeacon } from "@/components/performance-beacon";
 import AgentProvider from "@/components/agent/AgentProvider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/structured-data";
 
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Toaster />
           <PWARegistration />
           <PerformanceHUD />
+          <PerformanceBeacon />
           {/* Agent Suggestions: show drawer site-wide when enabled */}
           <AgentProvider />
           {/* [META:BEGIN:mounts] */}

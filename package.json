@@ -138,7 +138,13 @@
     "guardian:verify": "tsx ops/cli.ts guardian verify",
     "guardian:audit": "tsx ops/cli.ts guardian audit",
     "guardian:report": "tsx ops/cli.ts guardian report",
-    "guardian:status": "tsx ops/cli.ts guardian status"
+    "guardian:status": "tsx ops/cli.ts guardian status",
+    "perf:collect": "tsx scripts/collect-metrics.ts",
+    "perf:report": "tsx scripts/generate-performance-report.ts",
+    "perf:optimize": "tsx scripts/auto-optimize.ts",
+    "perf:alert": "tsx scripts/alert-regressions.ts",
+    "perf:verify": "tsx scripts/verify-performance-setup.ts",
+    "perf:all": "npm run perf:collect && npm run perf:report && npm run perf:optimize && npm run perf:alert"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",
