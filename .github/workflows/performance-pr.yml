@@ -43,14 +43,20 @@ jobs:
           fi
 
       - name: Run benchmarks
+        id: benchmarks
         run: |
+          # Create results directory
+          mkdir -p bench/results
           # Run performance benchmarks
-          pnpm tsx bench/example.bench.ts > bench/results/pr-${GITHUB_PR_NUMBER}.json || true
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          pnpm tsx bench/example.bench.ts > bench/results/pr-${PR_NUMBER}.json || echo '[]' > bench/results/pr-${PR_NUMBER}.json
+          echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
 
       - name: Compare with baseline
         run: |
           # Compare with baseline benchmarks
-          node scripts/bench-trend.js analyze bench/results/pr-${GITHUB_PR_NUMBER}.json || true
+          PR_NUMBER=${{ steps.benchmarks.outputs.pr_number }}
+          node scripts/bench-trend.js analyze bench/results/pr-${PR_NUMBER}.json || true
 
       - name: Comment performance diff on PR
         uses: actions/github-script@v7
@@ -62,8 +68,9 @@ jobs:
             
             let performanceComment = '## 📊 Performance Analysis\n\n';
             
-            // Check if benchmark results exist
-            const benchFile = `bench/results/pr-${context.issue.number}.json`;
+            // Get PR number from context
+            const prNumber = context.payload.pull_request?.number || context.issue.number;
+            const benchFile = `bench/results/pr-${prNumber}.json`;
             if (fs.existsSync(benchFile)) {
               try {
                 const results = JSON.parse(fs.readFileSync(benchFile, 'utf-8'));
@@ -107,7 +114,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: performance-results-pr-${GITHUB_PR_NUMBER}
+          name: performance-results-pr-${{ steps.benchmarks.outputs.pr_number }}
           path: |
             bench/results/pr-*.json
             dist/stats.html

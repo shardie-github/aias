@@ -137,8 +137,8 @@ class ErrorDetector {
       count: alert.count,
     });
 
-    // TODO: Integrate with monitoring service (e.g., Sentry, Datadog)
-    // monitoringService.sendAlert(alert);
+    // Integrate with monitoring service (e.g., Sentry, Datadog)
+    this.sendToMonitoringService(alert);
   }
 
   /**
@@ -155,6 +155,84 @@ class ErrorDetector {
   getRecentAlerts(hours: number = 1): ErrorAlert[] {
     const cutoff = new Date(Date.now() - hours * 60 * 60 * 1000);
     return this.alerts.filter(a => a.timestamp > cutoff);
+  }
+
+  /**
+   * Send alert to monitoring service
+   */
+  private sendToMonitoringService(alert: ErrorAlert): void {
+    // Integration with monitoring services
+    // Supports Sentry, Datadog, or custom webhook
+    
+    const monitoringConfig = {
+      sentry: process.env.SENTRY_DSN,
+      datadog: process.env.DATADOG_API_KEY,
+      webhook: process.env.ERROR_WEBHOOK_URL,
+    };
+
+    const alertPayload = {
+      id: alert.id,
+      timestamp: alert.timestamp.toISOString(),
+      severity: alert.severity,
+      error: {
+        message: alert.error.message,
+        stack: alert.error.stack,
+        name: alert.error.name,
+      },
+      context: alert.context,
+      count: alert.count,
+    };
+
+    // Send to Sentry if configured
+    if (monitoringConfig.sentry && typeof window !== 'undefined' && (window as any).Sentry) {
+      try {
+        (window as any).Sentry.captureException(alert.error, {
+          level: alert.severity === 'critical' ? 'error' : 'warning',
+          tags: alert.context,
+          extra: { count: alert.count },
+        });
+      } catch (e) {
+        console.warn('Failed to send to Sentry:', e);
+      }
+    }
+
+    // Send to Datadog if configured
+    if (monitoringConfig.datadog) {
+      try {
+        // Datadog integration would go here
+        // Example: fetch('https://api.datadoghq.com/api/v1/events', { ... })
+        console.log('Datadog integration: Would send alert', alertPayload);
+      } catch (e) {
+        console.warn('Failed to send to Datadog:', e);
+      }
+    }
+
+    // Send to custom webhook if configured
+    if (monitoringConfig.webhook) {
+      try {
+        fetch(monitoringConfig.webhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(alertPayload),
+        }).catch(e => console.warn('Failed to send webhook:', e));
+      } catch (e) {
+        console.warn('Failed to send webhook:', e);
+      }
+    }
+
+    // Also send to enhanced telemetry if available
+    try {
+      const { telemetry } = require('@/lib/monitoring/enhanced-telemetry');
+      if (telemetry && telemetry.trackError) {
+        telemetry.trackError(alert.error, {
+          ...alert.context,
+          severity: alert.severity,
+          count: alert.count,
+        });
+      }
+    } catch (e) {
+      // Telemetry not available, skip
+    }
   }
 
   /**

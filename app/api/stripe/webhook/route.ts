@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "@/lib/env";
+import { SystemError, ValidationError, formatError } from "@/src/lib/errors";
+import { recordError } from "@/lib/utils/error-detection";
+import { retry } from "@/lib/utils/retry";
 
 // Load environment variables dynamically - no hardcoded values
 const stripe = new Stripe(env.stripe.secretKey!, {
@@ -19,38 +22,96 @@ const XP_MULTIPLIERS: Record<string, number> = {
   enterprise: 2.0,
 };
 
-export async function POST(req: NextRequest) {
-  try {
-    const { priceId, userId, tier } = await req.json();
+interface CheckoutResponse {
+  sessionId?: string;
+  error?: string;
+}
 
-    if (!priceId || !userId || !tier) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+export async function POST(req: NextRequest): Promise<NextResponse<CheckoutResponse>> {
+  try {
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch (error) {
+      const validationError = new ValidationError("Invalid JSON body");
+      const formatted = formatError(validationError);
+      return NextResponse.json(
+        { error: formatted.message },
+        { status: formatted.statusCode }
+      );
     }
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      payment_method_types: ["card"],
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${req.nextUrl.origin}/billing/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.nextUrl.origin}/billing`,
-      client_reference_id: userId,
-      metadata: {
-        userId,
-        tier,
+    const { priceId, userId, tier } = body as { priceId?: string; userId?: string; tier?: string };
+
+    if (!priceId || !userId || !tier) {
+      const error = new ValidationError("Missing required fields: priceId, userId, tier");
+      const formatted = formatError(error);
+      return NextResponse.json(
+        { error: formatted.message },
+        { status: formatted.statusCode }
+      );
+    }
+
+    // Retry Stripe API call with exponential backoff
+    const session = await retry(
+      async () => {
+        return await stripe.checkout.sessions.create({
+          mode: "subscription",
+          payment_method_types: ["card"],
+          line_items: [{ price: priceId, quantity: 1 }],
+          success_url: `${req.nextUrl.origin}/billing/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${req.nextUrl.origin}/billing`,
+          client_reference_id: userId,
+          metadata: {
+            userId,
+            tier,
+          },
+        });
       },
-    });
+      {
+        maxAttempts: 3,
+        initialDelayMs: 1000,
+        onRetry: (attempt, err) => {
+          console.warn(`Retrying Stripe checkout (attempt ${attempt})`, { error: err.message });
+        },
+      }
+    );
 
     return NextResponse.json({ sessionId: session.id });
-  } catch (error: any) {
-    console.error("Checkout error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const systemError = new SystemError(
+      "Checkout error",
+      error instanceof Error ? error : new Error(String(error))
+    );
+    recordError(systemError, { endpoint: '/api/stripe/webhook', action: 'checkout' });
+    console.error("Checkout error:", systemError);
+    const formatted = formatError(systemError);
+    return NextResponse.json(
+      { error: formatted.message },
+      { status: formatted.statusCode }
+    );
   }
 }
 
+interface WebhookResponse {
+  received?: boolean;
+  error?: string;
+}
+
 // Webhook handler
-export async function PUT(req: NextRequest) {
-  const sig = req.headers.get("stripe-signature")!;
-  const webhookSecret = env.stripe.webhookSecret!;
+export async function PUT(req: NextRequest): Promise<NextResponse<WebhookResponse>> {
+  const sig = req.headers.get("stripe-signature");
+  const webhookSecret = env.stripe.webhookSecret;
+
+  if (!sig || !webhookSecret) {
+    const error = new SystemError("Missing Stripe webhook configuration");
+    recordError(error, { endpoint: '/api/stripe/webhook', action: 'webhook' });
+    const formatted = formatError(error);
+    return NextResponse.json(
+      { error: formatted.message },
+      { status: formatted.statusCode }
+    );
+  }
 
   const body = await req.text();
 
@@ -58,9 +119,19 @@ export async function PUT(req: NextRequest) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message);
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+  } catch (err: unknown) {
+    const error = new ValidationError(
+      "Webhook signature verification failed",
+      undefined,
+      { originalError: err instanceof Error ? err.message : String(err) }
+    );
+    recordError(error, { endpoint: '/api/stripe/webhook', action: 'webhook_verification' });
+    console.error("Webhook signature verification failed:", error);
+    const formatted = formatError(error);
+    return NextResponse.json(
+      { error: formatted.message },
+      { status: formatted.statusCode }
+    );
   }
 
   try {
@@ -74,12 +145,24 @@ export async function PUT(req: NextRequest) {
           const expiresAt = new Date();
           expiresAt.setMonth(expiresAt.getMonth() + 1);
 
-          await supabase.from("subscription_tiers").upsert({
-            user_id: userId,
-            tier,
-            xp_multiplier: XP_MULTIPLIERS[tier] || 1.0,
-            expires_at: expiresAt.toISOString(),
-          });
+          // Retry database operation with exponential backoff
+          await retry(
+            async () => {
+              const { error } = await supabase.from("subscription_tiers").upsert({
+                user_id: userId,
+                tier,
+                xp_multiplier: XP_MULTIPLIERS[tier] || 1.0,
+                expires_at: expiresAt.toISOString(),
+              });
+              if (error) {
+                throw new Error(error.message);
+              }
+            },
+            {
+              maxAttempts: 3,
+              initialDelayMs: 1000,
+            }
+          );
         }
         break;
       }
@@ -96,8 +179,17 @@ export async function PUT(req: NextRequest) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (error: any) {
-    console.error("Webhook handler error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const systemError = new SystemError(
+      "Webhook handler error",
+      error instanceof Error ? error : new Error(String(error))
+    );
+    recordError(systemError, { endpoint: '/api/stripe/webhook', action: 'webhook_handler' });
+    console.error("Webhook handler error:", systemError);
+    const formatted = formatError(systemError);
+    return NextResponse.json(
+      { error: formatted.message },
+      { status: formatted.statusCode }
+    );
   }
 }
