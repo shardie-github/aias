@@ -69,7 +69,7 @@
     "csv-stringify": "^6.4.4",
     "papaparse": "^5.4.1",
     "cheerio": "^1.0.0-rc.12",
-    "jose": "^5.1.3",
+    "jose": "^6.1.1",
     "bcryptjs": "^2.4.3",
     "crypto": "^1.0.1",
     "next-secure-headers": "^2.0.0",
