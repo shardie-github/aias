@@ -74,7 +74,7 @@ jobs:
           npx tsx scripts/generate-watcher-summary.ts
 
       - name: Upload watcher artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: watcher-reports-${{ github.run_number }}
           path: |

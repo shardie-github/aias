@@ -79,7 +79,7 @@ jobs:
           EOF
 
       - name: Upload backup to artifact storage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: supabase-backup-$(date +%Y%m%d)
           path: ops/dashboards/backups/backup-*.sql

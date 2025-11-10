@@ -38,7 +38,7 @@ jobs:
           npx tsx scripts/futurecheck.ts --output=json > futurecheck-report.json
 
       - name: Upload future check artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: futurecheck-report-${{ github.run_number }}
           path: futurecheck-report.json
