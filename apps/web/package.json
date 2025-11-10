@@ -94,7 +94,7 @@
     "rehype-highlight": "^7.0.0",
     "gray-matter": "^4.0.3",
     "reading-time": "^1.5.0",
-    "sitemap": "^7.1.1",
+    "sitemap": "^9.0.0",
     "robots-txt": "^1.0.0"
   },
   "devDependencies": {
