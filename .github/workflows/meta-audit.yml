@@ -29,7 +29,7 @@ jobs:
             docs/architecture/**
             patches/preview/**
       - name: Create PR with Findings
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           title: "meta: weekly audit & pre-release hardening"
           commit-message: "meta(audit): add reports + preview patches"
