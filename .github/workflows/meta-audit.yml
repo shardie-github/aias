@@ -22,7 +22,7 @@ jobs:
           node scripts/meta-architect/depgraph.js
           node scripts/meta-architect/api-inventory.js
           node scripts/meta-architect/plan.js
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: meta-audit-artifacts
           path: |
