@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 YEAR="$(date +%Y)"
 MODE="plan"
@@ -93,9 +93,14 @@ rewrite_links() {
 
 # Enumerate markdown files
 if [[ -n "$SINCE" ]]; then
-  mapfile -t files < <(git diff --name-only "$SINCE"...HEAD -- '*.md' ':!internal/private/**' ':!node_modules/**' || true)
+  mapfile -t files < <(git diff --name-only "$SINCE"...HEAD -- '*.md' ':!internal/private/**' ':!node_modules/**' 2>/dev/null || true)
 else
-  mapfile -t files < <(git ls-files -- '*.md' ':!internal/private/**' ':!node_modules/**')
+  mapfile -t files < <(git ls-files -- '*.md' ':!internal/private/**' ':!node_modules/**' 2>/dev/null || true)
+fi
+
+if [[ ${#files[@]} -eq 0 ]]; then
+  echo "No markdown files found to process" >&2
+  exit 0
 fi
 
 final_count=0
@@ -105,18 +110,39 @@ private_count=0
 # Build version map to detect supersession
 declare -A latest_by_stem
 for f in "${files[@]}"; do
-  stem="$(basename "$f" .md | sed -E 's/[-_ ]v[0-9]+$//I')"
-  ver="$(basename "$f" .md | grep -oEi 'v[0-9]+' | tr -d 'v' | tail -n1 || echo 0)"
-  if [[ -z "${latest_by_stem[$stem]:-}" ]] || (( ver > latest_by_stem[$stem] )); then
+  [[ -z "$f" ]] && continue
+  [[ ! -f "$f" ]] && continue
+  stem="$(basename "$f" .md 2>/dev/null | sed -E 's/[-_ ]v[0-9]+$//I' 2>/dev/null || echo "${f##*/}")"
+  ver_str="$(basename "$f" .md 2>/dev/null | grep -oEi 'v[0-9]+' 2>/dev/null | tr -d 'v' 2>/dev/null | tail -n1 2>/dev/null || echo "0")"
+  ver="${ver_str:-0}"
+  # Ensure ver is numeric
+  if ! [[ "$ver" =~ ^[0-9]+$ ]]; then
+    ver=0
+  fi
+  current="${latest_by_stem[$stem]:-0}"
+  current="${current:-0}"
+  if ! [[ "$current" =~ ^[0-9]+$ ]]; then
+    current=0
+  fi
+  if [[ -z "${latest_by_stem[$stem]:-}" ]] || (( ver > current )); then
     latest_by_stem[$stem]=$ver
   fi
 done
 
+file_count=0
 for f in "${files[@]}"; do
+  [[ -z "$f" ]] && continue
   [[ ! -f "$f" ]] && continue
-  base="$(basename "$f")"
-  dir="$(dirname "$f")"
-  area="$(derive_area "$f")"
+  file_count=$((file_count + 1))
+  base="$(basename "$f" 2>/dev/null || echo "${f##*/}")"
+  dir="$(dirname "$f" 2>/dev/null || echo ".")"
+  area="$(derive_area "$f" 2>/dev/null || echo "$AREA_DEFAULT")"
+
+  # Skip root-level reference docs - they stay in place
+  if [[ "$dir" == "." ]] && is_final_name "$f" 2>/dev/null; then
+    echo "| \`$f\` | \`$f\` (skipped) | keep | Root-level reference doc |" >> "$REPORT"
+    continue
+  fi
 
   class=""
   reason=""
@@ -128,9 +154,17 @@ for f in "${files[@]}"; do
     class="archive"
     reason="Name indicates draft/notes/legacy"
   elif is_version_like "$f"; then
-    stem="$(basename "$f" .md | sed -E 's/[-_ ]v[0-9]+$//I')"
-    ver="$(basename "$f" .md | grep -oEi 'v[0-9]+' | tr -d 'v' | tail -n1 || echo 0)"
+    stem="$(basename "$f" .md 2>/dev/null | sed -E 's/[-_ ]v[0-9]+$//I' 2>/dev/null || echo "${f##*/}")"
+    ver_str="$(basename "$f" .md 2>/dev/null | grep -oEi 'v[0-9]+' 2>/dev/null | tr -d 'v' 2>/dev/null | tail -n1 2>/dev/null || echo "0")"
+    ver="${ver_str:-0}"
+    if ! [[ "$ver" =~ ^[0-9]+$ ]]; then
+      ver=0
+    fi
     latest="${latest_by_stem[$stem]:-0}"
+    latest="${latest:-0}"
+    if ! [[ "$latest" =~ ^[0-9]+$ ]]; then
+      latest=0
+    fi
     if (( ver < latest )); then
       class="archive"; reason="Superseded by v${latest}"
     else
@@ -159,7 +193,7 @@ for f in "${files[@]}"; do
       if [[ "$MODE" == "apply" ]]; then
         git mv -f "$f" "$target" 2>/dev/null || { mkdir -p "$(dirname "$target")"; mv -f "$f" "$target"; git add "$target"; git rm -f "$f" 2>/dev/null || true; }
       fi
-      ((final_count++))
+      final_count=$((final_count + 1))
       ;;
     archive)
       target="docs/archive/${YEAR}/${area}/${base}"
@@ -180,7 +214,7 @@ for f in "${files[@]}"; do
         mv "$tmp" "$target"
         git add "$target"
       fi
-      ((archive_count++))
+      archive_count=$((archive_count + 1))
       ;;
     private)
       target="internal/private/${area}/${base}"
@@ -190,11 +224,15 @@ for f in "${files[@]}"; do
         mv -f "$f" "$target"
         git rm -f "$f" 2>/dev/null || true
       fi
-      ((private_count++))
+      private_count=$((private_count + 1))
       ;;
   esac
 
-  echo "| \`$f\` | \`$target\` | $class | $reason |" >> "$REPORT"
+  if [[ -n "$class" ]]; then
+    echo "| \`$f\` | \`$target\` | $class | $reason |" >> "$REPORT"
+  else
+    echo "Warning: No class determined for $f" >&2
+  fi
 done
 
 if [[ "$MODE" == "apply" ]]; then
@@ -205,8 +243,9 @@ if [[ "$MODE" == "apply" ]]; then
 fi
 
 echo "" >> "$REPORT"
+echo "- Files processed: ${file_count}" >> "$REPORT"
 echo "- Final kept: ${final_count}" >> "$REPORT"
 echo "- Archived: ${archive_count}" >> "$REPORT"
 echo "- Privatized (git-ignored): ${private_count}" >> "$REPORT"
 
-echo "Done (${MODE}). See $REPORT"
+echo "Done (${MODE}). Processed ${file_count} files. See $REPORT"
