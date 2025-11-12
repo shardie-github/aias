@@ -1,0 +1,62 @@
+name: Supabase Delta Migration
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'supabase/migrations/**'
+  workflow_dispatch:
+
+jobs:
+  delta-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Supabase CLI
+        run: npm install -g supabase
+
+      - name: Generate delta migration
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: tsx scripts/agents/generate_delta_migration.ts
+
+      - name: Apply migrations (Supabase CLI)
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          supabase db push --include-all || {
+            echo "Supabase CLI failed, attempting psql fallback..."
+            for file in supabase/migrations/*.sql; do
+              psql "$SUPABASE_DB_URL" -f "$file" || true
+            done
+          }
+
+      - name: Verify database
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: tsx scripts/agents/verify_db.ts
+
+      - name: Run system doctor
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: tsx scripts/agents/system_doctor.ts
+
+      - name: Notify
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            tsx scripts/agents/notify.ts "Migration Applied" "Delta migration applied successfully." info
+          else
+            tsx scripts/agents/notify.ts "Migration Failed" "Delta migration failed. Check logs." error
+          fi

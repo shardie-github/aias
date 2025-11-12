@@ -1,0 +1,48 @@
+name: Nightly ETL
+
+on:
+  schedule:
+    - cron: '0 1 * * *' # 1 AM UTC daily (8 PM ET previous day)
+  workflow_dispatch:
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pull events
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: tsx scripts/etl/pull_events.ts
+
+      - name: Pull Source A ads
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          GENERIC_SOURCE_A_TOKEN: ${{ secrets.GENERIC_SOURCE_A_TOKEN }}
+        run: tsx scripts/etl/pull_ads_source_a.ts
+
+      - name: Pull Source B ads
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          GENERIC_SOURCE_B_TOKEN: ${{ secrets.GENERIC_SOURCE_B_TOKEN }}
+        run: tsx scripts/etl/pull_ads_source_b.ts
+
+      - name: Compute metrics
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: tsx scripts/etl/compute_metrics.ts --cron
+
+      - name: Notify on failure
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: tsx scripts/agents/notify.ts "ETL Failed" "Nightly ETL job failed. Check logs." error
