@@ -1,4 +1,8 @@
 -- ===========================================
+-- ARCHIVED: This migration has been superseded by newer migrations in supabase/migrations/
+-- Archived on: 2025-11-12
+-- Superseded by: supabase/migrations/20250123000000_performance_metrics.sql
+-- ===========================================
 -- Finance → Automation → Growth Metrics Schema
 -- Migration: 001_metrics.sql
 -- Created: 2025-01-28

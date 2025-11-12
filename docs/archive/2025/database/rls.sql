@@ -1,4 +1,8 @@
 -- ===========================================
+-- ARCHIVED: This RLS file has been superseded by consolidated migrations
+-- Archived on: 2025-11-12
+-- Superseded by: supabase/migrations/20250122000000_rls_realtime_storage.sql and 20250129000000_consolidated_rls_policies_and_functions.sql
+-- ===========================================
 -- Row Level Security (RLS) Policies
 -- Finance → Automation → Growth Metrics Schema
 -- Created: 2025-01-28

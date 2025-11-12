@@ -1,4 +1,8 @@
 -- ===========================================
+-- ARCHIVED: Complete schema dump - use migrations in supabase/migrations/ instead
+-- Archived on: 2025-11-12
+-- Note: This is a snapshot dump. Use individual migrations in supabase/migrations/ for production.
+-- ===========================================
 -- COMPLETE SUPABASE SCHEMA FOR AIAS PLATFORM
 -- ===========================================
 -- This script creates all database tables, policies, and functions
