@@ -1,223 +1,44 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Financial Model Assumptions",
-  "description": "Typed assumptions for Base, Optimistic, and Conservative scenarios",
-  "version": "1.0.0",
-  "timezone": "America/Toronto",
-  "currency": "USD",
-  "scenarios": {
-    "Base": {
-      "description": "Most likely outcome based on current trajectory",
-      "confidence": 0.65,
-      "assumptions": {
-        "revenue": {
-          "starting_monthly": 50000,
-          "growth_rate_monthly": 0.15,
-          "type": "compound",
-          "notes": "15% MoM growth, stabilizing after month 6"
-        },
-        "cogs": {
-          "percentage_of_revenue": 0.40,
-          "type": "percentage",
-          "notes": "40% COGS includes product costs, payment processing, hosting"
-        },
-        "cac": {
-          "starting": 50,
-          "improvement_rate_monthly": -0.04,
-          "type": "linear_decay",
-          "notes": "4% monthly improvement through optimization"
-        },
-        "ltv": {
-          "starting": 200,
-          "growth_rate_monthly": 0.05,
-          "type": "compound",
-          "notes": "5% MoM growth from retention improvements"
-        },
-        "refund_rate": {
-          "starting": 0.05,
-          "improvement_rate_monthly": -0.10,
-          "type": "exponential_decay",
-          "notes": "10% monthly reduction through better onboarding"
-        },
-        "operating_expenses": {
-          "sales_marketing": {
-            "starting": 20000,
-            "growth_rate_monthly": 0.10,
-            "type": "compound",
-            "notes": "Scales with revenue growth"
-          },
-          "product_development": {
-            "starting": 10000,
-            "growth_rate_monthly": 0.20,
-            "type": "compound",
-            "notes": "20% MoM growth for first 6 months, then 10%"
-          },
-          "general_admin": {
-            "starting": 5000,
-            "growth_rate_monthly": 0.20,
-            "type": "compound",
-            "notes": "Scales with team size"
-          }
-        }
-      }
-    },
-    "Optimistic": {
-      "description": "Best-case scenario with strong execution and market tailwinds",
-      "confidence": 0.25,
-      "assumptions": {
-        "revenue": {
-          "starting_monthly": 75000,
-          "growth_rate_monthly": 0.25,
-          "type": "compound",
-          "notes": "25% MoM growth driven by viral loops and partnerships"
-        },
-        "cogs": {
-          "percentage_of_revenue": 0.35,
-          "type": "percentage",
-          "notes": "35% COGS through better unit economics and scale"
-        },
-        "cac": {
-          "starting": 40,
-          "improvement_rate_monthly": -0.06,
-          "type": "linear_decay",
-          "notes": "6% monthly improvement from superior targeting"
-        },
-        "ltv": {
-          "starting": 250,
-          "growth_rate_monthly": 0.08,
-          "type": "compound",
-          "notes": "8% MoM growth from premium features and upsells"
-        },
-        "refund_rate": {
-          "starting": 0.03,
-          "improvement_rate_monthly": -0.15,
-          "type": "exponential_decay",
-          "notes": "15% monthly reduction from exceptional UX"
-        },
-        "operating_expenses": {
-          "sales_marketing": {
-            "starting": 20000,
-            "growth_rate_monthly": 0.15,
-            "type": "compound",
-            "notes": "Higher spend justified by better ROI"
-          },
-          "product_development": {
-            "starting": 10000,
-            "growth_rate_monthly": 0.25,
-            "type": "compound",
-            "notes": "Aggressive feature development"
-          },
-          "general_admin": {
-            "starting": 5000,
-            "growth_rate_monthly": 0.20,
-            "type": "compound",
-            "notes": "Scales with team size"
-          }
-        }
-      }
-    },
-    "Conservative": {
-      "description": "Worst-case scenario with slower growth and higher costs",
-      "confidence": 0.10,
-      "assumptions": {
-        "revenue": {
-          "starting_monthly": 35000,
-          "growth_rate_monthly": 0.10,
-          "type": "compound",
-          "notes": "10% MoM growth, slower market adoption"
-        },
-        "cogs": {
-          "percentage_of_revenue": 0.45,
-          "type": "percentage",
-          "notes": "45% COGS due to higher payment processing and support costs"
-        },
-        "cac": {
-          "starting": 60,
-          "improvement_rate_monthly": -0.02,
-          "type": "linear_decay",
-          "notes": "2% monthly improvement, slower optimization"
-        },
-        "ltv": {
-          "starting": 150,
-          "growth_rate_monthly": 0.03,
-          "type": "compound",
-          "notes": "3% MoM growth, lower retention"
-        },
-        "refund_rate": {
-          "starting": 0.08,
-          "improvement_rate_monthly": -0.05,
-          "type": "exponential_decay",
-          "notes": "5% monthly reduction, slower improvement"
-        },
-        "operating_expenses": {
-          "sales_marketing": {
-            "starting": 20000,
-            "growth_rate_monthly": 0.10,
-            "type": "compound",
-            "notes": "Maintains spend despite lower ROI"
-          },
-          "product_development": {
-            "starting": 10000,
-            "growth_rate_monthly": 0.15,
-            "type": "compound",
-            "notes": "Slower feature development"
-          },
-          "general_admin": {
-            "starting": 5000,
-            "growth_rate_monthly": 0.20,
-            "type": "compound",
-            "notes": "Fixed overhead costs"
-          }
-        }
-      }
-    }
+  "revenue": {
+    "saas_mrr_base": 15000,
+    "saas_mrr_optimistic_multiplier": 3.0,
+    "api_revenue_month_1": 0,
+    "api_revenue_month_6": 15000,
+    "marketplace_revenue_month_1": 0,
+    "marketplace_revenue_month_6": 8000,
+    "partnership_revenue_month_1": 0,
+    "partnership_revenue_month_6": 5000
   },
-  "shared_assumptions": {
-    "starting_cash": 1000000,
-    "time_horizon_months": 12,
-    "cash_runway_threshold_months": 6,
-    "ltv_cac_target_ratio": 3.0,
-    "gross_margin_target": 0.60,
-    "ebitda_margin_target": 0.20,
-    "notes": "Shared assumptions across all scenarios"
+  "costs": {
+    "cac_base": 150,
+    "cac_optimistic": 120,
+    "cac_conservative": 200,
+    "infrastructure_monthly": 2000,
+    "team_monthly": 8000,
+    "marketing_monthly": 2000
   },
-  "key_metrics": {
-    "cac_payback_period_months": {
-      "target": 3,
-      "current": 1.5,
-      "notes": "Months to recover CAC"
-    },
-    "churn_rate_monthly": {
-      "base": 0.05,
-      "optimistic": 0.03,
-      "conservative": 0.08,
-      "notes": "Monthly churn rate by scenario"
-    },
-    "arpa": {
-      "base": 50,
-      "optimistic": 75,
-      "conservative": 35,
-      "notes": "Average Revenue Per Account"
-    }
+  "metrics": {
+    "churn_rate_base": 0.05,
+    "churn_rate_optimistic": 0.02,
+    "churn_rate_conservative": 0.08,
+    "ltv_base": 1800,
+    "ltv_optimistic": 3600,
+    "ltv_conservative": 1200,
+    "gross_margin_base": 0.75,
+    "gross_margin_optimistic": 0.85,
+    "gross_margin_conservative": 0.65
   },
-  "sensitivities": {
-    "revenue_growth": {
-      "impact": "high",
-      "notes": "Most sensitive driver"
-    },
-    "cac": {
-      "impact": "high",
-      "notes": "Critical for unit economics"
-    },
-    "refund_rate": {
-      "impact": "medium",
-      "notes": "Affects net revenue"
-    },
-    "cogs_percentage": {
-      "impact": "medium",
-      "notes": "Affects gross margin"
-    }
+  "growth": {
+    "monthly_growth_rate_base": 0.10,
+    "monthly_growth_rate_optimistic": 0.20,
+    "monthly_growth_rate_conservative": 0.05,
+    "upgrade_rate_target": 0.15,
+    "api_adoption_rate": 0.30
   },
-  "last_updated": "2025-01-28T00:00:00Z",
-  "updated_by": "finance_modeler_agent"
+  "assumptions": {
+    "currency": "USD",
+    "timezone": "America/Toronto",
+    "confidence_level": 0.85,
+    "last_updated": "2025-01-29"
+  }
 }

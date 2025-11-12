@@ -1,289 +1,63 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Zapier/Make.com Automation Blueprint",
-  "description": "No-code automation fallback for Finance → Automation → Growth pipeline",
+  "name": "AIAS Platform ETL Automation",
+  "description": "Fallback automation spec for pulling ads/orders data if GitHub Actions unavailable",
   "version": "1.0.0",
-  "created": "2025-01-28",
-  "timezone": "America/Toronto",
-  
-  "automations": [
+  "triggers": [
     {
-      "name": "Daily Metrics ETL",
-      "description": "Pull data from Meta, TikTok, Shopify and compute daily metrics",
-      "trigger": {
-        "type": "schedule",
-        "schedule": "daily",
-        "time": "01:10",
-        "timezone": "America/Toronto"
-      },
-      "steps": [
+      "name": "Nightly ETL Schedule",
+      "type": "schedule",
+      "schedule": "0 1 * * *",
+      "timezone": "America/Toronto",
+      "actions": [
         {
-          "order": 1,
-          "name": "Pull Meta Ads Data",
-          "app": "Facebook Ads",
-          "action": "Get Campaign Insights",
-          "config": {
-            "account_id": "{{META_AD_ACCOUNT_ID}}",
-            "date_range": "yesterday",
-            "fields": ["spend", "impressions", "clicks", "conversions", "campaign_id", "campaign_name"]
+          "name": "Pull Meta Ads",
+          "type": "webhook",
+          "url": "https://your-app.vercel.app/api/etl/meta-ads",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer {{ZAPIER_SECRET}}"
           }
         },
         {
-          "order": 2,
-          "name": "Store Meta Data in Supabase",
-          "app": "Supabase",
-          "action": "Insert Row",
-          "config": {
-            "table": "spend",
-            "data": {
-              "date": "{{yesterday_date}}",
-              "channel": "meta",
-              "campaign_id": "{{campaign_id}}",
-              "campaign_name": "{{campaign_name}}",
-              "amount": "{{spend}}",
-              "impressions": "{{impressions}}",
-              "clicks": "{{clicks}}",
-              "conversions": "{{conversions}}"
-            }
+          "name": "Pull TikTok Ads",
+          "type": "webhook",
+          "url": "https://your-app.vercel.app/api/etl/tiktok-ads",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer {{ZAPIER_SECRET}}"
           }
         },
         {
-          "order": 3,
-          "name": "Pull TikTok Ads Data",
-          "app": "TikTok Ads",
-          "action": "Get Campaign Performance",
-          "config": {
-            "advertiser_id": "{{TIKTOK_ADVERTISER_ID}}",
-            "date_range": "yesterday",
-            "metrics": ["spend", "impressions", "clicks", "conversions"]
-          }
-        },
-        {
-          "order": 4,
-          "name": "Store TikTok Data in Supabase",
-          "app": "Supabase",
-          "action": "Insert Row",
-          "config": {
-            "table": "spend",
-            "data": {
-              "date": "{{yesterday_date}}",
-              "channel": "tiktok",
-              "campaign_id": "{{campaign_id}}",
-              "campaign_name": "{{campaign_name}}",
-              "amount": "{{spend}}",
-              "impressions": "{{impressions}}",
-              "clicks": "{{clicks}}",
-              "conversions": "{{conversions}}"
-            }
-          }
-        },
-        {
-          "order": 5,
           "name": "Pull Shopify Orders",
-          "app": "Shopify",
-          "action": "Find Orders",
-          "config": {
-            "created_at_min": "{{yesterday_start}}",
-            "created_at_max": "{{yesterday_end}}",
-            "status": "any"
+          "type": "webhook",
+          "url": "https://your-app.vercel.app/api/etl/shopify-orders",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer {{ZAPIER_SECRET}}"
           }
         },
         {
-          "order": 6,
-          "name": "Store Shopify Orders in Supabase",
-          "app": "Supabase",
-          "action": "Insert Row",
-          "config": {
-            "table": "orders",
-            "data": {
-              "id": "{{order_id}}",
-              "order_number": "{{order_number}}",
-              "status": "{{financial_status}}",
-              "total_amount": "{{total_price}}",
-              "currency": "{{currency}}",
-              "refunded_amount": "{{refund_amount}}",
-              "created_at": "{{created_at}}"
-            }
-          }
-        },
-        {
-          "order": 7,
-          "name": "Compute Daily Metrics",
-          "app": "Code by Zapier",
-          "action": "Run Python",
-          "config": {
-            "code": "# Compute metrics from Supabase data\n# This would call Supabase functions or compute locally"
-          }
-        },
-        {
-          "order": 8,
-          "name": "Store Metrics in Supabase",
-          "app": "Supabase",
-          "action": "Upsert Row",
-          "config": {
-            "table": "metrics_daily",
-            "unique_field": "date",
-            "data": {
-              "date": "{{yesterday_date}}",
-              "revenue": "{{computed_revenue}}",
-              "spend_total": "{{computed_spend}}",
-              "cac": "{{computed_cac}}",
-              "ltv": "{{computed_ltv}}"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Alert on Low Cash Runway",
-      "description": "Send alert when cash runway drops below threshold",
-      "trigger": {
-        "type": "schedule",
-        "schedule": "daily",
-        "time": "09:00",
-        "timezone": "America/Toronto"
-      },
-      "steps": [
-        {
-          "order": 1,
-          "name": "Get Latest Metrics",
-          "app": "Supabase",
-          "action": "Find Row",
-          "config": {
-            "table": "metrics_daily",
-            "sort": "date",
-            "order": "desc",
-            "limit": 1
-          }
-        },
-        {
-          "order": 2,
-          "name": "Check Cash Runway",
-          "app": "Filter by Zapier",
-          "action": "Filter",
-          "config": {
-            "condition": "{{cash_runway_days}} < 365"
-          }
-        },
-        {
-          "order": 3,
-          "name": "Send Slack Alert",
-          "app": "Slack",
-          "action": "Send Channel Message",
-          "config": {
-            "channel": "#finance-alerts",
-            "message": "⚠️ Cash runway is below 12 months: {{cash_runway_days}} days"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Alert on High CAC",
-      "description": "Send alert when CAC exceeds threshold",
-      "trigger": {
-        "type": "schedule",
-        "schedule": "daily",
-        "time": "09:00",
-        "timezone": "America/Toronto"
-      },
-      "steps": [
-        {
-          "order": 1,
-          "name": "Get Latest Metrics",
-          "app": "Supabase",
-          "action": "Find Row",
-          "config": {
-            "table": "metrics_daily",
-            "sort": "date",
-            "order": "desc",
-            "limit": 1
-          }
-        },
-        {
-          "order": 2,
-          "name": "Check CAC",
-          "app": "Filter by Zapier",
-          "action": "Filter",
-          "config": {
-            "condition": "{{cac}} > 60"
-          }
-        },
-        {
-          "order": 3,
-          "name": "Send Email Alert",
-          "app": "Gmail",
-          "action": "Send Email",
-          "config": {
-            "to": "marketing@company.com",
-            "subject": "High CAC Alert",
-            "body": "CAC has exceeded threshold: ${{cac}}"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Weekly Finance Report",
-      "description": "Generate and send weekly finance report",
-      "trigger": {
-        "type": "schedule",
-        "schedule": "weekly",
-        "day": "monday",
-        "time": "08:00",
-        "timezone": "America/Toronto"
-      },
-      "steps": [
-        {
-          "order": 1,
-          "name": "Get Weekly Metrics",
-          "app": "Supabase",
-          "action": "Find Rows",
-          "config": {
-            "table": "metrics_daily",
-            "filter": "date >= last_monday AND date <= last_sunday"
-          }
-        },
-        {
-          "order": 2,
-          "name": "Generate Report",
-          "app": "Google Sheets",
-          "action": "Create Spreadsheet",
-          "config": {
-            "name": "Weekly Finance Report - {{week_date}}",
-            "data": "{{weekly_metrics}}"
-          }
-        },
-        {
-          "order": 3,
-          "name": "Send Report Email",
-          "app": "Gmail",
-          "action": "Send Email",
-          "config": {
-            "to": "finance@company.com",
-            "subject": "Weekly Finance Report - {{week_date}}",
-            "body": "See attached report",
-            "attachment": "{{spreadsheet_url}}"
+          "name": "Compute Metrics",
+          "type": "webhook",
+          "url": "https://your-app.vercel.app/api/etl/compute-metrics",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer {{ZAPIER_SECRET}}"
           }
         }
       ]
     }
   ],
-  
-  "notes": [
-    "This is a blueprint/specification for no-code automation platforms",
-    "Actual implementation would require platform-specific configuration",
-    "Zapier and Make.com have different syntax - adapt as needed",
-    "Consider using webhooks for real-time triggers instead of polling",
-    "Test all automations in sandbox mode before going live",
-    "Set up error handling and retry logic for API failures",
-    "Monitor automation execution logs for failures"
-  ],
-  
-  "prerequisites": [
-    "Zapier/Make.com account",
-    "Supabase integration configured",
-    "Meta Ads API access",
-    "TikTok Ads API access",
-    "Shopify API access",
-    "Slack/Gmail for notifications (optional)"
-  ]
+  "fallback": {
+    "enabled": true,
+    "description": "Use this if GitHub Actions nightly ETL fails",
+    "setup_instructions": [
+      "1. Create Zapier account",
+      "2. Create new Zap with Schedule trigger (daily at 1am ET)",
+      "3. Add Webhook action for each ETL endpoint",
+      "4. Set up error notifications (email/Slack)",
+      "5. Test with dry-run mode first"
+    ]
+  },
+  "notes": "This is a fallback automation. Primary automation is via GitHub Actions (infra/gh-actions/nightly-etl.yml)"
 }

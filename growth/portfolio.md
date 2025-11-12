@@ -1,154 +1,233 @@
 # Growth Experiment Portfolio
 
-**Created:** 2025-01-28  
-**Owner:** growth_experiment_agent  
-**Status:** Active
+**Last Updated:** 2025-01-29  
+**Total Experiments:** 5  
+**Status:** Planning
 
 ---
 
 ## Overview
 
-This portfolio contains prioritized growth experiments designed to improve key financial metrics: CAC reduction, LTV increase, refund rate reduction, and revenue growth. Each experiment is tied to specific financial sensitivities identified in the financial model.
+Prioritized growth experiments based on Impact × Confidence × TTV analysis. Focus on high-impact, high-confidence experiments with fast time-to-value.
 
 ---
 
-## Prioritization Framework
+## Experiment 1: API Usage Billing
 
-Experiments are scored using **Impact × Confidence ÷ Effort**:
+**Status:** 🟡 Planned  
+**Priority:** P0  
+**Impact:** 9/10  
+**Confidence:** 0.9  
+**TTV:** 14 days
 
-- **Impact:** Expected improvement in target metric (1-10 scale)
-- **Confidence:** Likelihood of success based on data/research (0.0-1.0)
-- **Effort:** Engineering/design effort required (1-10 scale, lower = easier)
+### Hypothesis
+If we implement usage-based API billing with clear pricing tiers, then API revenue will reach $1K/month within 30 days.
 
-**Priority Score = (Impact × Confidence) / Effort**
+### Metrics
+- API revenue (target: $1K/month)
+- API calls/day (target: 100+)
+- Upgrade rate (target: 15%)
 
----
+### Sample Size
+- Minimum: 100 API users
+- Target: 500 API users
+- Duration: 30 days
 
-## Top 5 Experiments
+### Rollout Plan
+1. Week 1: Implement metering + billing logic
+2. Week 2: Build paywall + dashboard
+3. Week 3: Beta test with 10 users
+4. Week 4: Launch to all users
 
-### 1. Onboarding Flow Optimization
-**Priority Score:** 8.5  
-**Status:** Ready to Launch  
-**Target Metric:** Refund Rate  
-**Expected Impact:** Reduce refund rate from 5% to 3% (40% reduction)  
-**Financial Impact:** +$1,600/month net revenue at $50K monthly revenue  
-**Hypothesis:** Improved onboarding reduces early churn and refunds  
-**Effort:** Medium (2-3 weeks)  
-**Confidence:** 0.75 (based on industry benchmarks)
+### Rollback Plan
+- Grandfather existing users for 30 days
+- Allow opt-out to free tier
+- Monitor for billing errors
 
-**Link:** [experiments/onboarding-optimization/plan.md](./experiments/onboarding-optimization/plan.md)
-
----
-
-### 2. Referral Program Launch
-**Priority Score:** 8.0  
-**Status:** Ready to Launch  
-**Target Metric:** CAC  
-**Expected Impact:** Reduce CAC by 20% through organic referrals  
-**Financial Impact:** Save $10K/month in marketing spend at $50K monthly revenue  
-**Hypothesis:** Referral program incentivizes existing customers to refer new ones, reducing paid acquisition costs  
-**Effort:** Medium (3-4 weeks)  
-**Confidence:** 0.70 (referral programs typically reduce CAC by 15-30%)
-
-**Link:** [experiments/referral-program/plan.md](./experiments/referral-program/plan.md)
+### Guardrails
+- Billing cap: $1000/month per customer
+- Alert on anomalies (>2x previous month)
+- Rate limit: 1000 req/min per key
 
 ---
 
-### 3. Pricing Page A/B Test
-**Priority Score:** 7.5  
-**Status:** Ready to Launch  
-**Target Metric:** Conversion Rate, ARPU  
-**Expected Impact:** Increase conversion rate by 15% or ARPU by 10%  
-**Financial Impact:** +$7,500/month revenue at $50K monthly revenue  
-**Hypothesis:** Optimized pricing presentation increases conversion or encourages higher-tier purchases  
-**Effort:** Low (1-2 weeks)  
-**Confidence:** 0.65 (pricing tests typically show 10-20% improvement)
+## Experiment 2: Usage-Based SaaS Tiers
 
-**Link:** [experiments/pricing-page-test/plan.md](./experiments/pricing-page-test/plan.md)
+**Status:** 🟡 Planned  
+**Priority:** P0  
+**Impact:** 8/10  
+**Confidence:** 0.85  
+**TTV:** 7 days
 
----
+### Hypothesis
+If we add usage-based pricing tiers (Free/Starter/Pro/Enterprise), then upgrade rate will increase to 15%+ within 30 days.
 
-### 4. Email Win-Back Campaign
-**Priority Score:** 7.0  
-**Status:** Ready to Launch  
-**Target Metric:** Churn Rate, LTV  
-**Expected Impact:** Reduce churn by 20% or increase LTV by 15%  
-**Financial Impact:** +$3,000/month revenue retention at $50K monthly revenue  
-**Hypothesis:** Automated win-back emails reduce churn and increase customer lifetime value  
-**Effort:** Low (1 week)  
-**Confidence:** 0.60 (email campaigns typically show 10-25% improvement)
+### Metrics
+- Upgrade rate (target: 15%)
+- Additional MRR (target: $5K/month)
+- Churn rate (target: <5%)
 
-**Link:** [experiments/email-winback/plan.md](./experiments/email-winback/plan.md)
+### Sample Size
+- All existing SaaS customers
+- Duration: 30 days
 
----
+### Rollout Plan
+1. Day 1-2: Track usage (workflows, API calls)
+2. Day 3-4: Update pricing page
+3. Day 5-6: Add upgrade prompts
+4. Day 7: Launch
 
-### 5. Landing Page Optimization
-**Priority Score:** 6.5  
-**Status:** Ready to Launch  
-**Target Metric:** Conversion Rate, CAC  
-**Expected Impact:** Increase conversion rate by 20% or reduce CAC by 15%  
-**Financial Impact:** +$10K/month revenue or -$7.50 CAC at $50K monthly revenue  
-**Hypothesis:** Improved landing page messaging and design increases conversion rates  
-**Effort:** Medium (2-3 weeks)  
-**Confidence:** 0.55 (landing page tests show variable results)
+### Rollback Plan
+- Grandfather existing customers for 90 days
+- Allow downgrades (no lock-in)
+- Clear usage limits in UI
 
-**Link:** [experiments/landing-page-optimization/plan.md](./experiments/landing-page-optimization/plan.md)
+### Guardrails
+- Usage warnings at 80% threshold
+- No surprise charges
+- Transparent pricing calculator
 
 ---
 
-## Experiment Pipeline
+## Experiment 3: Agent Marketplace Launch
 
-### In Design (Next 30 Days)
-- **Upsell Flow Test:** Test different upsell timing and messaging
-- **Checkout Flow Optimization:** Reduce cart abandonment
-- **Social Proof Integration:** Add testimonials and case studies
+**Status:** 🟡 Planned  
+**Priority:** P1  
+**Impact:** 8/10  
+**Confidence:** 0.7  
+**TTV:** 45 days
 
-### Backlog (Next 60-90 Days)
-- **Multi-Channel Attribution:** Better track customer acquisition paths
-- **Cohort Analysis Dashboard:** Deeper insights into customer behavior
-- **Predictive Churn Model:** ML model to predict at-risk customers
+### Hypothesis
+If we launch an agent marketplace with revenue share (70/30), then we'll have 50+ agents listed and $5K+ marketplace revenue within 60 days.
 
----
+### Metrics
+- Agents listed (target: 50+)
+- Marketplace revenue (target: $5K/month)
+- Agent creator revenue (target: $3.5K/month)
 
-## Success Metrics
+### Sample Size
+- Minimum: 10 agents at launch
+- Target: 50 agents within 60 days
+- Duration: 60 days
 
-### Overall Portfolio Goals (30 Days)
-- **Reduce CAC by 10%** (from $50 to $45)
-- **Increase LTV by 5%** (from $200 to $210)
-- **Reduce Refund Rate by 20%** (from 5% to 4%)
-- **Improve LTV:CAC Ratio** (from 4.0 to 4.7)
+### Rollout Plan
+1. Week 1-3: Build marketplace UI
+2. Week 4-6: Implement payment + revenue share
+3. Week 7: Beta launch with 10 agents
+4. Week 8+: Full launch, iterate
 
-### Overall Portfolio Goals (90 Days)
-- **Reduce CAC by 20%** (from $50 to $40)
-- **Increase LTV by 15%** (from $200 to $230)
-- **Reduce Refund Rate by 40%** (from 5% to 3%)
-- **Improve LTV:CAC Ratio** (from 4.0 to 5.75)
+### Rollback Plan
+- Pause new agent submissions if quality issues
+- Refund policy: 7-day money-back
+- Content moderation for abuse
 
----
-
-## Risk Register
-
-### High Risk
-- **Experiments interfere with each other:** Mitigate by running sequentially or using proper segmentation
-- **Sample size too small:** Ensure minimum sample sizes before drawing conclusions
-
-### Medium Risk
-- **Experiments take longer than expected:** Buffer time estimates by 20%
-- **Technical issues delay launch:** Have rollback plans ready
-
-### Low Risk
-- **Experiments show no significant results:** Learn and iterate
-- **Metrics tracking breaks:** Monitor dashboards daily
+### Guardrails
+- Agent approval process (prevent spam)
+- Revenue share: 70/30 (creator/platform)
+- Minimum payout: $10
 
 ---
 
-## Review Cadence
+## Experiment 4: Enterprise Onboarding Flow
 
-- **Weekly:** Review active experiments, check metrics
-- **Bi-weekly:** Analyze completed experiments, decide on next steps
-- **Monthly:** Portfolio review, reprioritize based on results
+**Status:** 🟡 Planned  
+**Priority:** P1  
+**Impact:** 7/10  
+**Confidence:** 0.8  
+**TTV:** 21 days
+
+### Hypothesis
+If we build an enterprise onboarding flow with SOC 2 marketing, then enterprise conversion rate will reach 10%+ with <7 day time-to-value.
+
+### Metrics
+- Enterprise conversion rate (target: 10%)
+- Time-to-value (target: <7 days)
+- Enterprise MRR (target: $50K/month)
+
+### Sample Size
+- Minimum: 5 enterprise trials
+- Target: 20 enterprise customers
+- Duration: 60 days
+
+### Rollout Plan
+1. Week 1: Enterprise signup flow
+2. Week 2: SOC 2 marketing + landing page
+3. Week 3: Onboarding wizard
+4. Week 4: Launch to beta enterprises
+
+### Rollback Plan
+- Manual approval for enterprise accounts
+- Fallback to standard onboarding
+- Dedicated support for issues
+
+### Guardrails
+- Require company email for enterprise
+- 4-hour support SLA
+- Custom domain setup wizard
 
 ---
 
-**Last Updated:** 2025-01-28  
-**Next Review:** 2025-02-04
+## Experiment 5: Nightly ETL Automation
+
+**Status:** 🟡 Planned  
+**Priority:** P1  
+**Impact:** 7/10  
+**Confidence:** 0.95  
+**TTV:** 3 days
+
+### Hypothesis
+If we automate nightly ETL for ads/orders data, then metrics will be available by 9am ET with 100% success rate.
+
+### Metrics
+- ETL success rate (target: 100%)
+- Runtime (target: <5 minutes)
+- Data freshness (target: <1 hour delay)
+
+### Sample Size
+- All data sources (Meta, TikTok, Shopify)
+- Duration: 30 days
+
+### Rollout Plan
+1. Day 1: Create ETL scripts
+2. Day 2: Set up GitHub Actions cron
+3. Day 3: Test + monitor
+
+### Rollback Plan
+- Fallback to manual ETL
+- Alert on failures
+- Retry logic (3 attempts)
+
+### Guardrails
+- Idempotent (safe to re-run)
+- Rate limiting (avoid API limits)
+- Error notifications (Slack/email)
+
+---
+
+## Portfolio Summary
+
+| Experiment | Impact | Confidence | TTV | Score | Status |
+|------------|--------|------------|-----|-------|--------|
+| API Usage Billing | 9 | 0.9 | 14 | 7.29 | Planned |
+| Usage-Based SaaS Tiers | 8 | 0.85 | 7 | 6.8 | Planned |
+| Agent Marketplace | 8 | 0.7 | 45 | 5.6 | Planned |
+| Enterprise Onboarding | 7 | 0.8 | 21 | 5.6 | Planned |
+| Nightly ETL Automation | 7 | 0.95 | 3 | 6.65 | Planned |
+
+**Total Estimated Impact:** +$30K MRR, -10hrs/week manual work  
+**Total Estimated Effort:** 90 days  
+**Risk Level:** 🟢 Low (high confidence, clear rollback plans)
+
+---
+
+## Next Steps
+
+1. **This Week:** Start API billing + usage tiers (P0)
+2. **Next Week:** Set up ETL automation (P1)
+3. **Month 2:** Launch agent marketplace (P1)
+4. **Month 3:** Enterprise onboarding (P1)
+
+---
+
+**Confidence Level:** 🟢 High (85%)  
+**Assumptions:** Market demand, API adoption rate, enterprise conversion rate

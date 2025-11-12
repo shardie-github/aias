@@ -1,250 +1,96 @@
-#!/usr/bin/env tsx
-/**
- * ETL Script: Pull TikTok Ads Data
- * 
- * Fetches ad spend, impressions, clicks, and conversions from TikTok Marketing API
- * and stores in Supabase spend table.
- * 
- * Usage:
- *   tsx scripts/etl/pull_ads_tiktok.ts [--dry-run] [--date YYYY-MM-DD]
- * 
- * Environment Variables:
- *   SUPABASE_URL - Supabase project URL
- *   SUPABASE_SERVICE_ROLE_KEY - Service role key for Supabase
- *   TIKTOK_ACCESS_TOKEN - TikTok Marketing API access token
- *   TIKTOK_ADVERTISER_ID - TikTok advertiser ID
- */
+// scripts/etl/pull_ads_tiktok.ts
+import pg from "pg";
+import fetch from "node-fetch";
 
-import { createClient } from '@supabase/supabase-js';
-import { config } from 'dotenv';
-import * as path from 'path';
+const TIKTOK_API_VERSION = "v1.3";
+const TIKTOK_TOKEN = process.env.TIKTOK_ACCESS_TOKEN || process.env.TIKTOK_TOKEN;
+const TIKTOK_ADVERTISER_ID = process.env.TIKTOK_ADVERTISER_ID;
+const DATABASE_URL = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Load environment variables
-config({ path: path.join(process.cwd(), '.env') });
+if (!TIKTOK_TOKEN || !TIKTOK_ADVERTISER_ID || !DATABASE_URL) {
+  console.error("Missing required env vars: TIKTOK_TOKEN, TIKTOK_ADVERTISER_ID, DATABASE_URL");
+  process.exit(1);
+}
 
 interface TikTokAdData {
-  date: string;
-  spend: number;
-  impressions: number;
-  clicks: number;
-  conversions: number;
+  stat_time_day: string;
+  spend: string;
+  click: string;
+  impression: string;
+  conversion: string;
   campaign_id: string;
-  campaign_name: string;
+  adgroup_id: string;
 }
 
-interface TikTokAPIResponse {
-  code: number;
-  message: string;
-  request_id: string;
-  data: {
-    list: Array<{
-      stat_time_day: string;
-      spend: string;
-      impressions: string;
-      clicks: string;
-      conversions: string;
-      campaign_id: string;
-      campaign_name: string;
-    }>;
-    page_info: {
-      page: number;
-      page_size: number;
-      total_number: number;
-      total_page: number;
-    };
-  };
-}
-
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-const TIKTOK_ACCESS_TOKEN = process.env.TIKTOK_ACCESS_TOKEN || '';
-const TIKTOK_ADVERTISER_ID = process.env.TIKTOK_ADVERTISER_ID || '';
-
-const DRY_RUN = process.argv.includes('--dry-run');
-const DATE_ARG = process.argv.find(arg => arg.startsWith('--date='));
-const TARGET_DATE = DATE_ARG ? DATE_ARG.split('=')[1] : new Date().toISOString().split('T')[0];
-
-// Exponential backoff helper
-async function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function fetchWithRetry(
-  url: string,
-  options: RequestInit,
-  maxRetries = 3,
-  baseDelay = 1000
-): Promise<Response> {
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const response = await fetch(url, options);
-      
-      if (response.status === 429) {
-        // Rate limited - exponential backoff
-        const delay = baseDelay * Math.pow(2, attempt);
-        console.log(`Rate limited. Retrying in ${delay}ms...`);
-        await sleep(delay);
-        continue;
-      }
-      
-      if (!response.ok && response.status >= 500) {
-        // Server error - retry
-        const delay = baseDelay * Math.pow(2, attempt);
-        console.log(`Server error ${response.status}. Retrying in ${delay}ms...`);
-        await sleep(delay);
-        continue;
-      }
-      
-      return response;
-    } catch (error) {
-      if (attempt === maxRetries - 1) throw error;
-      const delay = baseDelay * Math.pow(2, attempt);
-      console.log(`Request failed. Retrying in ${delay}ms...`);
-      await sleep(delay);
-    }
-  }
-  
-  throw new Error('Max retries exceeded');
-}
-
-async function fetchTikTokAdsData(date: string): Promise<TikTokAdData[]> {
-  if (!TIKTOK_ACCESS_TOKEN || !TIKTOK_ADVERTISER_ID) {
-    throw new Error('TIKTOK_ACCESS_TOKEN and TIKTOK_ADVERTISER_ID must be set');
-  }
-
-  const apiVersion = 'v1.3';
-  const url = `https://business-api.tiktok.com/open_api/${apiVersion}/report/integrated/get/`;
-  
-  const requestBody = {
-    advertiser_id: TIKTOK_ADVERTISER_ID,
-    service_type: 'AUCTION',
-    report_type: 'BASIC',
-    data_level: 'AUCTION_CAMPAIGN',
-    dimensions: ['stat_time_day', 'campaign_id'],
-    metrics: ['spend', 'impressions', 'clicks', 'conversions'],
-    start_date: date,
-    end_date: date,
-    page: 1,
-    page_size: 1000,
-  };
-
-  console.log(`[TikTok ETL] Fetching data for ${date}...`);
-
-  const response = await fetchWithRetry(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Token': TIKTOK_ACCESS_TOKEN,
-    },
-    body: JSON.stringify(requestBody),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`TikTok API error: ${response.status} ${errorText}`);
-  }
-
-  const data: TikTokAPIResponse = await response.json();
-  
-  if (data.code !== 0) {
-    throw new Error(`TikTok API error: ${data.message} (code: ${data.code})`);
-  }
-
-  const results: TikTokAdData[] = [];
-  
-  for (const item of data.data.list) {
-    results.push({
-      date: item.stat_time_day,
-      spend: parseFloat(item.spend) || 0,
-      impressions: parseInt(item.impressions) || 0,
-      clicks: parseInt(item.clicks) || 0,
-      conversions: parseInt(item.conversions) || 0,
-      campaign_id: item.campaign_id,
-      campaign_name: item.campaign_name,
-    });
-  }
-
-  // Handle pagination if needed
-  if (data.data.page_info.total_page > 1) {
-    console.log(`[TikTok ETL] Pagination detected (${data.data.page_info.total_page} pages), fetching remaining pages...`);
-    // In production, implement pagination handling
-  }
-
-  return results;
-}
-
-async function storeInSupabase(data: TikTokAdData[]): Promise<void> {
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set');
-  }
-
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
-  for (const item of data) {
-    const { error } = await supabase
-      .from('spend')
-      .upsert({
-        date: item.date,
-        channel: 'tiktok',
-        campaign_id: item.campaign_id,
-        campaign_name: item.campaign_name,
-        amount: item.spend,
-        currency: 'USD',
-        impressions: item.impressions,
-        clicks: item.clicks,
-        conversions: item.conversions,
-        updated_at: new Date().toISOString(),
-      }, {
-        onConflict: 'date,channel,campaign_id',
-      });
-
-    if (error) {
-      console.error(`[TikTok ETL] Error storing ${item.campaign_id}:`, error);
-      throw error;
-    }
-  }
-
-  console.log(`[TikTok ETL] Successfully stored ${data.length} records`);
-}
-
-async function main() {
-  const startTime = Date.now();
-  console.log(`[TikTok ETL] Starting at ${new Date().toISOString()}`);
-  console.log(`[TikTok ETL] Target date: ${TARGET_DATE}`);
-  console.log(`[TikTok ETL] Dry run: ${DRY_RUN}`);
+async function pullTikTokAds() {
+  const pool = new pg.Pool({ connectionString: DATABASE_URL });
+  const client = await pool.connect();
 
   try {
-    // Fetch data from TikTok API
-    const tiktokData = await fetchTikTokAdsData(TARGET_DATE);
-    
-    if (tiktokData.length === 0) {
-      console.log('[TikTok ETL] No data found for the specified date');
-      return;
+    // Pull last 30 days of data
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 30);
+
+    const url = `https://business-api.tiktok.com/open_api/${TIKTOK_API_VERSION}/report/integrated/get/`;
+    const body = {
+      advertiser_id: TIKTOK_ADVERTISER_ID,
+      service_type: "AUCTION",
+      report_type: "BASIC",
+      data_level: "AUCTION_ADGROUP",
+      dimensions: ["stat_time_day", "campaign_id", "adgroup_id"],
+      metrics: ["spend", "click", "impression", "conversion"],
+      start_date: startDate.toISOString().split("T")[0],
+      end_date: endDate.toISOString().split("T")[0],
+      page_size: 1000,
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Token": TIKTOK_TOKEN!,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error(`TikTok API error: ${response.statusText}`);
     }
 
-    console.log(`[TikTok ETL] Fetched ${tiktokData.length} campaigns`);
-    console.log(`[TikTok ETL] Total spend: $${tiktokData.reduce((sum, d) => sum + d.spend, 0).toFixed(2)}`);
+    const data = await response.json() as { data: { list: TikTokAdData[] } };
 
-    if (DRY_RUN) {
-      console.log('[TikTok ETL] DRY RUN - Would store:');
-      console.log(JSON.stringify(tiktokData, null, 2));
-      return;
+    // Insert into spend table
+    for (const row of data.data.list) {
+      const spendCents = Math.round(parseFloat(row.spend) * 100);
+      const clicks = parseInt(row.click) || 0;
+      const impressions = parseInt(row.impression) || 0;
+      const convCount = parseInt(row.conversion) || 0;
+
+      await client.query(
+        `INSERT INTO public.spend (platform, campaign_id, adset_id, date, spend_cents, clicks, impressions, conv)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+         ON CONFLICT (platform, date, COALESCE(campaign_id, ''), COALESCE(adset_id, ''))
+         DO UPDATE SET spend_cents = EXCLUDED.spend_cents, clicks = EXCLUDED.clicks, impressions = EXCLUDED.impressions, conv = EXCLUDED.conv`,
+        ["tiktok", row.campaign_id, row.adgroup_id, row.stat_time_day, spendCents, clicks, impressions, convCount]
+      );
     }
 
-    // Store in Supabase
-    await storeInSupabase(tiktokData);
-
-    const duration = Date.now() - startTime;
-    console.log(`[TikTok ETL] Completed successfully in ${duration}ms`);
+    console.log(`✅ Pulled ${data.data.list.length} TikTok ad records`);
   } catch (error) {
-    console.error('[TikTok ETL] Error:', error);
-    process.exit(1);
+    console.error("Error pulling TikTok ads:", error);
+    throw error;
+  } finally {
+    client.release();
+    await pool.end();
   }
 }
 
-// Run if executed directly
 if (require.main === module) {
-  main();
+  pullTikTokAds().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
 }
 
-export { fetchTikTokAdsData, storeInSupabase };
+export { pullTikTokAds };

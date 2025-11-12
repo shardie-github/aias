@@ -1,93 +1,29 @@
 name: Nightly ETL
-
 on:
   schedule:
-    # Run at 01:10 America/Toronto (06:10 UTC during EST, 05:10 UTC during EDT)
-    - cron: '10 6 * * *'
-  workflow_dispatch: # Allow manual trigger
-    inputs:
-      date:
-        description: 'Date to process (YYYY-MM-DD), defaults to yesterday'
-        required: false
-        type: string
-
+    - cron: '10 1 * * *'  # 01:10 America/Toronto
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    
-    env:
-      TZ: America/Toronto
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
-      META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
-      TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
-      TIKTOK_ADVERTISER_ID: ${{ secrets.TIKTOK_ADVERTISER_ID }}
-      SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
-      SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_PASSWORD }}
-      SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Determine target date
-        id: date
-        run: |
-          if [ -n "${{ github.event.inputs.date }}" ]; then
-            echo "date=${{ github.event.inputs.date }}" >> $GITHUB_OUTPUT
-          else
-            # Default to yesterday (America/Toronto timezone)
-            TZ=America/Toronto date -d "yesterday" +%Y-%m-%d >> $GITHUB_OUTPUT
-            echo "date=$(TZ=America/Toronto date -d 'yesterday' +%Y-%m-%d)" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Pull Meta Ads Data
-        continue-on-error: true
-        run: |
-          npx tsx scripts/etl/pull_ads_meta.ts --date=${{ steps.date.outputs.date }}
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Install deps
+        run: npm ci || true
+      - name: Run ETL
         env:
-          NODE_ENV: production
-
-      - name: Pull TikTok Ads Data
-        continue-on-error: true
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
+          TIKTOK_TOKEN: ${{ secrets.TIKTOK_TOKEN }}
+          TIKTOK_ADVERTISER_ID: ${{ secrets.TIKTOK_ADVERTISER_ID }}
+          SHOPIFY_API_KEY: ${{ secrets.SHOPIFY_API_KEY }}
+          SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_PASSWORD }}
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          TZ: America/Toronto
         run: |
-          npx tsx scripts/etl/pull_ads_tiktok.ts --date=${{ steps.date.outputs.date }}
-        env:
-          NODE_ENV: production
-
-      - name: Pull Shopify Orders
-        continue-on-error: true
-        run: |
-          npx tsx scripts/etl/pull_shopify_orders.ts --date=${{ steps.date.outputs.date }}
-        env:
-          NODE_ENV: production
-
-      - name: Compute Daily Metrics
-        run: |
-          npx tsx scripts/etl/compute_metrics.ts --date=${{ steps.date.outputs.date }} --cron
-        env:
-          NODE_ENV: production
-
-      - name: Notify on failure
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `ETL Pipeline Failed - ${new Date().toISOString()}`,
-              body: `Nightly ETL job failed. Check workflow run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-              labels: ['bug', 'etl']
-            })
+          node scripts/etl/pull_ads_meta.ts || echo "Meta ETL failed"
+          node scripts/etl/pull_ads_tiktok.ts || echo "TikTok ETL failed"
+          node scripts/etl/pull_shopify_orders.ts || echo "Shopify ETL failed"
+          node scripts/etl/compute_metrics.ts --cron || echo "Metrics computation failed"

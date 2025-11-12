@@ -1,41 +1,11 @@
-# ===========================================
 # ETL Cron Schedule
-# Finance → Automation → Growth Pipeline
-# ===========================================
-# 
-# This cron file can be used with external schedulers
-# (e.g., cron daemon, AWS EventBridge, Google Cloud Scheduler)
-# 
-# Timezone: America/Toronto
-# 
-# Schedule: Daily at 01:10 AM America/Toronto
-# (06:10 UTC during EST, 05:10 UTC during EDT)
-# 
-# ===========================================
+# Runs nightly at 01:10 America/Toronto (06:10 UTC)
+# Format: minute hour day month weekday
 
-# Example cron entry (adjust path and environment as needed):
-# 10 6 * * * cd /path/to/project && TZ=America/Toronto /usr/bin/node scripts/etl/compute_metrics.ts --cron
+10 6 * * * cd /workspace && TZ=America/Toronto node scripts/etl/pull_ads_meta.ts
+15 6 * * * cd /workspace && TZ=America/Toronto node scripts/etl/pull_ads_tiktok.ts
+20 6 * * * cd /workspace && TZ=America/Toronto node scripts/etl/pull_shopify_orders.ts
+25 6 * * * cd /workspace && TZ=America/Toronto node scripts/etl/compute_metrics.ts --cron
 
-# ===========================================
-# Individual ETL Scripts (run in sequence)
-# ===========================================
-
-# Pull Meta Ads Data (01:10 AM)
-# 10 6 * * * cd /path/to/project && TZ=America/Toronto /usr/bin/npx tsx scripts/etl/pull_ads_meta.ts --date=$(TZ=America/Toronto date -d 'yesterday' +\%Y-\%m-\%d)
-
-# Pull TikTok Ads Data (01:15 AM)
-# 15 6 * * * cd /path/to/project && TZ=America/Toronto /usr/bin/npx tsx scripts/etl/pull_ads_tiktok.ts --date=$(TZ=America/Toronto date -d 'yesterday' +\%Y-\%m-\%d)
-
-# Pull Shopify Orders (01:20 AM)
-# 20 6 * * * cd /path/to/project && TZ=America/Toronto /usr/bin/npx tsx scripts/etl/pull_shopify_orders.ts --date=$(TZ=America/Toronto date -d 'yesterday' +\%Y-\%m-\%d)
-
-# Compute Daily Metrics (01:30 AM)
-# 30 6 * * * cd /path/to/project && TZ=America/Toronto /usr/bin/npx tsx scripts/etl/compute_metrics.ts --cron
-
-# ===========================================
-# Notes:
-# - Adjust paths to match your deployment
-# - Ensure environment variables are set (use .env file or export)
-# - Consider using a process manager (PM2, systemd) for better error handling
-# - Monitor logs for failures
-# - Set up alerts for cron job failures
+# Note: This cron file is for reference. Actual execution happens via GitHub Actions.
+# See: infra/gh-actions/nightly-etl.yml

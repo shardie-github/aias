@@ -1,136 +1,74 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Feature Flags Configuration",
-  "description": "Feature flags for Finance → Automation → Growth experiments",
-  "version": "1.0.0",
-  "created": "2025-01-28",
-  "timezone": "America/Toronto",
-  
   "flags": [
     {
-      "key": "onboarding_optimization_v2",
-      "name": "Onboarding Flow Optimization",
-      "description": "Enable improved onboarding flow with progress indicators and value demonstration",
+      "key": "api_billing_enabled",
+      "name": "API Usage Billing",
+      "description": "Enable usage-based API billing with pricing tiers",
       "enabled": false,
-      "type": "experiment",
-      "experiment_slug": "onboarding-optimization",
-      "variants": [
-        {
-          "name": "control",
-          "weight": 50,
-          "description": "Current onboarding flow"
-        },
-        {
-          "name": "treatment",
-          "weight": 50,
-          "description": "Optimized onboarding flow"
-        }
-      ],
-      "targeting": {
-        "all_users": true
-      },
+      "rollout_percentage": 0,
+      "target_users": [],
       "metadata": {
-        "experiment_plan": "growth/experiments/onboarding-optimization/plan.md",
-        "owner": "growth-team",
-        "created": "2025-01-28"
+        "experiment_id": "api-billing-001",
+        "owner": "Engineering Lead",
+        "created_at": "2025-01-29"
       }
     },
     {
-      "key": "referral_program_enabled",
-      "name": "Referral Program",
-      "description": "Enable referral program for existing customers",
+      "key": "usage_tiers_enabled",
+      "name": "Usage-Based SaaS Tiers",
+      "description": "Enable usage-based pricing tiers for SaaS subscriptions",
       "enabled": false,
-      "type": "feature",
-      "targeting": {
-        "all_users": true
-      },
+      "rollout_percentage": 0,
+      "target_users": [],
       "metadata": {
-        "experiment_plan": "growth/experiments/referral-program/plan.md",
-        "owner": "growth-team",
-        "created": "2025-01-28"
+        "experiment_id": "usage-tiers-001",
+        "owner": "Product Lead",
+        "created_at": "2025-01-29"
       }
     },
     {
-      "key": "pricing_page_v2",
-      "name": "Pricing Page Optimization",
-      "description": "Enable optimized pricing page with value-focused design",
+      "key": "agent_marketplace_enabled",
+      "name": "Agent Marketplace",
+      "description": "Enable agent marketplace with discovery and revenue share",
       "enabled": false,
-      "type": "experiment",
-      "experiment_slug": "pricing-page-test",
-      "variants": [
-        {
-          "name": "control",
-          "weight": 50,
-          "description": "Current pricing page"
-        },
-        {
-          "name": "treatment",
-          "weight": 50,
-          "description": "Optimized pricing page"
-        }
-      ],
-      "targeting": {
-        "all_users": true
-      },
+      "rollout_percentage": 0,
+      "target_users": [],
       "metadata": {
-        "experiment_plan": "growth/experiments/pricing-page-test/plan.md",
-        "owner": "growth-team",
-        "created": "2025-01-28"
+        "experiment_id": "marketplace-001",
+        "owner": "Product Lead",
+        "created_at": "2025-01-29"
       }
     },
     {
-      "key": "email_winback_enabled",
-      "name": "Email Win-Back Campaign",
-      "description": "Enable automated win-back emails for at-risk customers",
+      "key": "enterprise_onboarding_enabled",
+      "name": "Enterprise Onboarding Flow",
+      "description": "Enable enterprise-specific onboarding flow with SOC 2 marketing",
       "enabled": false,
-      "type": "feature",
-      "targeting": {
-        "segments": [
-          "at_risk_customers",
-          "churned_customers",
-          "low_engagement_customers"
-        ]
-      },
+      "rollout_percentage": 0,
+      "target_users": [],
       "metadata": {
-        "experiment_plan": "growth/experiments/email-winback/plan.md",
-        "owner": "growth-team",
-        "created": "2025-01-28"
+        "experiment_id": "enterprise-001",
+        "owner": "Product Lead",
+        "created_at": "2025-01-29"
       }
     },
     {
-      "key": "landing_page_v2",
-      "name": "Landing Page Optimization",
-      "description": "Enable optimized landing page with conversion-focused design",
-      "enabled": false,
-      "type": "experiment",
-      "experiment_slug": "landing-page-optimization",
-      "variants": [
-        {
-          "name": "control",
-          "weight": 50,
-          "description": "Current landing page"
-        },
-        {
-          "name": "treatment",
-          "weight": 50,
-          "description": "Optimized landing page"
-        }
-      ],
-      "targeting": {
-        "all_users": true
-      },
+      "key": "nightly_etl_enabled",
+      "name": "Nightly ETL Automation",
+      "description": "Enable automated nightly ETL for ads/orders data",
+      "enabled": true,
+      "rollout_percentage": 100,
+      "target_users": [],
       "metadata": {
-        "experiment_plan": "growth/experiments/landing-page-optimization/plan.md",
-        "owner": "growth-team",
-        "created": "2025-01-28"
+        "experiment_id": "etl-001",
+        "owner": "Data Engineer",
+        "created_at": "2025-01-29"
       }
     }
   ],
-  
-  "notes": [
-    "Flags are disabled by default - enable when ready to launch experiments",
-    "Use feature flag service (LaunchDarkly, Split.io) or build custom middleware",
-    "Track flag usage in analytics for experiment attribution",
-    "Review flags quarterly and remove unused ones"
-  ]
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2025-01-29",
+    "schema_version": "1.0"
+  }
 }
