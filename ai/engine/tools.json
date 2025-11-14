@@ -1,0 +1,64 @@
+[
+  {
+    "name": "getShopifyProducts",
+    "path": "./ai/engine/tools/example-tools.ts",
+    "version": "1.0.0",
+    "description": "Fetch products from Shopify store",
+    "category": "native",
+    "schema": {
+      "name": "getShopifyProducts",
+      "description": "Fetch products from Shopify store",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "number", "default": 10 },
+          "collectionId": { "type": "string" },
+          "query": { "type": "string" }
+        },
+        "required": []
+      }
+    },
+    "enabled": true
+  },
+  {
+    "name": "getCRMContacts",
+    "path": "./ai/engine/tools/example-tools.ts",
+    "version": "1.0.0",
+    "description": "Fetch contacts from CRM system",
+    "category": "native",
+    "schema": {
+      "name": "getCRMContacts",
+      "description": "Fetch contacts from CRM system",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "number", "default": 100 },
+          "search": { "type": "string" }
+        },
+        "required": []
+      }
+    },
+    "enabled": true
+  },
+  {
+    "name": "getAnalytics",
+    "path": "./ai/engine/tools/example-tools.ts",
+    "version": "1.0.0",
+    "description": "Fetch analytics data",
+    "category": "native",
+    "schema": {
+      "name": "getAnalytics",
+      "description": "Fetch analytics data",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": { "type": "string" },
+          "endDate": { "type": "string" },
+          "metrics": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["startDate", "endDate"]
+      }
+    },
+    "enabled": true
+  }
+]
