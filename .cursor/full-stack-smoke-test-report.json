@@ -1,0 +1,130 @@
+{
+  "timestamp": "2025-11-14T00:55:51.117Z",
+  "secretParityMatrix": [
+    {
+      "name": "DATABASE_URL",
+      "envLocal": "postgresql://aias_user:[VAR]:5432/aias_production"
+    },
+    {
+      "name": "SUPABASE_URL"
+    },
+    {
+      "name": "SUPABASE_ANON_KEY"
+    },
+    {
+      "name": "SUPABASE_SERVICE_ROLE_KEY",
+      "envLocal": "[VAR]"
+    },
+    {
+      "name": "SUPABASE_JWT_SECRET"
+    },
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_URL",
+      "envLocal": "https://[VAR].supabase.co"
+    },
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "envLocal": "[VAR]"
+    },
+    {
+      "name": "SUPABASE_PROJECT_REF",
+      "envLocal": "gzadczzgyghnrshszyft"
+    },
+    {
+      "name": "SUPABASE_ACCESS_TOKEN"
+    },
+    {
+      "name": "VERCEL_TOKEN"
+    },
+    {
+      "name": "NEXTAUTH_URL"
+    },
+    {
+      "name": "NEXTAUTH_SECRET"
+    },
+    {
+      "name": "NODE_ENV",
+      "envLocal": "production"
+    }
+  ],
+  "connectivityResults": [
+    {
+      "name": "Vercel CLI Check",
+      "passed": false,
+      "message": "Vercel CLI not installed. Install with: npm i -g vercel"
+    },
+    {
+      "name": "Supabase Client Library",
+      "passed": false,
+      "message": "@supabase/supabase-js not installed. Install with: npm install @supabase/supabase-js"
+    },
+    {
+      "name": "Vercel Endpoints",
+      "passed": false,
+      "message": "VERCEL_URL or NEXT_PUBLIC_SITE_URL not set. Cannot test deployed endpoints."
+    },
+    {
+      "name": "GitHub Actions Environment",
+      "passed": true,
+      "message": "Not running in GitHub Actions (expected for local test)"
+    },
+    {
+      "name": "GitHub Actions Required Secrets",
+      "passed": false,
+      "message": "Missing secrets: DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY"
+    },
+    {
+      "name": "Package Manager Available",
+      "passed": true,
+      "message": "pnpm is available"
+    },
+    {
+      "name": "Node Version",
+      "passed": true,
+      "message": "Node v22.21.1 (required: >=18.x)"
+    },
+    {
+      "name": "Prisma Schema",
+      "passed": true,
+      "message": "Prisma schema file exists"
+    },
+    {
+      "name": "Prisma DATABASE_URL",
+      "passed": false,
+      "message": "DATABASE_URL not set"
+    }
+  ],
+  "errors": [],
+  "autoFixSteps": [
+    "Missing DATABASE_URL in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Construct DATABASE_URL using SUPABASE_SERVICE_ROLE_KEY",
+    "  → Format: postgresql://postgres:{service-role-key}@db.{project-ref}.supabase.co:5432/postgres?sslmode=require",
+    "Missing SUPABASE_URL in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_URL from Supabase Dashboard → Settings → API",
+    "Missing SUPABASE_ANON_KEY in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_ANON_KEY from Supabase Dashboard → Settings → API",
+    "Missing SUPABASE_SERVICE_ROLE_KEY in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_SERVICE_ROLE_KEY from Supabase Dashboard → Settings → API",
+    "Missing SUPABASE_JWT_SECRET in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_JWT_SECRET from Supabase Dashboard → Settings → API",
+    "Missing NEXT_PUBLIC_SUPABASE_URL in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get NEXT_PUBLIC_SUPABASE_URL from Supabase Dashboard → Settings → API",
+    "Missing NEXT_PUBLIC_SUPABASE_ANON_KEY in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get NEXT_PUBLIC_SUPABASE_ANON_KEY from Supabase Dashboard → Settings → API",
+    "Missing SUPABASE_PROJECT_REF in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_PROJECT_REF from Supabase Dashboard → Settings → API",
+    "Missing SUPABASE_ACCESS_TOKEN in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get SUPABASE_ACCESS_TOKEN from Supabase Dashboard → Settings → API",
+    "Missing VERCEL_TOKEN in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "  → Get VERCEL_TOKEN from Vercel Dashboard → Settings → Tokens",
+    "Missing NEXTAUTH_URL in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "Missing NEXTAUTH_SECRET in: Cursor, .env.local, GitHub, Vercel Production, Vercel Preview, Vercel Development",
+    "Missing NODE_ENV in: Cursor, GitHub, Vercel Production, Vercel Preview, Vercel Development"
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 4,
+    "failed": 5,
+    "status": "FAIL"
+  }
+}
