@@ -5,6 +5,7 @@ import { env } from "@/lib/env";
 import { SystemError, ValidationError, formatError } from "@/src/lib/errors";
 import { recordError } from "@/lib/utils/error-detection";
 import { retry } from "@/lib/utils/retry";
+import { telemetry } from "@/lib/monitoring/enhanced-telemetry";
 import { z } from "zod";
 
 // Load environment variables dynamically - no hardcoded values
