@@ -35,6 +35,9 @@ export function MobileNav() {
           <Link href="/case-studies" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
             Case Studies
           </Link>
+          <Link href="/tasks" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Our Builds
+          </Link>
           <Link href="/blog" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
             Blog
           </Link>

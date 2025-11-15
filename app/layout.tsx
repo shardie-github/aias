@@ -14,8 +14,8 @@ import { EnhancedErrorBoundary } from "@/lib/error-handling/error-boundary-enhan
 import { TelemetryProvider } from "@/lib/monitoring/telemetry-provider";
 
 export const metadata: Metadata = {
-  title: "Save 10+ Hours/Week with AI Automation | AIAS Platform — Canadian-Built",
-  description: "Save 10+ hours/week with AI automation. CAD $49/month. Built in Canada, trusted worldwide. 100+ integrations, PIPEDA compliant, 30-minute setup. Start free trial.",
+  title: "AIAS Consultancy — Custom AI Platforms & Automation | AI Automated Services",
+  description: "AIAS Consultancy builds custom AI platforms, workflow automation systems, and intelligent agents. See our builds (TokPulse, Hardonia Suite) and AIAS Platform for business automation. Built in Canada, serving the world.",
   keywords: ["systems thinking", "AI age skills", "job market advantage", "business success", "systems thinking training", "critical thinking skills", "AI automation", "holistic problem solving", "root cause analysis", "multi-perspective thinking", "career differentiation", "systems thinking methodology", "genai content engine", "automated website creation", "ai blog analysis", "website automation", "genai website generator"],
   authors: [{ name: "AIAS Platform Team" }],
   creator: "AIAS Platform",

@@ -18,7 +18,7 @@ export async function sendEmail({ to, subject, html, from }: EmailOptions) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: from || process.env.RESEND_FROM_EMAIL || "Hardonia <noreply@hardonia.com>",
+      from: from || process.env.RESEND_FROM_EMAIL || "AIAS <noreply@aias-platform.com>",
       to,
       subject,
       html,
@@ -69,7 +69,7 @@ export async function sendStreakReminderEmail(userId: string, days: number) {
           </p>
           
           <p style="margin: 0 0 15px 0;">
-            Don't let it break! Come back to Hardonia today to keep your streak going and earn more XP.
+            Don't let it break! Come back to AIAS Platform today to keep your streak going and earn more XP.
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
@@ -81,7 +81,7 @@ export async function sendStreakReminderEmail(userId: string, days: number) {
         </div>
         
         <p style="color: #666; font-size: 14px; text-align: center; margin-top: 30px;">
-          Hardonia Team
+          AIAS Platform Team
         </p>
       </body>
     </html>
@@ -136,7 +136,7 @@ export async function sendChallengeNotificationEmail(userId: string, challengeTi
         </div>
         
         <p style="color: #666; font-size: 14px; text-align: center; margin-top: 30px;">
-          Hardonia Team
+          AIAS Platform Team
         </p>
       </body>
     </html>
@@ -207,7 +207,7 @@ export async function sendMilestoneEmail(userId: string, milestoneType: string) 
         </div>
         
         <p style="color: #666; font-size: 14px; text-align: center; margin-top: 30px;">
-          Hardonia Team
+          AIAS Platform Team
         </p>
       </body>
     </html>

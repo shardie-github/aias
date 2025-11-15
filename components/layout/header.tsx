@@ -24,6 +24,9 @@ export function Header() {
           <Link href="/case-studies" className="px-3 py-2 hover:underline text-sm">
             Case Studies
           </Link>
+          <Link href="/tasks" className="px-3 py-2 hover:underline text-sm">
+            Our Builds
+          </Link>
           <Link href="/why-canadian" className="px-3 py-2 hover:underline text-sm">
             🇨🇦 Why Canadian
           </Link>
