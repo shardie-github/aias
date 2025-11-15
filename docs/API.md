@@ -1,38 +1,67 @@
 # API Documentation
 
-## Overview
-
-This document describes all API endpoints available in the AIAS Platform.
+Complete API reference for the AIAS Platform.
 
 ## Base URL
 
-- **Production:** `https://your-app.vercel.app`
-- **Preview:** `https://your-app-{branch}.vercel.app`
-- **Development:** `http://localhost:3000`
+- **Production**: `https://aias-platform.com/api`
+- **Development**: `http://localhost:3000/api`
 
 ## Authentication
 
-Most API endpoints require authentication via Supabase Auth. Include the JWT token in the `Authorization` header:
+Most endpoints require authentication. Include the access token in one of the following ways:
 
-```
-Authorization: Bearer <jwt-token>
-```
+1. **Authorization Header** (Recommended):
+   ```
+   Authorization: Bearer <access_token>
+   ```
 
-For endpoints that use Supabase client-side, authentication is handled automatically via cookies.
+2. **Cookie**:
+   ```
+   Cookie: sb-access-token=<access_token>
+   ```
 
-## API Routes
+## Multi-Tenant Support
 
-### Health & Status
+For multi-tenant endpoints, include the tenant ID:
 
-#### `GET /api/healthz`
+1. **Header**:
+   ```
+   X-Tenant-ID: <tenant_id>
+   ```
 
-Health check endpoint for monitoring and load balancers.
+2. **Query Parameter**:
+   ```
+   ?tenant_id=<tenant_id>
+   ```
+
+## Rate Limiting
+
+Rate limits are applied per endpoint:
+
+- **Auth endpoints**: 5 requests/minute
+- **Stripe endpoints**: 20 requests/minute
+- **Telemetry endpoints**: 100 requests/minute
+- **Default**: 100 requests/minute
+
+Rate limit headers are included in responses:
+- `X-RateLimit-Limit`: Maximum requests allowed
+- `X-RateLimit-Remaining`: Remaining requests in window
+- `X-RateLimit-Reset`: Unix timestamp when limit resets
+
+## Endpoints
+
+### Health Check
+
+#### GET /api/healthz
+
+Check system health and connectivity.
 
 **Response:**
 ```json
 {
   "ok": true,
-  "timestamp": "2025-01-27T12:00:00.000Z",
+  "timestamp": "2025-01-30T12:00:00Z",
   "db": {
     "ok": true,
     "latency_ms": 15
@@ -43,7 +72,7 @@ Health check endpoint for monitoring and load balancers.
   },
   "auth": {
     "ok": true,
-    "latency_ms": 10
+    "latency_ms": 25
   },
   "rls": {
     "ok": true,
@@ -51,79 +80,275 @@ Health check endpoint for monitoring and load balancers.
   },
   "storage": {
     "ok": true,
-    "latency_ms": 25,
+    "latency_ms": 30,
     "buckets_count": 3
   },
-  "total_latency_ms": 70
+  "total_latency_ms": 90
 }
 ```
 
-**Status Codes:**
-- `200`: All checks passed
-- `503`: One or more checks failed
+### Settings
 
----
+#### GET /api/settings
 
-### Stripe Integration
+Get user settings and preferences.
 
-#### `POST /api/stripe/create-checkout`
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `X-Tenant-ID: <tenant_id>` (optional)
 
-Create a Stripe checkout session.
+**Query Parameters:**
+- `tenant_id` (optional): Tenant ID
+
+**Response:**
+```json
+{
+  "settings": {
+    "id": "uuid",
+    "user_id": "uuid",
+    "email_notifications_enabled": true,
+    "push_notifications_enabled": true,
+    "sms_notifications_enabled": false,
+    "notification_types": {
+      "system": true,
+      "security": true,
+      "marketing": false,
+      "product_updates": true,
+      "community": true,
+      "billing": true
+    },
+    "theme": "system",
+    "language": "en",
+    "timezone": "UTC",
+    "date_format": "YYYY-MM-DD",
+    "time_format": "24h",
+    "profile_visibility": "private",
+    "analytics_opt_in": true,
+    "data_sharing_enabled": false,
+    "beta_features_enabled": false,
+    "experimental_features_enabled": false,
+    "custom_settings": {},
+    "created_at": "2025-01-30T12:00:00Z",
+    "updated_at": "2025-01-30T12:00:00Z"
+  }
+}
+```
+
+#### PUT /api/settings
+
+Update user settings.
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `Content-Type: application/json` (required)
+- `X-Tenant-ID: <tenant_id>` (optional)
 
 **Request Body:**
 ```json
 {
-  "priceId": "price_xxx",
-  "userId": "user-uuid",
-  "tier": "starter" | "pro" | "enterprise"
+  "email_notifications_enabled": true,
+  "push_notifications_enabled": true,
+  "theme": "dark",
+  "language": "en",
+  "timezone": "America/Toronto",
+  "time_format": "24h",
+  "profile_visibility": "private",
+  "analytics_opt_in": true,
+  "beta_features_enabled": false
 }
 ```
 
 **Response:**
 ```json
 {
-  "sessionId": "cs_test_xxx"
+  "settings": {
+    // Updated settings object
+  }
 }
 ```
 
-**Status Codes:**
-- `200`: Session created successfully
-- `400`: Invalid request body
-- `500`: Server error
+### Notifications
 
-#### `PUT /api/stripe/webhook`
+#### GET /api/notifications
 
-Stripe webhook handler for subscription events.
+Get user notifications.
 
 **Headers:**
-- `stripe-signature`: Stripe webhook signature (required)
+- `Authorization: Bearer <token>` (required)
+- `X-Tenant-ID: <tenant_id>` (optional)
 
-**Request Body:** Raw Stripe event payload
+**Query Parameters:**
+- `type` (optional): Filter by notification type (`system`, `security`, `marketing`, `product_updates`, `community`, `billing`, `achievement`, `reminder`, `alert`)
+- `read` (optional): Filter by read status (`true`/`false`)
+- `archived` (optional): Filter by archived status (`true`/`false`)
+- `limit` (optional): Number of results (default: 20, max: 100)
+- `offset` (optional): Pagination offset (default: 0)
+- `tenant_id` (optional): Tenant ID
 
 **Response:**
 ```json
 {
-  "received": true
+  "notifications": [
+    {
+      "id": "uuid",
+      "user_id": "uuid",
+      "tenant_id": "uuid",
+      "type": "system",
+      "title": "Welcome!",
+      "message": "Welcome to AIAS Platform",
+      "action_url": "https://example.com/action",
+      "action_label": "Get Started",
+      "read": false,
+      "archived": false,
+      "priority": "normal",
+      "created_at": "2025-01-30T12:00:00Z",
+      "updated_at": "2025-01-30T12:00:00Z"
+    }
+  ],
+  "unread_count": 5,
+  "pagination": {
+    "limit": 20,
+    "offset": 0,
+    "total": 1
+  }
 }
 ```
 
-**Status Codes:**
-- `200`: Webhook processed successfully
-- `400`: Invalid signature or payload
-- `500`: Server error
+#### POST /api/notifications
 
-**Supported Events:**
-- `checkout.session.completed`
-- `customer.subscription.updated`
-- `customer.subscription.deleted`
+Create a notification (admin/service role only).
 
----
+**Headers:**
+- `Authorization: Bearer <service_role_token>` (required)
+- `Content-Type: application/json` (required)
 
-### Analytics & Telemetry
+**Request Body:**
+```json
+{
+  "user_id": "uuid",
+  "tenant_id": "uuid",
+  "type": "system",
+  "title": "Notification Title",
+  "message": "Notification message",
+  "action_url": "https://example.com/action",
+  "action_label": "View",
+  "priority": "normal",
+  "expires_at": "2025-12-31T23:59:59Z",
+  "metadata": {}
+}
+```
 
-#### `POST /api/telemetry/ingest`
+**Response:**
+```json
+{
+  "notification": {
+    // Created notification object
+  }
+}
+```
 
-Ingest telemetry events from clients.
+#### PATCH /api/notifications/[id]
+
+Update a notification (mark as read, archive, etc.).
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `Content-Type: application/json` (required)
+
+**Request Body:**
+```json
+{
+  "read": true,
+  "archived": false
+}
+```
+
+**Response:**
+```json
+{
+  "notification": {
+    // Updated notification object
+  }
+}
+```
+
+#### DELETE /api/notifications/[id]
+
+Delete a notification.
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+
+**Response:**
+```json
+{
+  "success": true
+}
+```
+
+#### POST /api/notifications/mark-read
+
+Mark notifications as read.
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `Content-Type: application/json` (required)
+
+**Request Body:**
+```json
+{
+  "notification_ids": ["uuid1", "uuid2"],
+  "all": false
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 2
+}
+```
+
+### Stripe
+
+#### POST /api/stripe/create-checkout
+
+Create a Stripe checkout session.
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `Content-Type: application/json` (required)
+
+**Request Body:**
+```json
+{
+  "price_id": "price_xxx",
+  "success_url": "https://example.com/success",
+  "cancel_url": "https://example.com/cancel"
+}
+```
+
+**Response:**
+```json
+{
+  "checkout_url": "https://checkout.stripe.com/..."
+}
+```
+
+#### POST /api/stripe/webhook
+
+Stripe webhook endpoint (no authentication required, uses Stripe signature verification).
+
+### Telemetry
+
+#### POST /api/telemetry/ingest
+
+Ingest telemetry data.
+
+**Headers:**
+- `Authorization: Bearer <token>` (optional)
+- `Content-Type: application/json` (required)
 
 **Request Body:**
 ```json
@@ -131,12 +356,8 @@ Ingest telemetry events from clients.
   "events": [
     {
       "name": "page_view",
-      "category": "user",
-      "properties": {
-        "path": "/dashboard",
-        "referrer": "https://example.com"
-      },
-      "timestamp": 1706364000000
+      "properties": {},
+      "timestamp": "2025-01-30T12:00:00Z"
     }
   ]
 }
@@ -145,269 +366,85 @@ Ingest telemetry events from clients.
 **Response:**
 ```json
 {
-  "received": true,
-  "count": 1
+  "success": true,
+  "ingested": 1
 }
 ```
-
-**Status Codes:**
-- `200`: Events ingested successfully
-- `400`: Invalid event format
-- `500`: Server error
-
-#### `GET /api/analytics/track`
-
-Track analytics events (legacy endpoint).
-
-**Query Parameters:**
-- `event`: Event name
-- `properties`: JSON-encoded event properties
-
-**Response:**
-```json
-{
-  "tracked": true
-}
-```
-
----
-
-### Admin Endpoints
-
-#### `GET /api/admin/compliance`
-
-Get compliance status (admin only).
-
-**Response:**
-```json
-{
-  "status": "compliant",
-  "checks": {
-    "gdpr": true,
-    "ccpa": true,
-    "soc2": true
-  }
-}
-```
-
-#### `GET /api/admin/reliability`
-
-Get system reliability metrics (admin only).
-
-**Response:**
-```json
-{
-  "uptime": 99.9,
-  "error_rate": 0.01,
-  "latency_p95": 150
-}
-```
-
----
-
-### Blog & Content
-
-#### `GET /api/blog/rss`
-
-Get blog RSS feed.
-
-**Response:** RSS XML feed
-
-#### `GET /api/blog/comments`
-
-Get blog comments.
-
-**Query Parameters:**
-- `postId`: Blog post ID (optional)
-- `limit`: Number of comments (default: 50)
-- `offset`: Pagination offset (default: 0)
-
-**Response:**
-```json
-{
-  "comments": [
-    {
-      "id": "comment-uuid",
-      "postId": "post-uuid",
-      "author": "User Name",
-      "content": "Comment text",
-      "createdAt": "2025-01-27T12:00:00.000Z"
-    }
-  ],
-  "total": 100
-}
-```
-
----
-
-### Feedback
-
-#### `POST /api/feedback`
-
-Submit user feedback.
-
-**Request Body:**
-```json
-{
-  "type": "bug" | "feature" | "general",
-  "message": "Feedback text",
-  "email": "user@example.com" // optional
-}
-```
-
-**Response:**
-```json
-{
-  "received": true,
-  "id": "feedback-uuid"
-}
-```
-
----
-
-### Agent & AI
-
-#### `POST /api/agent/suggest`
-
-Get AI agent suggestions.
-
-**Request Body:**
-```json
-{
-  "context": "User's current context",
-  "preferences": {
-    "category": "automation"
-  }
-}
-```
-
-**Response:**
-```json
-{
-  "suggestions": [
-    {
-      "agentId": "agent-uuid",
-      "name": "Agent Name",
-      "description": "Agent description",
-      "relevance": 0.95
-    }
-  ]
-}
-```
-
----
 
 ## Error Responses
 
-All endpoints return consistent error responses:
+All errors follow a consistent format:
 
 ```json
 {
-  "error": "Error message",
-  "statusCode": 400,
-  "details": {
-    "field": "Additional error details"
-  }
+  "error": "Error Type",
+  "message": "Human-readable error message",
+  "details": {}
 }
 ```
 
-### Error Status Codes
+### Status Codes
 
-- `400`: Bad Request - Invalid input
-- `401`: Unauthorized - Missing or invalid authentication
-- `403`: Forbidden - Insufficient permissions
-- `404`: Not Found - Resource doesn't exist
-- `429`: Too Many Requests - Rate limit exceeded
-- `500`: Internal Server Error - Server error
-- `503`: Service Unavailable - Service temporarily unavailable
+- `200` - Success
+- `201` - Created
+- `400` - Bad Request (validation error)
+- `401` - Unauthorized
+- `403` - Forbidden
+- `404` - Not Found
+- `429` - Too Many Requests (rate limit exceeded)
+- `500` - Internal Server Error
+- `503` - Service Unavailable
 
-## Rate Limiting
-
-API endpoints are rate-limited to prevent abuse:
-
-- **Authenticated Users:** 1000 requests per hour
-- **Anonymous Users:** 100 requests per hour
-- **Webhook Endpoints:** 1000 requests per hour
-
-Rate limit headers are included in responses:
-
-```
-X-RateLimit-Limit: 1000
-X-RateLimit-Remaining: 999
-X-RateLimit-Reset: 1706367600
-```
-
-## Webhooks
-
-### Stripe Webhooks
-
-Configure in Stripe Dashboard → Developers → Webhooks:
-
-- **URL:** `https://your-app.vercel.app/api/stripe/webhook`
-- **Events:** `checkout.session.completed`, `customer.subscription.*`
-
-### Supabase Webhooks
-
-Configure in Supabase Dashboard → Database → Webhooks:
-
-- **Table:** Any table with webhook triggers
-- **Events:** INSERT, UPDATE, DELETE
-- **URL:** Your webhook handler endpoint
-
-## Integration Examples
-
-### JavaScript/TypeScript
-
-```typescript
-const response = await fetch('/api/stripe/create-checkout', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    priceId: 'price_xxx',
-    userId: 'user-uuid',
-    tier: 'pro'
-  })
-});
-
-const data = await response.json();
-```
+## Examples
 
 ### cURL
 
 ```bash
-curl -X POST https://your-app.vercel.app/api/stripe/create-checkout \
-  -H "Content-Type: application/json" \
+# Get settings
+curl -X GET https://aias-platform.com/api/settings \
+  -H "Authorization: Bearer <token>"
+
+# Update settings
+curl -X PUT https://aias-platform.com/api/settings \
   -H "Authorization: Bearer <token>" \
-  -d '{
-    "priceId": "price_xxx",
-    "userId": "user-uuid",
-    "tier": "pro"
-  }'
+  -H "Content-Type: application/json" \
+  -d '{"theme": "dark"}'
+
+# Get notifications
+curl -X GET "https://aias-platform.com/api/notifications?limit=10&read=false" \
+  -H "Authorization: Bearer <token>"
 ```
 
-## API Versioning
+### JavaScript/TypeScript
 
-Currently, all endpoints are unversioned. Future versions will use URL versioning:
+```typescript
+// Get settings
+const response = await fetch('/api/settings', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+const data = await response.json();
 
-- `/api/v1/...` (future)
-- `/api/v2/...` (future)
+// Update settings
+const response = await fetch('/api/settings', {
+  method: 'PUT',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    theme: 'dark',
+    language: 'en'
+  })
+});
+const data = await response.json();
+```
 
-## OpenAPI/Swagger
+## Changelog
 
-OpenAPI specification will be available at `/api/openapi.json` (future).
-
-## Support
-
-For API support:
-1. Check this documentation
-2. Review error messages and status codes
-3. Check `/api/healthz` for system status
-4. Contact platform team for assistance
-
----
-
-**Last Updated:** Generated automatically during API audit
-**Maintained By:** Platform Team
+### 2025-01-30
+- Added `/api/settings` endpoints
+- Added `/api/notifications` endpoints
+- Enhanced error handling
+- Added rate limiting headers

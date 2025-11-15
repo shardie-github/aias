@@ -2,268 +2,265 @@
 
 ## Overview
 
-AIAS Platform is a full-stack, multi-tenant SaaS platform built with modern technologies and enterprise-grade architecture patterns.
-
-## System Architecture
-
-### High-Level Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Client Layer                          │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   Next.js    │  │     Expo     │  │   Web App    │      │
-│  │   (Web)      │  │   (Mobile)   │  │   (PWA)      │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      API Layer (Next.js)                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   API Routes │  │ Server Actions│  │ Edge Functions│     │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Backend Services Layer                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   Supabase   │  │    Redis     │  │   Workers    │      │
-│  │  (PostgreSQL)│  │   (Cache)    │  │  (Jobs)      │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    External Integrations                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │    Stripe    │  │    OpenAI     │  │   Zapier     │      │
-│  │  (Payments)  │  │   (AI/ML)    │  │(Automation)  │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-```
+The AIAS Platform is a modern, full-stack SaaS application built with Next.js 14, Supabase, and TypeScript. It follows a multi-tenant architecture with comprehensive security, observability, and scalability features.
 
 ## Technology Stack
 
 ### Frontend
-
-- **Framework:** Next.js 14+ (App Router)
-- **Language:** TypeScript 5.3+
-- **UI Library:** React 18+
-- **Styling:** Tailwind CSS
-- **Components:** Radix UI
-- **Animations:** Framer Motion
-- **State Management:** React Query (TanStack Query)
-- **Forms:** React Hook Form + Zod
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **State Management**: React Query (TanStack Query)
+- **Animations**: Framer Motion
+- **Forms**: React Hook Form + Zod
 
 ### Backend
-
-- **Database:** Supabase (PostgreSQL)
-- **ORM:** Prisma
-- **Auth:** Supabase Auth
-- **API:** Next.js API Routes + Server Actions
-- **Edge Functions:** Supabase Edge Functions
-- **Caching:** Redis (via ioredis)
-- **Job Queue:** BullMQ (if implemented)
+- **Database**: PostgreSQL (via Supabase)
+- **ORM**: Prisma (for migrations)
+- **Authentication**: Supabase Auth
+- **API**: Next.js API Routes
+- **Real-time**: Supabase Realtime
+- **Storage**: Supabase Storage
 
 ### Infrastructure
+- **Hosting**: Vercel
+- **Database**: Supabase (PostgreSQL)
+- **CDN**: Vercel Edge Network
+- **Monitoring**: OpenTelemetry
+- **CI/CD**: GitHub Actions
 
-- **Hosting:** Vercel
-- **Database Hosting:** Supabase
-- **CDN:** Vercel Edge Network
-- **Monitoring:** OpenTelemetry
-- **Error Tracking:** Custom telemetry system
+## Architecture Patterns
 
-## Project Structure
+### Multi-Tenant Architecture
+
+The platform supports multiple tenants with complete data isolation:
+
+1. **Tenant Identification**:
+   - Subdomain-based routing (`tenant.aias-platform.com`)
+   - Header-based (`X-Tenant-ID`)
+   - Query parameter (`?tenant_id=xxx`)
+
+2. **Row-Level Security (RLS)**:
+   - All tables have RLS policies
+   - Policies enforce tenant isolation
+   - Service role bypasses RLS for admin operations
+
+3. **Tenant Context**:
+   - Middleware extracts tenant ID
+   - Context passed to all API routes
+   - Database queries filtered by tenant
+
+### API Architecture
+
+#### Route Structure
+```
+app/api/
+├── [endpoint]/
+│   ├── route.ts          # GET, POST handlers
+│   └── [id]/
+│       └── route.ts       # PATCH, DELETE handlers
+```
+
+#### Request Flow
+1. **Middleware**:
+   - Security headers
+   - Rate limiting
+   - Tenant extraction
+   - Authentication
+
+2. **Route Handler**:
+   - Request validation (Zod)
+   - Business logic
+   - Database operations
+   - Response formatting
+
+3. **Error Handling**:
+   - Centralized error handling
+   - Consistent error format
+   - Logging and telemetry
+
+### Database Architecture
+
+#### Schema Design
+- **Multi-tenant tables**: Include `tenant_id` column
+- **User tables**: Reference `auth.users`
+- **RLS policies**: Enforce tenant isolation
+- **Indexes**: Optimize common queries
+
+#### Migration Strategy
+- Supabase migrations in `supabase/migrations/`
+- Prisma for schema management
+- Versioned migrations with timestamps
+- Rollback support
+
+### Security Architecture
+
+#### Authentication
+- Supabase Auth (JWT-based)
+- Session management via cookies
+- Token refresh handling
+
+#### Authorization
+- Role-based access control (RBAC)
+- Tenant-based access control
+- RLS policies at database level
+
+#### Security Headers
+- CSP (Content Security Policy)
+- HSTS (HTTP Strict Transport Security)
+- X-Frame-Options
+- X-Content-Type-Options
+
+#### Rate Limiting
+- Per-endpoint limits
+- Per-user/IP tracking
+- Redis-backed (optional)
+
+### Observability
+
+#### Logging
+- Structured logging (JSON)
+- Log levels (debug, info, warn, error)
+- Request tracing
+
+#### Metrics
+- OpenTelemetry integration
+- Performance metrics
+- Business metrics
+- Custom metrics
+
+#### Tracing
+- Distributed tracing
+- Request correlation IDs
+- Performance profiling
+
+### State Management
+
+#### Server State
+- React Query for server data
+- Automatic caching
+- Background refetching
+- Optimistic updates
+
+#### Client State
+- React Context for global state
+- Local state for component state
+- URL state for shareable state
+
+## Directory Structure
 
 ```
-/workspace
-├── app/                    # Next.js App Router pages and routes
-│   ├── api/                # API route handlers
-│   ├── (routes)/           # Page routes
-│   └── layout.tsx          # Root layout
-├── components/             # React components
-│   ├── ui/                 # Base UI components (Radix UI wrappers)
-│   └── ...                 # Feature-specific components
-├── lib/                    # Shared libraries and utilities
-│   ├── env.ts              # Environment variable management
-│   ├── supabase/           # Supabase client initialization
-│   ├── monitoring/         # Telemetry and monitoring
-│   └── utils/              # Utility functions
-├── supabase/               # Supabase configuration
-│   ├── migrations/         # Database migrations
-│   └── functions/          # Edge functions
-├── scripts/                # Build and deployment scripts
-│   └── guardian/           # Full-stack guardian audit scripts
-├── docs/                   # Documentation
-└── ops/                    # Operations and deployment configs
+/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── [pages]/           # Page routes
+│   └── layout.tsx         # Root layout
+├── components/            # React components
+│   ├── ui/                # UI primitives
+│   └── [feature]/         # Feature components
+├── lib/                   # Shared libraries
+│   ├── api/               # API utilities
+│   ├── auth/              # Auth utilities
+│   ├── db/                # Database utilities
+│   └── utils/            # General utilities
+├── supabase/              # Supabase config
+│   ├── migrations/        # Database migrations
+│   └── functions/        # Edge functions
+├── scripts/               # Utility scripts
+├── tests/                 # Test files
+└── docs/                  # Documentation
 ```
-
-## Key Architectural Patterns
-
-### 1. Multi-Tenancy
-
-- **Tenant Isolation:** Row Level Security (RLS) in Supabase
-- **Tenant Context:** Passed via middleware and API routes
-- **Resource Management:** Per-tenant quotas and limits
-
-### 2. API Design
-
-- **RESTful Routes:** Next.js API routes follow REST conventions
-- **Server Actions:** For form submissions and mutations
-- **Edge Functions:** For high-performance, globally distributed logic
-
-### 3. Error Handling
-
-- **Error Taxonomy:** Structured error types (SystemError, ValidationError, etc.)
-- **Error Formatting:** Consistent error responses
-- **Error Tracking:** Telemetry system for error monitoring
-
-### 4. Environment Management
-
-- **Centralized Config:** `lib/env.ts` as single source of truth
-- **Runtime Detection:** Automatic detection of Vercel/GitHub/local environments
-- **Validation:** Startup validation of required environment variables
-
-### 5. Database Schema
-
-- **Migrations:** Version-controlled SQL migrations in `supabase/migrations`
-- **Prisma Schema:** Type-safe database access via Prisma
-- **RLS Policies:** Row-level security for multi-tenant isolation
 
 ## Data Flow
 
-### Request Flow
-
-1. **Client Request** → Next.js App Router
-2. **Middleware** → Authentication, tenant context extraction
-3. **API Route/Server Action** → Business logic execution
-4. **Supabase Client** → Database queries with RLS
-5. **Response** → Formatted JSON response
+### User Request Flow
+1. User makes request → Browser
+2. Request → Vercel Edge Network
+3. Edge → Next.js Middleware
+4. Middleware → Route Handler
+5. Route Handler → Supabase (Database/Auth)
+6. Response ← Route Handler
+7. Response ← Middleware
+8. Response ← Edge Network
+9. Response → Browser
 
 ### Authentication Flow
+1. User logs in → Supabase Auth
+2. Auth returns JWT token
+3. Token stored in cookie
+4. Token included in requests
+5. Middleware validates token
+6. User context available in routes
 
-1. **User Login** → Supabase Auth
-2. **JWT Token** → Stored in HTTP-only cookie
-3. **Request** → Token validated by middleware
-4. **Tenant Context** → Extracted from user's organization membership
-5. **RLS Policies** → Automatically filter data by tenant
+### Multi-Tenant Flow
+1. Request includes tenant ID
+2. Middleware extracts tenant ID
+3. Tenant ID added to request context
+4. Database queries filtered by tenant
+5. RLS policies enforce isolation
 
-## Security Architecture
-
-### Authentication & Authorization
-
-- **Supabase Auth:** JWT-based authentication
-- **RLS Policies:** Database-level access control
-- **API Route Guards:** Middleware-based route protection
-- **Tenant Isolation:** Enforced at database and application layers
-
-### Data Protection
-
-- **Encryption:** TLS in transit, database encryption at rest
-- **Secrets Management:** Environment variables (Vercel/GitHub Secrets)
-- **Input Validation:** Zod schemas for all user inputs
-- **SQL Injection Prevention:** Parameterized queries via Prisma
-
-### Security Headers
-
-- **CSP:** Content Security Policy configured in `next.config.ts`
-- **HSTS:** HTTP Strict Transport Security
-- **X-Frame-Options:** Prevent clickjacking
-- **X-Content-Type-Options:** Prevent MIME sniffing
-
-## Performance Optimizations
-
-### Frontend
-
-- **Code Splitting:** Automatic via Next.js App Router
-- **Image Optimization:** Next.js Image component with Supabase CDN
-- **Bundle Optimization:** Webpack configuration in `next.config.ts`
-- **Caching:** Static page generation and ISR where applicable
-
-### Backend
-
-- **Connection Pooling:** Prisma connection pooling
-- **Edge Functions:** Globally distributed logic
-- **Caching:** Redis for frequently accessed data
-- **Database Indexes:** Optimized queries with proper indexes
-
-## Monitoring & Observability
-
-### Telemetry
-
-- **Performance Metrics:** Track API response times, database queries
-- **Error Tracking:** Structured error logging
-- **User Analytics:** Engagement tracking (with privacy compliance)
-- **Business Metrics:** Conversion funnels, feature usage
-
-### Health Checks
-
-- **Health Endpoint:** `/api/healthz` for system health
-- **Database Checks:** Connection and query latency
-- **External Services:** Stripe, Supabase API availability
-
-## Deployment Architecture
-
-### Environments
-
-- **Production:** Vercel production deployment
-- **Preview:** Vercel preview deployments (per PR)
-- **Development:** Local development with Supabase local instance
-
-### CI/CD Pipeline
-
-- **GitHub Actions:** Automated testing and deployment
-- **Vercel:** Automatic deployments on push to main
-- **Migrations:** Automated database migrations via Supabase CLI
-
-## Integration Architecture
-
-### External Services
-
-- **Stripe:** Payment processing and subscriptions
-- **OpenAI:** AI/ML features
-- **Zapier:** Workflow automation
-- **TikTok/Meta Ads:** Marketing analytics (if configured)
-
-### Webhook Handlers
-
-- **Stripe Webhooks:** Subscription events
-- **Supabase Webhooks:** Database change events
-- **Custom Webhooks:** For external integrations
-
-## Scalability Considerations
+## Scalability
 
 ### Horizontal Scaling
+- Stateless API routes
+- Database connection pooling
+- CDN for static assets
+- Edge functions for compute
 
-- **Stateless API:** All API routes are stateless
-- **Edge Functions:** Automatically distributed globally
-- **Database:** Supabase handles connection pooling and scaling
+### Performance Optimization
+- Next.js Image Optimization
+- Code splitting
+- Lazy loading
+- Caching strategies
+- Database indexing
 
-### Vertical Scaling
+### Monitoring
+- Performance monitoring
+- Error tracking
+- Usage analytics
+- Cost tracking
 
-- **Vercel:** Automatic scaling based on traffic
-- **Supabase:** Managed database scaling
-- **Redis:** Caching layer for read-heavy workloads
+## Deployment
 
-## Future Architecture Considerations
+### Environments
+- **Development**: Local development
+- **Preview**: Vercel preview deployments
+- **Staging**: Staging environment
+- **Production**: Production environment
 
-### Planned Improvements
+### CI/CD Pipeline
+1. Code push → GitHub
+2. GitHub Actions triggered
+3. Run tests and linting
+4. Build application
+5. Deploy to Vercel
+6. Run smoke tests
+7. Monitor deployment
 
-- **Microservices:** Consider splitting into services if needed
-- **Event-Driven Architecture:** Event sourcing for audit trails
-- **GraphQL API:** Consider GraphQL for complex queries
-- **Real-time Features:** Supabase Realtime for live updates
+## Security Best Practices
+
+1. **Environment Variables**: Never commit secrets
+2. **Input Validation**: Validate all inputs
+3. **SQL Injection**: Use parameterized queries
+4. **XSS Prevention**: Sanitize user input
+5. **CSRF Protection**: Use CSRF tokens
+6. **Rate Limiting**: Prevent abuse
+7. **HTTPS Only**: Enforce HTTPS
+8. **Security Headers**: Set appropriate headers
+
+## Future Improvements
+
+1. **Microservices**: Split into services
+2. **Event-Driven**: Add event bus
+3. **Caching Layer**: Add Redis cache
+4. **Search**: Add full-text search
+5. **Analytics**: Enhanced analytics
+6. **AI Integration**: AI-powered features
 
 ## References
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Supabase Documentation](https://supabase.com/docs)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [Vercel Documentation](https://vercel.com/docs)
-
----
-
-**Last Updated:** Generated automatically during architecture audit
-**Maintained By:** Platform Team
+- [OpenTelemetry Documentation](https://opentelemetry.io/docs)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs)
