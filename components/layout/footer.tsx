@@ -4,22 +4,23 @@ export function Footer() {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-semibold mb-4">AIAS Platform</h3>
+            <h3 className="font-semibold mb-4">AIAS Consultancy</h3>
             <p className="text-xs mb-2">
-              Systems thinking + AI automation. THE critical skill for the AI age. What makes you stand out in the job market, 
-              succeed in business, and achieve optimal outcomes.
+              Custom AI platforms, workflow automation systems, and intelligent agents. AIAS Consultancy builds complete solutions 
+              (like TokPulse and Hardonia Suite) while AIAS Platform powers business automation.
             </p>
-            <p className="text-xs">🧠 Systems Thinking • 🤖 AI-Powered • 🇨🇦 Built in Canada • 🌍 Trusted Worldwide</p>
+            <p className="text-xs">🚀 Custom Builds • 🤖 AI Agents • 🇨🇦 Built in Canada • 🌍 Serving the World</p>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-2">
-              <li><a href="/features" className="hover:underline">Features</a></li>
-              <li><a href="/pricing" className="hover:underline">Pricing</a></li>
-              <li><a href="/systems-thinking" className="hover:underline">Systems Thinking</a></li>
-              <li><a href="/genai-content-engine" className="hover:underline">GenAI Content Engine</a></li>
-              <li><a href="/integrations" className="hover:underline">Integrations</a></li>
+              <li><a href="/services" className="hover:underline">Services</a></li>
+              <li><a href="/portfolio" className="hover:underline">Portfolio</a></li>
+              <li><a href="/process" className="hover:underline">Our Process</a></li>
               <li><a href="/case-studies" className="hover:underline">Case Studies</a></li>
+              <li><a href="/tasks" className="hover:underline">Our Builds</a></li>
+              <li><a href="/pricing" className="hover:underline">Platform Pricing</a></li>
+              <li><a href="/features" className="hover:underline">Features</a></li>
             </ul>
           </div>
           <div>
@@ -36,6 +37,7 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li><a href="/about" className="hover:underline">About</a></li>
+              <li><a href="/tasks" className="hover:underline">Consultancy Builds</a></li>
               <li><a href="/why-canadian" className="hover:underline">Why Canadian</a></li>
               <li><a href="/privacy" className="hover:underline">Privacy Policy</a></li>
               <li><a href="/terms" className="hover:underline">Terms of Service</a></li>
@@ -70,7 +72,7 @@ export function Footer() {
             </div>
           </div>
           <div className="text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} AIAS Platform. All rights reserved. Built in Canada 🇨🇦 • Serving the World 🌍
+            © {new Date().getFullYear()} AIAS Consultancy / AI Automated Services. All rights reserved. Built in Canada 🇨🇦 • Serving the World 🌍
           </div>
         </div>
       </div>

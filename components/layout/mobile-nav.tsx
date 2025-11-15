@@ -17,23 +17,26 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="right" className="w-64">
         <nav className="flex flex-col gap-4 mt-8">
-          <Link href="/features" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
-            Features
+          <Link href="/services" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Services
           </Link>
-          <Link href="/pricing" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
-            Pricing
+          <Link href="/portfolio" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Portfolio
           </Link>
-          <Link href="/systems-thinking" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline text-primary">
-            Systems Thinking
-          </Link>
-          <Link href="/genai-content-engine" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
-            GenAI Content Engine
-          </Link>
-          <Link href="/integrations" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
-            Integrations
+          <Link href="/tasks" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Our Builds
           </Link>
           <Link href="/case-studies" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
             Case Studies
+          </Link>
+          <Link href="/pricing" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Platform Pricing
+          </Link>
+          <Link href="/features" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
+            Features
+          </Link>
+          <Link href="/systems-thinking" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline text-primary">
+            Systems Thinking
           </Link>
           <Link href="/blog" onClick={() => setOpen(false)} className="text-lg font-medium hover:underline">
             Blog

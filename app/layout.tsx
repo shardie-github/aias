@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { StickyCTA } from "@/components/layout/sticky-cta";
 import { Toaster } from "@/components/ui/toaster";
 import { PWARegistration } from "@/components/pwa-registration";
 import { PerformanceHUD } from "@/components/dev/performance-hud";
@@ -14,8 +15,8 @@ import { EnhancedErrorBoundary } from "@/lib/error-handling/error-boundary-enhan
 import { TelemetryProvider } from "@/lib/monitoring/telemetry-provider";
 
 export const metadata: Metadata = {
-  title: "Save 10+ Hours/Week with AI Automation | AIAS Platform — Canadian-Built",
-  description: "Save 10+ hours/week with AI automation. CAD $49/month. Built in Canada, trusted worldwide. 100+ integrations, PIPEDA compliant, 30-minute setup. Start free trial.",
+  title: "Custom AI Platform Development | AIAS Consultancy",
+  description: "We build custom AI platforms — not integrations. See TokPulse and Hardonia Suite. From strategy to deployment. Schedule a strategy call.",
   keywords: ["systems thinking", "AI age skills", "job market advantage", "business success", "systems thinking training", "critical thinking skills", "AI automation", "holistic problem solving", "root cause analysis", "multi-perspective thinking", "career differentiation", "systems thinking methodology", "genai content engine", "automated website creation", "ai blog analysis", "website automation", "genai website generator"],
   authors: [{ name: "AIAS Platform Team" }],
   creator: "AIAS Platform",
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Header />
               <main id="main" className="container py-6">{children}</main>
               <Footer />
+              <StickyCTA />
               <Toaster />
               <PWARegistration />
               <PerformanceHUD />

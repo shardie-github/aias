@@ -12,17 +12,23 @@ export function Header() {
           AIAS Platform
         </Link>
         <nav aria-label="Primary" className="hidden md:flex items-center gap-4">
-          <Link href="/features" className="px-3 py-2 hover:underline text-sm">
-            Features
+          <Link href="/services" className="px-3 py-2 hover:underline text-sm">
+            Services
           </Link>
-          <Link href="/pricing" className="px-3 py-2 hover:underline text-sm">
-            Pricing
+          <Link href="/portfolio" className="px-3 py-2 hover:underline text-sm">
+            Portfolio
           </Link>
-          <Link href="/integrations" className="px-3 py-2 hover:underline text-sm">
-            Integrations
+          <Link href="/tasks" className="px-3 py-2 hover:underline text-sm">
+            Our Builds
           </Link>
           <Link href="/case-studies" className="px-3 py-2 hover:underline text-sm">
             Case Studies
+          </Link>
+          <Link href="/pricing" className="px-3 py-2 hover:underline text-sm">
+            Platform Pricing
+          </Link>
+          <Link href="/features" className="px-3 py-2 hover:underline text-sm">
+            Features
           </Link>
           <Link href="/why-canadian" className="px-3 py-2 hover:underline text-sm">
             🇨🇦 Why Canadian
